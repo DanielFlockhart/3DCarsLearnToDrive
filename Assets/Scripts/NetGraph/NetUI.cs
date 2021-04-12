@@ -34,7 +34,7 @@ public class NetUI : MonoBehaviour
     void build(int[] layers) {
         for (int x = 0; x < layers.Length; x++) {
             for (int y = 0; y < layers[x]; y++) {
-                float xWidth = x;
+                float xWidth = x-(layers.Length/2);
                 float yHeight = y-(layers[x]/2);
                 addNode(xWidth, yHeight);
             }
@@ -51,8 +51,11 @@ public class NetUI : MonoBehaviour
     void addNode(float xPos,float yPos) {
         GameObject newNode = Instantiate(Node);
         newNode.transform.SetParent(NetGraph.transform, false);
+        newNode.transform.position = NetGraph.transform.position;
+
+
         weight = utilities.RandomFloat();
         setColour(newNode);
-        newNode.transform.position = new Vector3(20*xPos,10*yPos,0);
+        newNode.transform.position += new Vector3(20*xPos,10*yPos,0);
     }
 }
