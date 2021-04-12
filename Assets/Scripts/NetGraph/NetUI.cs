@@ -12,7 +12,9 @@ public class NetUI : MonoBehaviour
     public GameObject Node;
 
     public float[] rgb;
-    public float weight;
+
+    public int[] layers;
+    
 
 
 
@@ -20,11 +22,12 @@ public class NetUI : MonoBehaviour
 
     void Start()
     {
-        
+        layers = new int[2] { 1, 1 };
         utilities = FindObjectOfType<GameManager>().GetComponent<Utils>();
-        build(new int[4] {2,4,3,6});
+        build(layers);
+        GameObject[] nodes = GameObject.FindGameObjectsWithTag("netNode");
+        connectNet(layers,nodes);
     }
-
 
 
     void Update()
@@ -43,7 +46,7 @@ public class NetUI : MonoBehaviour
 
     }
 
-    void setColour(GameObject img)
+    void setColour(GameObject img,float weight)
     {
         rgb = utilities.mColour(weight);
         img.GetComponent<RawImage>().color = new Color(255* rgb[0], 255 * rgb[1], 255 * rgb[2], 255);
@@ -53,9 +56,24 @@ public class NetUI : MonoBehaviour
         newNode.transform.SetParent(NetGraph.transform, false);
         newNode.transform.position = NetGraph.transform.position;
 
-
-        weight = utilities.RandomFloat();
-        setColour(newNode);
+        float weight = utilities.RandomFloat();
         newNode.transform.position += new Vector3(20*xPos,10*yPos,0);
+        setColour(newNode,weight);
+    }
+    void connectNet(int[] layers,GameObject[] nodes) {
+        foreach (GameObject node in nodes)
+        {
+            connectNode(node, nodes);
+        }
+
+        
+    }
+    void connectNode(GameObject root, GameObject[] nodes) {
+        foreach (GameObject node in nodes) {
+            if (node.GetComponent<NodeScript>().layerID == root.GetComponent<NodeScript>().layerID + 1) { 
+                
+            }
+        }
+    
     }
 }
