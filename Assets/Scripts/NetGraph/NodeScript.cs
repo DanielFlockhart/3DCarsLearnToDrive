@@ -4,19 +4,8 @@ using UnityEngine;
 
 public class NodeScript : MonoBehaviour
 {
+    // Contains information of position and values of nodes
     public int layerID,posID;
     public float bias;
 
-    // Start is called before the first frame update
-
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

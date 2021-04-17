@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1116761375587688081}
   - component: {fileID: 8234851922850454118}
   - component: {fileID: 7257924520589540021}
+  - component: {fileID: 3243317485673576933}
   m_Layer: 5
   m_Name: LineRenderer
   m_TagString: Untagged
@@ -146,3 +147,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b163590311d61244eb8b9780167321fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3243317485673576933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 514245673731386068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1662989b833bd214d95e0bcc73a561f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  axonID: 
+  weight: 0
+  inputNode: {fileID: 0}
+  outputNode: {fileID: 0}

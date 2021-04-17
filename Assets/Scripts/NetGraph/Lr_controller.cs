@@ -4,14 +4,18 @@ using UnityEngine;
 
 public class Lr_controller : MonoBehaviour
 {
+
+    // Class script of linerender
     private LineRenderer lr;
     private Transform[] points;
-    // Start is called before the first frame update
+    
     void Awake()
     {
         lr = GetComponent<LineRenderer>();
         
     }
+
+    // Initialise points to connect to
     public void SetUpLine(Transform[] points) {
         
         lr.positionCount = points.Length;
@@ -19,7 +23,8 @@ public class Lr_controller : MonoBehaviour
         build();
 
     }
-    // Update is called once per frame
+
+    // Connect between two points
     void build()
     {
         for (int i = 0; i < points.Length; i++) {

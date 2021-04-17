@@ -4,23 +4,16 @@ using UnityEngine;
 
 public class Utils : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
+    // Basic Utils script for containing reoccuring functions without using too many libraries
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
+    //Return random float between -1 and 1 to use as weights/biases
     public float RandomFloat()
     {
-
         return Random.Range(-1.0f, 1.0f);
     }
+
+    // Used for converting polarity(weight) into a red or blue colour based on whether it is positive or negative
+    // Used predominantly in the NetUI script
     public float[] mColour(float polarity)
     {
         if (polarity > 0)
