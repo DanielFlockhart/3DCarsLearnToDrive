@@ -11,8 +11,11 @@ public class Brain : MonoBehaviour
 
     private float[][] weights;
     private float[][] biases;
+
+
+    [SerializeField] float[] slice;
     
-    void Start()
+    void Awake()
     {
         utilities = FindObjectOfType<GameManager>().GetComponent<Utils>();
         net = GetComponent<NeuralNetwork>();
@@ -20,6 +23,7 @@ public class Brain : MonoBehaviour
     public void build() {
         weights = initWeights(layers);
         biases = initBiases(layers);
+        slice = weights[0];
         
     }
 

@@ -20,11 +20,13 @@ public class AiController : MonoBehaviour
     [SerializeField] float leftVal;
     [SerializeField] bool breakVal;
 
+
+
     [SerializeField] float[] input;
     [SerializeField] float[] output;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         int hiddenNodes = Mathf.RoundToInt(inputs * (2 / 3)) + outputs;
         layers = new int[] { inputs, 16, 16, outputs};
@@ -110,15 +112,14 @@ public class AiController : MonoBehaviour
                 {
                     if (rayed.collider.tag != "Ai")
                     {
+
                         distanceList[ray] = hitRay[0].distance/50;
                         break;
                     }
                 }
             }
             else {
-                // Every other one is effected??
-                // This is occuring when 2 or more cars in scene
-                distanceList[ray] =Mathf.Infinity;
+                distanceList[ray] =0;
             }
         }
         return distanceList;

@@ -5,7 +5,7 @@ using UnityEngine;
 public class NeuralNetwork : MonoBehaviour
 {
     private Utils utilities;
-    private void Start()
+    private void Awake()
     {
         utilities = FindObjectOfType<GameManager>().GetComponent<Utils>();
     }
