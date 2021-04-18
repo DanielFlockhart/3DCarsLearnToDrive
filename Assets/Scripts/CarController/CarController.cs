@@ -11,8 +11,8 @@ public class CarController : MonoBehaviour
 
     private float horizontalInput;
     private float verticalInput;
-    private float currentSteeringAngle;
-    private float currentBreakForce;
+    public float currentSteeringAngle;
+    public float currentBreakForce;
     private bool isBreaking;
 
     [SerializeField] private float motorForce;
@@ -22,9 +22,18 @@ public class CarController : MonoBehaviour
     [SerializeField] private WheelCollider frontLeftWheelCollider, frontRightWheelCollider, backLeftWheelCollider, backRightWheelCollider;
 
     [SerializeField] private Transform frontLeftWheelTransform, frontRightWheelTransform, backLeftWheelTransform, backRightWheelTransform;
-    private void FixedUpdate()
-    {
-        GetUserInput();
+    //private void FixedUpdate()
+    //{
+    //    GetUserInput();
+    //    HandleCarMotor();
+    //    HandleCarSteering();
+    //    UpdateCarWheels();
+    //}
+    public void operate(float forward,float left,bool breakVal) {
+        //GetUserInput();
+        horizontalInput = left;
+        verticalInput = forward;
+        isBreaking = breakVal;
         HandleCarMotor();
         HandleCarSteering();
         UpdateCarWheels();

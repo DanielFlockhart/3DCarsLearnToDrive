@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Utils : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class Utils : MonoBehaviour
     //Return random float between -1 and 1 to use as weights/biases
     public float RandomFloat()
     {
-        return Random.Range(-1.0f, 1.0f);
+        return UnityEngine.Random.Range(-1.0f, 1.0f);
     }
 
     // Used for converting polarity(weight) into a red or blue colour based on whether it is positive or negative
@@ -24,5 +25,15 @@ public class Utils : MonoBehaviour
         {
             return new float[] { -polarity, 0, 0 };
         }
+    }
+
+
+    // Returns value between 0 - 1 -> to get between -1,1 times by 2 minus 1
+    public float sigmoid(float x)
+    {
+        return (1 / (1 + Mathf.Exp(-x)));
+    }
+    public float tanh(float x) {
+        return (float) Math.Tanh(x);
     }
 }
