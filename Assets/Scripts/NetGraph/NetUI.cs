@@ -85,7 +85,7 @@ public class NetUI : MonoBehaviour
     {
         // Instantiate node
         GameObject newNode = Instantiate(Node);
-        float bias = utilities.RandomFloat();
+        float bias = utilities.rFloat();
 
 
         // Place node and place in correct position in heirachy
@@ -121,7 +121,7 @@ public class NetUI : MonoBehaviour
             {
                 // Instantiate LineRenderer
                 GameObject lr_obj = Instantiate(lineRenderer);
-                float weight = utilities.RandomFloat();
+                float weight = utilities.rFloat();
 
                 // Assign axon object positional inforamtion
                 lr_obj.transform.SetParent(NetGraph.transform.Find("Axons"), false);

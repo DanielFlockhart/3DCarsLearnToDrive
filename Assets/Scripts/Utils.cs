@@ -8,7 +8,7 @@ public class Utils : MonoBehaviour
     // Basic Utils script for containing reoccuring functions without using too many libraries
 
     //Return random float between -1 and 1 to use as weights/biases
-    public float RandomFloat()
+    public float rFloat()
     {
         return UnityEngine.Random.Range(-1.0f, 1.0f);
     }

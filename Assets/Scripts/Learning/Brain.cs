@@ -6,21 +6,21 @@ using System.Linq;
 public class Brain : MonoBehaviour
 {
     private NeuralNetwork net;
-    private Utils utilities;
+    [SerializeField] Utils utilities;
     public int[] layers;
 
     private float[][] weights;
     private float[][] biases;
     
-    private void Start()
+    void Start()
     {
         utilities = FindObjectOfType<GameManager>().GetComponent<Utils>();
         net = GetComponent<NeuralNetwork>();
     }
-    public void build(int[] netLayers) {
-        layers = netLayers;
+    public void build() {
         weights = initWeights(layers);
         biases = initBiases(layers);
+        
     }
 
 
@@ -28,7 +28,7 @@ public class Brain : MonoBehaviour
     {
         return net.forwardPass(layers, inputs, weights, biases);
     }
-    public float[][] initBiases(int[] layers)
+    private float[][] initBiases(int[] layers)
     {
         float[][] biasList = new float[layers.Length-1][];
         for (int layer = 0; layer < biasList.Length; layer++)
@@ -37,12 +37,12 @@ public class Brain : MonoBehaviour
             biasList[layer] = new float[layerLength];
             for (int node = 0; node < layerLength; node++)
             {
-                biasList[layer][node] = utilities.RandomFloat();
+                biasList[layer][node] = Random.Range(-1.0f, 1.0f);
             }
         }
         return biasList;
     }
-    public float[][] initWeights(int[] layers)
+    private float[][] initWeights(int[] layers)
     {
 
         float[][] weightList = new float[layers.Length-1][];
@@ -52,7 +52,7 @@ public class Brain : MonoBehaviour
             weightList[layer] = new float[layerLength];
             for (int connection = 0; connection < layerLength; connection++)
             {
-                weightList[layer][connection] = utilities.RandomFloat();
+                weightList[layer][connection] = Random.Range(-1.0f, 1.0f);
             }
         }
         return weightList;

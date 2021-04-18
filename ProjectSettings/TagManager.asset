@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - netNode
+  - Ai
+  - Obstacle
   layers:
   - Default
   - TransparentFX
@@ -14,8 +16,8 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
+  - Ais
+  - Obstacles
   - 
   - 
   - 

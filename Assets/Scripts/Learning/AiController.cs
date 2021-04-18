@@ -7,25 +7,31 @@ public class AiController : MonoBehaviour
 {
     private CarController carControls;
     private Brain brain;
-    private int[] layers;
 
-    private int inputs = 12;
-    private int outputs = 3;
+    [SerializeField] int[] layers;
+
+    [SerializeField] int inputs = 12;
+    [SerializeField] int outputs = 3;
 
     private Vector3[] rays;
-    [SerializeField] float[] distances;
+    private float[] distances;
     
     [SerializeField] float forwardVal;
     [SerializeField] float leftVal;
     [SerializeField] bool breakVal;
+
+    [SerializeField] float[] input;
+    [SerializeField] float[] output;
+
     // Start is called before the first frame update
     void Start()
     {
-        int hiddenNodes = (2/3 * inputs) + outputs;
-        layers = new int[] { inputs, hiddenNodes, hiddenNodes, outputs};
+        int hiddenNodes = Mathf.RoundToInt(inputs * (2 / 3)) + outputs;
+        layers = new int[] { inputs, 16, 16, outputs};
         brain = GetComponent<Brain>();
+        brain.layers = layers;
         carControls = GetComponent<CarController>();
-        brain.build(layers);
+        brain.build();
     }
 
     // Update is called once per frame
@@ -35,13 +41,13 @@ public class AiController : MonoBehaviour
         //drawRays(rays);
         distances = getCollisions(rays);
 
-        float breakforce = carControls.currentBreakForce;
-        float steeringAngle = carControls.currentSteeringAngle;
-        float[] inputs = new float[] { breakforce, steeringAngle, distances[0], distances[1], distances[2], distances[3], distances[4], distances[5], distances[6], distances[7], distances[8], distances[9]};
-        float[] outputs = brain.getOutputs(inputs);
-        forwardVal = outputs[0] > 0 ? 1 : -1;
-        leftVal = outputs[1] > 0 ? 1 : -1;
-        breakVal = outputs[2] > 0 ? true : false;
+        float breakforce = carControls.currentBreakForce/3000;
+        float steeringAngle = carControls.currentSteeringAngle/30;
+        input = new float[] { breakforce, steeringAngle, distances[0], distances[1], distances[2], distances[3], distances[4], distances[5], distances[6], distances[7], distances[8], distances[9]};
+        output = brain.getOutputs(input);
+        forwardVal = output[0] > 0 ? 1 : -1;
+        leftVal = output[1] > 0 ? 1 : -1;
+        breakVal = output[2] > 0 ? true : false;
         operateCar(forwardVal, leftVal, breakVal);
 
     }
@@ -94,7 +100,6 @@ public class AiController : MonoBehaviour
     }
 
     private float[] getCollisions(Vector3[] rays) {
-        print("here");
         float[] distanceList = new float[rays.Length];
         for(int ray = 0; ray < rays.Length;ray++) {
             // Inefficient as it has to check all collisions
@@ -105,12 +110,14 @@ public class AiController : MonoBehaviour
                 {
                     if (rayed.collider.tag != "Ai")
                     {
-                        distanceList[ray] = hitRay[0].distance;
+                        distanceList[ray] = hitRay[0].distance/50;
                         break;
                     }
                 }
             }
             else {
+                // Every other one is effected??
+                // This is occuring when 2 or more cars in scene
                 distanceList[ray] =Mathf.Infinity;
             }
         }
