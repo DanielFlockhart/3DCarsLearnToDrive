@@ -112,7 +112,6 @@ public class AiController : MonoBehaviour
                 {
                     if (rayed.collider.tag != "Ai")
                     {
-
                         distanceList[ray] = hitRay[0].distance/50;
                         break;
                     }
