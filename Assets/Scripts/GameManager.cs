@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
         timer += Time.deltaTime;
         if (isOver()) {
             timer = 0;
+            print(bestScore);
             clear();
             spawn();
         
