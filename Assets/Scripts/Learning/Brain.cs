@@ -5,18 +5,27 @@ using System.Linq;
 
 public class Brain : MonoBehaviour
 {
+    // Setup of weights, biases topology etc
+    // This will be used more if I decide to implement NEAT
+
+    // Prefabs
     private NeuralNetwork net;
     [SerializeField] Utils utilities;
+
+    // Network Variables
     public int[] layers;
 
     public float[][] weights;
     public float[][] biases;
     
+
+    // Assign Neural network before cars start to move to avoid errors
     void Awake()
     {
         utilities = FindObjectOfType<GameManager>().GetComponent<Utils>();
         net = GetComponent<NeuralNetwork>();
     }
+    // Initialise weights and biases
     public void build() {
         weights = initWeights(layers);
         biases = initBiases(layers);
@@ -24,11 +33,13 @@ public class Brain : MonoBehaviour
     }
     
 
-
+    // Get outputs from FFNN after inputs
     public float[] getOutputs(float[] inputs)
     {
         return net.forwardPass(layers, inputs, weights, biases);
     }
+
+    // Initialising Biases - Glorot Weight initialising?
     private float[][] initBiases(int[] layers)
     {
         float[][] biasList = new float[layers.Length-1][];
@@ -38,11 +49,14 @@ public class Brain : MonoBehaviour
             biasList[layer] = new float[layerLength];
             for (int node = 0; node < layerLength; node++)
             {
+                // Should access random from utils but didnt like it
                 biasList[layer][node] = Random.Range(-1.0f, 1.0f);
             }
         }
         return biasList;
     }
+
+    // Initialising Weight - Glorot Weight initialising?
     private float[][] initWeights(int[] layers)
     {
 

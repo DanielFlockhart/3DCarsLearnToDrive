@@ -1,17 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Genetics : MonoBehaviour
 {
+    // Genetic Algorithm + Natural Selection Control
+    // Includes crossover, mutation and sorting of ais
+    
     void crossover()
     {
+        //Will most likely use uniform random crossover not cutoff
+    }
+    void sortfits(float[][][][] data) {
+        // Use LINQ to sort by the fitness value (Or use lambda)
+        // Data in form (F,W,B)
+        data =;
 
     }
-    void sortfits() { 
-    
-    }
     // Possible issues with pointers here
+    // Copy the individual variables in the 3D array to new 3D array and give a chance of random mutation
     public float[][] mutate(float rate,float[][] vals) {
         float[][] newVals = new float[vals.Length][];
         for (int x = 0; x < vals.Length; x++) {

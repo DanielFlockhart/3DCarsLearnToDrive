@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class CarController : MonoBehaviour
 {
+    // Main Physics controller of car
 
     private const string HORIZONTAL = "Horizontal";
     private const string VERTICAL = "Vertical";
@@ -22,6 +23,10 @@ public class CarController : MonoBehaviour
     [SerializeField] private WheelCollider frontLeftWheelCollider, frontRightWheelCollider, backLeftWheelCollider, backRightWheelCollider;
 
     [SerializeField] private Transform frontLeftWheelTransform, frontRightWheelTransform, backLeftWheelTransform, backRightWheelTransform;
+
+    // Commented as only required for when a use chooses to pilot a car
+    // Will eventaully add the ability to race against the ais
+
     //private void FixedUpdate()
     //{
     //    GetUserInput();
@@ -29,6 +34,8 @@ public class CarController : MonoBehaviour
     //    HandleCarSteering();
     //    UpdateCarWheels();
     //}
+
+    // Use outputs of NN to act and change state of car
     public void operate(float forward,float left,bool breakVal) {
         //GetUserInput();
         horizontalInput = left;
@@ -39,6 +46,7 @@ public class CarController : MonoBehaviour
         UpdateCarWheels();
     }
 
+    // Change the acceleration and force the motor is providing
     private void HandleCarMotor() {
         frontLeftWheelCollider.motorTorque = verticalInput * motorForce;
         frontRightWheelCollider.motorTorque = verticalInput * motorForce;
@@ -47,6 +55,8 @@ public class CarController : MonoBehaviour
 
     }
 
+
+    // Slow car down
     private void ApplyBreak()
     {
         frontRightWheelCollider.brakeTorque = currentBreakForce;
@@ -55,13 +65,14 @@ public class CarController : MonoBehaviour
         backLeftWheelCollider.brakeTorque = currentBreakForce;
     }
 
-
+    // Get user controls (WASD) + space for break
     private void GetUserInput() {
         horizontalInput = Input.GetAxis(HORIZONTAL);
         verticalInput = Input.GetAxis(VERTICAL);
         isBreaking = Input.GetKey(KeyCode.Space);
     }
 
+    // Control direction of travel. - Issues with wheels going haywire as a result of binary outputs of network. Smoother?
     private void HandleCarSteering()
     {
         currentSteeringAngle = maxSteerAngle * horizontalInput;
@@ -70,6 +81,7 @@ public class CarController : MonoBehaviour
 
     }
 
+    // Update all of wheels simultaneously 
     private void UpdateCarWheels() {
         UpdateSingleWheel(frontLeftWheelCollider, frontLeftWheelTransform);
         UpdateSingleWheel(frontRightWheelCollider, frontRightWheelTransform);
@@ -77,6 +89,7 @@ public class CarController : MonoBehaviour
         UpdateSingleWheel(backRightWheelCollider, backRightWheelTransform);
     }
 
+    // Set wheel rotation and position according to world space
     private void UpdateSingleWheel(WheelCollider wheelCollider, Transform wheelTransform)
     {
         Vector3 pos;

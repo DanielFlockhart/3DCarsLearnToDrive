@@ -4,29 +4,33 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    /* Main Game Manager,
+     * Often is the spaghetti'est place */
 
+    //Prefabs
     public GameObject car;
+
+    // Coefficients
     public int populationSize = 80;
     public float genTime = 10;
-    public float timer;
-    public float bestScore = -100;
     public float mutRate = 0.05f;
 
+    // Arrays
     public float[][][][] data;
 
 
+    public float timer;
+    public float bestScore = -100;
 
-
-
-    // Start is called before the first frame update
     void Start()
     {
+        // Spawn first ais and assign goals their identities
         data = new float[populationSize][][][];
         initialiseCourse();
         spawn("init");
     }
 
-    // Update is called once per frame
+    // Controls generation timer
     void Update()
     {
         timer += Time.deltaTime;
@@ -38,13 +42,21 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
+    /*Spawn Function:
+     Spawn some elites
+     Some with Crossover
+     Some with Random
+     Some with Random and Crossover*/
     void spawn(string state) {
         for (int x = 0; x < populationSize; x++) {
+            // If first spawn stage
             if (state == "init")
             {
                 GameObject ai = Instantiate(car);
                 ai.GetComponent<AiController>().state = "init"; 
             }
+            // If spawning ais with related weights from previous generation
             else if (state == "respawn") {
                 GameObject ai = Instantiate(car);
                 ai.GetComponent<AiController>().state = "new";
@@ -61,6 +73,8 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+
+    // Checking if generation is over, Add manual gen skipping
     bool isOver() {
         if (GameObject.FindGameObjectsWithTag("Ai").Length == 0 || timer > genTime)
         {
@@ -71,6 +85,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // Kill all ais currently still alive
     void clear() {
         GameObject[] ais = GameObject.FindGameObjectsWithTag("Ai");
         foreach (GameObject ai in ais) {
@@ -79,6 +94,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
+    // Give Goals their identities
     void initialiseCourse() {
         int x = 0;
         foreach (GameObject goal in GameObject.FindGameObjectsWithTag("goal"))
@@ -88,12 +105,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
+    // Stores ai data before they get destroyed so it can be save for sorting and culling
     public void storeData(GameObject ai) {
 
         float[][] toStoreWeights = ai.GetComponent<Brain>().weights;
         float[][] toStoreBiases = ai.GetComponent<Brain>().biases;
         float fitness = ai.GetComponent<FitCheck>().fitness;
         for (int x = 0; x < populationSize; x++) {
+
+            // TEMP FIX - Very inefficient
             if (data[x] == null) {
                 data[x] = new float[3][][];
                 data[x][0] = new float[1][];

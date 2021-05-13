@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class FitCheck : MonoBehaviour
 {
+    // Script to control and evaluate current fitness of ai
     public float fitness = -1;
     public int currentGoal = -1;
-    // Update is called once per frame
     void Update()
     {
         fitness = currentGoal;
+        // If this ais fitness is better then the current set change it
         if (fitness > FindObjectOfType<GameManager>().bestScore) {
             FindObjectOfType<GameManager>().bestScore = fitness;
+            // Depreciated access
             FindObjectOfType<GameManager>().Bweights = GetComponent<Brain>().weights;
             FindObjectOfType<GameManager>().Bbiases = GetComponent<Brain>().biases;
             print(fitness);
