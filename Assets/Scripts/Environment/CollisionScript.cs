@@ -8,6 +8,7 @@ public class CollisionScript : MonoBehaviour
     {
         if (collision.collider.tag == "Ai") {
             Destroy(collision.gameObject);
+            FindObjectOfType<GameManager>().GetComponent<GameManager>().storeData(collision.gameObject);
             //print(collision.gameObject.transform.position.z);
         }
     }

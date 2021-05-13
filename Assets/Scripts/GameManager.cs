@@ -11,11 +11,9 @@ public class GameManager : MonoBehaviour
     public float timer;
     public float bestScore = -100;
     public float mutRate = 0.05f;
-    public float[][] Bweights;
-    public float[][] Bbiases;
 
-    public float[][][] w_list;
-    public float[][][] b_list;
+    public float[][][][] data;
+
 
 
 
@@ -23,6 +21,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        data = new float[populationSize][][][];
         initialiseCourse();
         spawn("init");
     }
@@ -75,6 +74,7 @@ public class GameManager : MonoBehaviour
     void clear() {
         GameObject[] ais = GameObject.FindGameObjectsWithTag("Ai");
         foreach (GameObject ai in ais) {
+            storeData(ai);
             Destroy(ai);
         }
     }
@@ -88,11 +88,40 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void storeData(GameObject ai) {
+    public void storeData(GameObject ai) {
 
         float[][] toStoreWeights = ai.GetComponent<Brain>().weights;
         float[][] toStoreBiases = ai.GetComponent<Brain>().biases;
         float fitness = ai.GetComponent<FitCheck>().fitness;
+        for (int x = 0; x < populationSize; x++) {
+            if (data[x] == null) {
+                data[x] = new float[3][][];
+                data[x][0] = new float[1][];
+                data[x][0][0] = new float[1]{ fitness};
+
+                data[x] = new float[3][][];
+                data[x][1] = new float[toStoreWeights.Length][];
+                for (int z = 0; z < toStoreWeights.Length; z++) {
+                    data[x][1][z] = new float[toStoreWeights[z].Length];
+                    for (int w = 0; w < toStoreWeights[z].Length; w++) {
+                        data[x][1][z][w] = toStoreWeights[z][w];
+                    }
+                }
+
+
+                data[x] = new float[3][][];
+                data[x][2] = new float[toStoreBiases.Length][];
+                for (int z = 0; z < toStoreBiases.Length; z++)
+                {
+                    data[x][2][z] = new float[toStoreBiases[z].Length];
+                    for (int w = 0; w < toStoreBiases[z].Length; w++)
+                    {
+                        data[x][2][z][w] = toStoreBiases[z][w];
+                    }
+                }
+                break;
+            }
+        }
     }
 }
 
