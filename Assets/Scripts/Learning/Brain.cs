@@ -9,11 +9,8 @@ public class Brain : MonoBehaviour
     [SerializeField] Utils utilities;
     public int[] layers;
 
-    private float[][] weights;
-    private float[][] biases;
-
-
-    [SerializeField] float[] slice;
+    public float[][] weights;
+    public float[][] biases;
     
     void Awake()
     {
@@ -23,9 +20,9 @@ public class Brain : MonoBehaviour
     public void build() {
         weights = initWeights(layers);
         biases = initBiases(layers);
-        slice = weights[0];
         
     }
+    
 
 
     public float[] getOutputs(float[] inputs)

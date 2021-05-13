@@ -10,10 +10,17 @@ public class GameManager : MonoBehaviour
     public float genTime = 10;
     public float timer;
     public float bestScore = -100;
+    public float mutRate = 0.05f;
+    public float[][] Bweights;
+    public float[][] Bbiases;
+
+
+
     // Start is called before the first frame update
     void Start()
     {
-        spawn();
+        initialiseCourse();
+        spawn("init");
     }
 
     // Update is called once per frame
@@ -22,16 +29,25 @@ public class GameManager : MonoBehaviour
         timer += Time.deltaTime;
         if (isOver()) {
             timer = 0;
-            print(bestScore);
             clear();
-            spawn();
+            spawn("respawn");
         
         }
     }
 
-    void spawn() {
+    void spawn(string state) {
         for (int x = 0; x < populationSize; x++) {
-            Instantiate(car);
+            if (state == "init")
+            {
+                GameObject ai = Instantiate(car);
+                ai.GetComponent<AiController>().state = "init"; 
+            }
+            else if (state == "respawn") {
+                GameObject ai = Instantiate(car);
+                ai.GetComponent<AiController>().state = "new";
+                ai.GetComponent<Brain>().weights = ai.GetComponent<Genetics>().mutate(mutRate, Bweights);
+                ai.GetComponent<Brain>().biases = ai.GetComponent<Genetics>().mutate(mutRate, Bbiases);
+            }
         }
     }
     bool isOver() {
@@ -48,6 +64,15 @@ public class GameManager : MonoBehaviour
         GameObject[] ais = GameObject.FindGameObjectsWithTag("Ai");
         foreach (GameObject ai in ais) {
             Destroy(ai);
+        }
+    }
+
+    void initialiseCourse() {
+        int x = 0;
+        foreach (GameObject goal in GameObject.FindGameObjectsWithTag("goal"))
+        {
+            goal.GetComponent<GoalScript>().Ident = x;
+            x++;
         }
     }
 }

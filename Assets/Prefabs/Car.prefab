@@ -48,6 +48,7 @@ GameObject:
   - component: {fileID: 771295119088812946}
   - component: {fileID: 771295119088812947}
   - component: {fileID: 3281600398431590730}
+  - component: {fileID: 8424026328710798636}
   m_Layer: 8
   m_Name: Car
   m_TagString: Ai
@@ -120,6 +121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 293fad630156c374db42cd81b842b83c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state: 
   layers: 
   inputs: 12
   outputs: 3
@@ -142,7 +144,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   utilities: {fileID: 0}
   layers: 
-  slice: []
 --- !u!65 &771295119088812946
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -185,6 +186,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fitness: 0
+  currentGoal: -1
+--- !u!114 &8424026328710798636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 771295119088812944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ed44e9123b4d5f4ea2ca121685996cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1681739642550026867
 GameObject:
   m_ObjectHideFlags: 0

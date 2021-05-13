@@ -8,6 +8,8 @@ public class AiController : MonoBehaviour
     private CarController carControls;
     private Brain brain;
 
+    public string state;
+
     [SerializeField] int[] layers;
 
     [SerializeField] int inputs = 12;
@@ -33,7 +35,15 @@ public class AiController : MonoBehaviour
         brain = GetComponent<Brain>();
         brain.layers = layers;
         carControls = GetComponent<CarController>();
-        brain.build();
+        
+        
+    }
+    private void Start()
+    {
+        if (state == "init")
+        {
+            brain.build();
+        }
     }
 
     // Update is called once per frame
