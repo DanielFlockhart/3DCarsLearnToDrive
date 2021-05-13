@@ -14,6 +14,10 @@ public class GameManager : MonoBehaviour
     public float[][] Bweights;
     public float[][] Bbiases;
 
+    public float[][][] w_list;
+    public float[][][] b_list;
+
+
 
 
     // Start is called before the first frame update
@@ -45,8 +49,16 @@ public class GameManager : MonoBehaviour
             else if (state == "respawn") {
                 GameObject ai = Instantiate(car);
                 ai.GetComponent<AiController>().state = "new";
-                ai.GetComponent<Brain>().weights = ai.GetComponent<Genetics>().mutate(mutRate, Bweights);
-                ai.GetComponent<Brain>().biases = ai.GetComponent<Genetics>().mutate(mutRate, Bbiases);
+                if (x > populationSize/2)
+                {
+                    ai.GetComponent<Brain>().weights = Bweights;
+                    ai.GetComponent<Brain>().biases = Bbiases;
+                }
+                else { 
+                    ai.GetComponent<Brain>().weights = ai.GetComponent<Genetics>().mutate(mutRate, Bweights);
+                    ai.GetComponent<Brain>().biases = ai.GetComponent<Genetics>().mutate(mutRate, Bbiases);
+                }
+                
             }
         }
     }
@@ -74,6 +86,13 @@ public class GameManager : MonoBehaviour
             goal.GetComponent<GoalScript>().Ident = x;
             x++;
         }
+    }
+
+    void storeData(GameObject ai) {
+
+        float[][] toStoreWeights = ai.GetComponent<Brain>().weights;
+        float[][] toStoreBiases = ai.GetComponent<Brain>().biases;
+        float fitness = ai.GetComponent<FitCheck>().fitness;
     }
 }
 
