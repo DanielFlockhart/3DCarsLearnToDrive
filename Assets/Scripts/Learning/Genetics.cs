@@ -15,7 +15,7 @@ public class Genetics : MonoBehaviour
     void sortfits(float[][][][] data) {
         // Use LINQ to sort by the fitness value (Or use lambda)
         // Data in form (F,W,B)
-        data =;
+        //ata = ;
 
     }
     // Possible issues with pointers here

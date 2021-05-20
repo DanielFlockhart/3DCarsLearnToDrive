@@ -122,14 +122,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 
-  layers: 
-  inputs: 12
-  outputs: 3
   forwardVal: 0
   leftVal: 0
   breakVal: 0
   input: []
   output: []
+  layers: 
+  inputs: 12
+  outputs: 3
 --- !u!114 &771295119088812948
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -212,7 +212,7 @@ GameObject:
   - component: {fileID: 2871407002564182513}
   m_Layer: 8
   m_Name: FrontRightWheel
-  m_TagString: Ai
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -291,7 +291,7 @@ GameObject:
   - component: {fileID: 2510066654290670967}
   m_Layer: 8
   m_Name: FrontLeftWheel
-  m_TagString: Ai
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -368,7 +368,7 @@ GameObject:
   - component: {fileID: 2260516354674885236}
   m_Layer: 8
   m_Name: Meshes
-  m_TagString: Ai
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -404,7 +404,7 @@ GameObject:
   - component: {fileID: 3302005122271054284}
   m_Layer: 8
   m_Name: RearLeftWheel
-  m_TagString: Ai
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -482,7 +482,7 @@ GameObject:
   - component: {fileID: 6682105407557496308}
   m_Layer: 8
   m_Name: RearLeftWheel
-  m_TagString: Ai
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -543,7 +543,7 @@ GameObject:
   - component: {fileID: 6682105408302843144}
   m_Layer: 8
   m_Name: FrontLeftWheel
-  m_TagString: Ai
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -604,7 +604,7 @@ GameObject:
   - component: {fileID: 6682105409086797162}
   m_Layer: 8
   m_Name: RearRightWheel
-  m_TagString: Ai
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -665,7 +665,7 @@ GameObject:
   - component: {fileID: 6682105409208506516}
   m_Layer: 8
   m_Name: FrontRightWheel
-  m_TagString: Ai
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -725,7 +725,7 @@ GameObject:
   - component: {fileID: 6682105409391068981}
   m_Layer: 8
   m_Name: Colliders
-  m_TagString: Ai
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -761,7 +761,7 @@ GameObject:
   - component: {fileID: 7741321407019223913}
   m_Layer: 8
   m_Name: Body
-  m_TagString: Ai
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -841,7 +841,7 @@ GameObject:
   - component: {fileID: 7098846274495036659}
   m_Layer: 8
   m_Name: RearRightWheel
-  m_TagString: Ai
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -54,20 +54,23 @@ public class GameManager : MonoBehaviour
             if (state == "init")
             {
                 GameObject ai = Instantiate(car);
-                ai.GetComponent<AiController>().state = "init"; 
+                ai.GetComponent<AiController>().state = "init";
+                ai.name = "car" + x;
             }
             // If spawning ais with related weights from previous generation
             else if (state == "respawn") {
                 GameObject ai = Instantiate(car);
                 ai.GetComponent<AiController>().state = "new";
-                if (x > populationSize/2)
+                ai.name = "car" + x;
+
+                if (x < populationSize/2)
                 {
-                    ai.GetComponent<Brain>().weights = Bweights;
-                    ai.GetComponent<Brain>().biases = Bbiases;
+                    ai.GetComponent<Brain>().weights = data[0][x];
+                    ai.GetComponent<Brain>().biases = data[1][x];
                 }
                 else { 
-                    ai.GetComponent<Brain>().weights = ai.GetComponent<Genetics>().mutate(mutRate, Bweights);
-                    ai.GetComponent<Brain>().biases = ai.GetComponent<Genetics>().mutate(mutRate, Bbiases);
+                    ai.GetComponent<Brain>().weights = ai.GetComponent<Genetics>().mutate(mutRate, data[0][x-populationSize/2]);
+                    ai.GetComponent<Brain>().biases = ai.GetComponent<Genetics>().mutate(mutRate, data[1][x - populationSize / 2]);
                 }
                 
             }
@@ -108,7 +111,6 @@ public class GameManager : MonoBehaviour
 
     // Stores ai data before they get destroyed so it can be save for sorting and culling
     public void storeData(GameObject ai) {
-
         float[][] toStoreWeights = ai.GetComponent<Brain>().weights;
         float[][] toStoreBiases = ai.GetComponent<Brain>().biases;
         float fitness = ai.GetComponent<FitCheck>().fitness;
