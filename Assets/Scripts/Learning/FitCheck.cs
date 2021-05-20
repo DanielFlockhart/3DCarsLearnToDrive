@@ -13,8 +13,6 @@ public class FitCheck : MonoBehaviour
         // If this ais fitness is better then the current set change it
         if (fitness > FindObjectOfType<GameManager>().bestScore) {
             FindObjectOfType<GameManager>().bestScore = fitness;
-            // Depreciated access
-            print(fitness);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class GameManager : MonoBehaviour
 {
@@ -63,14 +64,15 @@ public class GameManager : MonoBehaviour
                 ai.GetComponent<AiController>().state = "new";
                 ai.name = "car" + x;
 
-                if (x < populationSize/2)
+                if (x < 10000000)
                 {
-                    ai.GetComponent<Brain>().weights = data[0][x];
-                    ai.GetComponent<Brain>().biases = data[1][x];
+                    print(data[x][0].Length);
+                    ai.GetComponent<Brain>().weights = data[x][1];
+                    ai.GetComponent<Brain>().biases = data[x][2];
                 }
                 else { 
-                    ai.GetComponent<Brain>().weights = ai.GetComponent<Genetics>().mutate(mutRate, data[0][x-populationSize/2]);
-                    ai.GetComponent<Brain>().biases = ai.GetComponent<Genetics>().mutate(mutRate, data[1][x - populationSize / 2]);
+                    ai.GetComponent<Brain>().weights = ai.GetComponent<Genetics>().mutate(mutRate, data[x-populationSize/2][0]);
+                    ai.GetComponent<Brain>().biases = ai.GetComponent<Genetics>().mutate(mutRate, data[x - populationSize / 2][1]);
                 }
                 
             }
@@ -117,31 +119,14 @@ public class GameManager : MonoBehaviour
         for (int x = 0; x < populationSize; x++) {
 
             // TEMP FIX - Very inefficient
+
+            // Data[x][y][z][a]
+            // x = ai
+            // y = fitness,weight,bias
+            // z = layer
+            // a = raw value
             if (data[x] == null) {
-                data[x] = new float[3][][];
-                data[x][0] = new float[1][];
-                data[x][0][0] = new float[1]{ fitness};
-
-                data[x] = new float[3][][];
-                data[x][1] = new float[toStoreWeights.Length][];
-                for (int z = 0; z < toStoreWeights.Length; z++) {
-                    data[x][1][z] = new float[toStoreWeights[z].Length];
-                    for (int w = 0; w < toStoreWeights[z].Length; w++) {
-                        data[x][1][z][w] = toStoreWeights[z][w];
-                    }
-                }
-
-
-                data[x] = new float[3][][];
-                data[x][2] = new float[toStoreBiases.Length][];
-                for (int z = 0; z < toStoreBiases.Length; z++)
-                {
-                    data[x][2][z] = new float[toStoreBiases[z].Length];
-                    for (int w = 0; w < toStoreBiases[z].Length; w++)
-                    {
-                        data[x][2][z][w] = toStoreBiases[z][w];
-                    }
-                }
+                data[x][0][0];
                 break;
             }
         }
