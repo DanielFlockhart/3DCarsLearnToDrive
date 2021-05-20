@@ -5696,10 +5696,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   car: {fileID: 771295119088812944, guid: c580d8245c471784a9f9ec20f1957a4a, type: 3}
   populationSize: 40
-  genTime: 20
+  genTime: 5
+  mutRate: 0.02
   timer: 0
   bestScore: -100
-  mutRate: 0.02
 --- !u!4 &1399677786
 Transform:
   m_ObjectHideFlags: 0
