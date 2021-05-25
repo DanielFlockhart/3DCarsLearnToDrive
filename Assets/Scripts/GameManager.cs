@@ -17,7 +17,9 @@ public class GameManager : MonoBehaviour
     public float mutRate = 0.05f;
 
     // Arrays
-    public float[][][][] data;
+    public float[][][] weights;
+    public float[][][] biases;
+    public float[] fitnesses;
 
 
     public float timer;
@@ -26,7 +28,6 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         // Spawn first ais and assign goals their identities
-        data = new float[populationSize][][][];
         initialiseCourse();
         spawn("init");
     }
@@ -66,13 +67,8 @@ public class GameManager : MonoBehaviour
 
                 if (x < 10000000)
                 {
-                    print(data[x][0].Length);
-                    ai.GetComponent<Brain>().weights = data[x][1];
-                    ai.GetComponent<Brain>().biases = data[x][2];
-                }
-                else { 
-                    ai.GetComponent<Brain>().weights = ai.GetComponent<Genetics>().mutate(mutRate, data[x-populationSize/2][0]);
-                    ai.GetComponent<Brain>().biases = ai.GetComponent<Genetics>().mutate(mutRate, data[x - populationSize / 2][1]);
+                    ai.GetComponent<Brain>().weights = weights[x];
+                    ai.GetComponent<Brain>().biases = biases[x];
                 }
                 
             }
@@ -93,8 +89,8 @@ public class GameManager : MonoBehaviour
     // Kill all ais currently still alive
     void clear() {
         GameObject[] ais = GameObject.FindGameObjectsWithTag("Ai");
+        storeData(ais);
         foreach (GameObject ai in ais) {
-            storeData(ai);
             Destroy(ai);
         }
     }
@@ -112,24 +108,16 @@ public class GameManager : MonoBehaviour
 
 
     // Stores ai data before they get destroyed so it can be save for sorting and culling
-    public void storeData(GameObject ai) {
-        float[][] toStoreWeights = ai.GetComponent<Brain>().weights;
-        float[][] toStoreBiases = ai.GetComponent<Brain>().biases;
-        float fitness = ai.GetComponent<FitCheck>().fitness;
-        for (int x = 0; x < populationSize; x++) {
-
-            // TEMP FIX - Very inefficient
-
-            // Data[x][y][z][a]
-            // x = ai
-            // y = fitness,weight,bias
-            // z = layer
-            // a = raw value
-            if (data[x] == null) {
-                data[x][0][0];
-                break;
-            }
+    public void storeData(GameObject[] ais) {
+        weights = new float[ais.Length][][];
+        biases = new float[ais.Length][][];
+        fitnesses = new float[ais.Length];
+        for (int x = 0;x<ais.Length;x++){
+            fitnesses[x] = ais[x].GetComponent<FitCheck>().fitness;
+            Array.Copy(ais[x].GetComponent<Brain>().weights, weights[x],weights[x].Length);
+            Array.Copy(ais[x].GetComponent<Brain>().biases, biases[x], biases[x].Length);
         }
+        
     }
 }
 
