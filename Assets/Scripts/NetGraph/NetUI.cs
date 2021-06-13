@@ -63,7 +63,7 @@ public class NetUI : MonoBehaviour
     // Convert Weight into rgb colour using utils
     Color convertColor(float weight) {
         rgb = utilities.mColour(weight);
-        return new Color(255 * rgb[0], 255 * rgb[1], 255 * rgb[2], 255);
+        return new Color(255 * rgb[0], 255 * rgb[1], 255 * rgb[2], 1 * Mathf.Abs(weight));
     }
 
     // Simple setter for node colour
@@ -77,7 +77,6 @@ public class NetUI : MonoBehaviour
         Color col = convertColor(weight);
         line.GetComponent<LineRenderer>().endColor = col;
         line.GetComponent<LineRenderer>().startColor = col;
-
     }
 
     // Add node to netUI
@@ -98,7 +97,8 @@ public class NetUI : MonoBehaviour
         newNode.GetComponent<NodeScript>().posID = y;
 
         //Set colour of new node
-        setColour(newNode, bias);
+        // Depends on desired look
+        //setColour(newNode, bias);
     }
 
     // Connect every node in netUI with axon to next layer nodes
@@ -121,7 +121,8 @@ public class NetUI : MonoBehaviour
             {
                 // Instantiate LineRenderer
                 GameObject lr_obj = Instantiate(lineRenderer);
-                float weight = utilities.rFloat();
+                // SHOULD SET TO UTILS RANDOM
+                float weight = UnityEngine.Random.Range(-1.0f, 1.0f);
 
                 // Assign axon object positional inforamtion
                 lr_obj.transform.SetParent(NetGraph.transform.Find("Axons"), false);
