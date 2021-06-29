@@ -2,5 +2,15 @@
  A-Level OCR Computer Science Programming Project
 
 
-to do
-NetUI change opacity instead of value of rgb
+Milestones:  
+- Set Up Car Driving Physics and first environment  
+- Setup UI and Neural Network Graph + Performance Graphing 
+- Setup Ai and reinforcement learning functionality  
+- Complete learning mechanics Add anti-overfitting. 
+- Make android app for progress checking and set up firebase 
+- Get App Uploaded In beta testing mode on GP 
+
+Current To Do's:
+- Get progress graph working
+- Genetic Algorithm Coded
+- Android app and firebase setup
