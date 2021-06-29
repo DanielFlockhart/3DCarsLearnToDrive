@@ -17,8 +17,8 @@ public class GameManager : MonoBehaviour
     public float mutRate = 0.05f;
 
     // Arrays
-    public float[][][] weights;
-    public float[][][] biases;
+    public List<float[][]> weights;
+    public List<float[][]> biases;
     public float[] fitnesses;
 
 
@@ -113,7 +113,10 @@ public class GameManager : MonoBehaviour
         biases = new float[ais.Length][][];
         fitnesses = new float[ais.Length];
         for (int x = 0;x<ais.Length;x++){
+            weights[x] = new float[ais[x].GetComponent<Brain>().layers.Length][];
+            biases[x] = new float[ais[x].GetComponent<Brain>().layers.Length][];
             fitnesses[x] = ais[x].GetComponent<FitCheck>().fitness;
+            print(weights[x].Length);
             Array.Copy(ais[x].GetComponent<Brain>().weights, weights[x],weights[x].Length);
             Array.Copy(ais[x].GetComponent<Brain>().biases, biases[x], biases[x].Length);
         }
