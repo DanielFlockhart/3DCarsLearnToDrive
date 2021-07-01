@@ -31,10 +31,12 @@ public class NeuralNetwork : MonoBehaviour
             int wPerNode = (weights.Length / inputs.Length);
             for (int weight = 0; weight < wPerNode; weight++)
             {
+                // Adds the value of the weight times the input to the node value
                 outputs[weight] += weights[(node * wPerNode) + weight] * inputs[node];
             }
         }
         for (int outs = 0; outs < outCount; outs++) {
+            // Activation function to create non-linearity
             outputs[outs] = utilities.tanh(outputs[outs] + biases[outs]);
         }
         return outputs;
