@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
+using System;
 
 public class Brain : MonoBehaviour
 {
@@ -39,6 +39,14 @@ public class Brain : MonoBehaviour
         return net.forwardPass(layers, inputs, weights, biases);
     }
 
+    public void setWeights(float[][] w){
+        Array.Copy(w,weights, w.Length);
+    }
+
+    public void setBiases(float[][] b){
+        Array.Copy(b,biases, b.Length);
+    }
+
     // Initialising Biases - Glorot Weight initialising?
     private float[][] initBiases(int[] layers)
     {
@@ -50,7 +58,7 @@ public class Brain : MonoBehaviour
             for (int node = 0; node < layerLength; node++)
             {
                 // Should access random from utils but didnt like it
-                biasList[layer][node] = Random.Range(-1.0f, 1.0f);
+                biasList[layer][node] = UnityEngine.Random.Range(-1.0f, 1.0f);
             }
         }
         return biasList;
@@ -67,7 +75,7 @@ public class Brain : MonoBehaviour
             weightList[layer] = new float[layerLength];
             for (int connection = 0; connection < layerLength; connection++)
             {
-                weightList[layer][connection] = Random.Range(-1.0f, 1.0f);
+                weightList[layer][connection] = UnityEngine.Random.Range(-1.0f, 1.0f);
             }
         }
         return weightList;

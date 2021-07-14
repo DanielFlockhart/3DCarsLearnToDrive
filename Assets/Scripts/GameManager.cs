@@ -12,14 +12,14 @@ public class GameManager : MonoBehaviour
     public GameObject car;
 
     // Coefficients
-    public int populationSize = 80;
+    public int populationSize = 128;
     public float genTime = 10;
     public float mutRate = 0.05f;
 
     // Arrays
     public List<float[][]> weights;
     public List<float[][]> biases;
-    public float[] fitnesses;
+    public List<float> fitnesses;
 
 
     public float timer;
@@ -49,28 +49,40 @@ public class GameManager : MonoBehaviour
      Spawn some elites
      Some with Crossover
      Some with Random
-     Some with Random and Crossover*/
+     Some with Random and Crossover
+     Some New*/
     void spawn(string state) {
-        for (int x = 0; x < populationSize; x++) {
-            // If first spawn stage
-            if (state == "init")
-            {
+        // If first spawn stage
+        if (state == "init"){
+            for (int x = 0; x < populationSize; x++) {
                 GameObject ai = Instantiate(car);
                 ai.GetComponent<AiController>().state = "init";
                 ai.name = "car" + x;
             }
-            // If spawning ais with related weights from previous generation
-            else if (state == "respawn") {
+
+        }
+
+        else if (state == "respawn"){
+            List<List<float[][]>> sorted = gameObject.GetComponent<Genetics>().sortfits(weights,biases,fitnesses);
+            weights = sorted[0];
+            biases = sorted[1];
+            for (int x = 0; x < populationSize; x++) {
                 GameObject ai = Instantiate(car);
                 ai.GetComponent<AiController>().state = "new";
                 ai.name = "car" + x;
-
-                if (x < 10000000)
+                ai.GetComponent<Brain>().build();
+                // THIS IS WEIGHT SELECTION
+                if (x < populationSize / 2)
                 {
-                    ai.GetComponent<Brain>().weights = weights[x];
-                    ai.GetComponent<Brain>().biases = biases[x];
+                    ai.GetComponent<Brain>().setWeights(weights[x]);
+                    ai.GetComponent<Brain>().setBiases(biases[x]);
+                    
+                } else {
+                    int index = x - (populationSize/2);
+                    ai.GetComponent<Brain>().setWeights(gameObject.GetComponent<Genetics>().mutate(mutRate,weights[index]));
+                    ai.GetComponent<Brain>().setBiases(gameObject.GetComponent<Genetics>().mutate(mutRate,biases[index]));
+
                 }
-                
             }
         }
     }
@@ -109,16 +121,13 @@ public class GameManager : MonoBehaviour
 
     // Stores ai data before they get destroyed so it can be save for sorting and culling
     public void storeData(GameObject[] ais) {
-        weights = new float[ais.Length][][];
-        biases = new float[ais.Length][][];
-        fitnesses = new float[ais.Length];
+        weights = new List<float[][]>();
+        biases = new List<float[][]>();
+        fitnesses = new List<float>();
         for (int x = 0;x<ais.Length;x++){
-            weights[x] = new float[ais[x].GetComponent<Brain>().layers.Length][];
-            biases[x] = new float[ais[x].GetComponent<Brain>().layers.Length][];
-            fitnesses[x] = ais[x].GetComponent<FitCheck>().fitness;
-            print(weights[x].Length);
-            Array.Copy(ais[x].GetComponent<Brain>().weights, weights[x],weights[x].Length);
-            Array.Copy(ais[x].GetComponent<Brain>().biases, biases[x], biases[x].Length);
+            weights.Add(ais[x].GetComponent<Brain>().weights);
+            biases.Add(ais[x].GetComponent<Brain>().biases);
+            fitnesses.Add(ais[x].GetComponent<FitCheck>().fitness);
         }
         
     }

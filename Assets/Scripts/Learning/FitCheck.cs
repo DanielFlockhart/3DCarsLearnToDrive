@@ -14,5 +14,6 @@ public class FitCheck : MonoBehaviour
         if (fitness > FindObjectOfType<GameManager>().bestScore) {
             FindObjectOfType<GameManager>().bestScore = fitness;
         }
+        
     }
 }

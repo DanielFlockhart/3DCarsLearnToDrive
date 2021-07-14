@@ -1,0 +1,6 @@
+{
+  "files.exclude": {
+    "Assets\\**/*.meta": true,
+    "Assets\\Scripts\\Learning\\**/*.meta": true
+  }
+}

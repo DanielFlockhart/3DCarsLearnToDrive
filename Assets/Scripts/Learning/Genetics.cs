@@ -12,10 +12,33 @@ public class Genetics : MonoBehaviour
     {
         //Will most likely use uniform random crossover not cutoff
     }
-    void sortfits(float[][][][] data) {
+    public List<List<float[][]>> sortfits(List<float[][]> weights,List<float[][]> biases,List<float> fitness) {
         // Use LINQ to sort by the fitness value (Or use lambda)
         // Data in form (F,W,B)
         //ata = ;
+        
+        int swaps = 1;
+        while (swaps != 0) // Bubble sort
+        {
+            swaps = 0;
+            for (int i = 0; i < fitness.Count - 1; i++)
+            {
+                if (fitness[i + 1] > fitness[i])
+                {
+                    float[][] storedWeights = weights[i];
+                    float[][] storedBiases = biases[i];
+                    float storedFit = fitness[i];
+                    fitness[i] = fitness[i + 1];
+                    weights[i] = weights[i + 1];
+                    biases[i] = biases[i + 1];
+                    fitness[i + 1] = storedFit;
+                    weights[i + 1] = storedWeights;
+                    biases[i + 1] = storedBiases;
+                    swaps++;
+                }
+            }
+        }
+        return new List<List<float[][]>>{weights, biases};
 
     }
     // Possible issues with pointers here
