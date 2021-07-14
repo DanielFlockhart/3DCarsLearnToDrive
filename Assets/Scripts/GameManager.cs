@@ -25,6 +25,8 @@ public class GameManager : MonoBehaviour
     public float timer;
     public float bestScore = -100;
 
+    public float averageFitness = 0;
+
     void Start()
     {
         // Spawn first ais and assign goals their identities
@@ -35,6 +37,7 @@ public class GameManager : MonoBehaviour
     // Controls generation timer
     void Update()
     {
+        print(bestScore + "  "+ averageFitness);
         timer += Time.deltaTime;
         if (isOver()) {
             timer = 0;
@@ -124,11 +127,15 @@ public class GameManager : MonoBehaviour
         weights = new List<float[][]>();
         biases = new List<float[][]>();
         fitnesses = new List<float>();
+        averageFitness = 0;
+
         for (int x = 0;x<ais.Length;x++){
             weights.Add(ais[x].GetComponent<Brain>().weights);
             biases.Add(ais[x].GetComponent<Brain>().biases);
             fitnesses.Add(ais[x].GetComponent<FitCheck>().fitness);
+            averageFitness+=ais[x].GetComponent<FitCheck>().fitness;
         }
+        averageFitness = averageFitness / populationSize;
         
     }
 }

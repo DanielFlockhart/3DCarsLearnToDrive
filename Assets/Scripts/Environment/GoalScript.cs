@@ -11,7 +11,7 @@ public class GoalScript : MonoBehaviour
     private void OnTriggerEnter(Collider collision)
     {
         // If object collided is ai and its not a previous goal
-        if (collision.gameObject.tag == "Ai" && collision.gameObject.GetComponent<FitCheck>().currentGoal < Ident)
+        if (collision.gameObject.tag == "Ai" && collision.gameObject.GetComponent<FitCheck>().currentGoal == Ident-1)
         {
             //Increase ai fitness by one
             collision.gameObject.GetComponent<FitCheck>().fitness += 1;
