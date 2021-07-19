@@ -9,7 +9,7 @@ public class FitCheck : MonoBehaviour
     public int currentGoal = -1;
     void Update()
     {
-        fitness = currentGoal;
+        //fitness = currentGoal;
         // If this ais fitness is better then the current set change it
         if (fitness > FindObjectOfType<GameManager>().bestScore) {
             FindObjectOfType<GameManager>().bestScore = fitness;
