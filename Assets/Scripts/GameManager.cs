@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
 
     // Coefficients
     public int populationSize = 128;
-    public float genTime = 10;
+    [SerializeField] private float genTime = 30;
     public float mutRate = 0.05f;
 
     // Arrays
@@ -48,12 +48,7 @@ public class GameManager : MonoBehaviour
     }
 
 
-    /*Spawn Function:
-     Spawn some elites
-     Some with Crossover
-     Some with Random
-     Some with Random and Crossover
-     Some New*/
+    
     void spawn(string state) {
         // If first spawn stage
         if (state == "init"){
@@ -61,20 +56,30 @@ public class GameManager : MonoBehaviour
                 GameObject ai = Instantiate(car);
                 ai.GetComponent<AiController>().state = "init";
                 ai.name = "car" + x;
+                gameObject.GetComponent<Genetics>().crossover();
             }
+
 
         }
 
         else if (state == "respawn"){
+            genTime += 0.97f;
             List<List<float[][]>> sorted = gameObject.GetComponent<Genetics>().sortfits(weights,biases,fitnesses);
             weights = sorted[0];
             biases = sorted[1];
+            List<List<float[][]>> newGen = gameObject.GetComponent<Genetics>().newGeneration(weights,biases,populationSize,mutRate);
+            weights = sorted[0];
+            biases = sorted[1];
+
             for (int x = 0; x < populationSize; x++) {
                 GameObject ai = Instantiate(car);
                 ai.GetComponent<AiController>().state = "new";
                 ai.name = "car" + x;
                 ai.GetComponent<Brain>().build();
+                ai.GetComponent<Brain>().setWeights(weights[x]);
+                ai.GetComponent<Brain>().setBiases(biases[x]);
                 // THIS IS WEIGHT SELECTION
+                /*
                 if (x < populationSize / 2)
                 {
                     ai.GetComponent<Brain>().setWeights(weights[x]);
@@ -86,6 +91,7 @@ public class GameManager : MonoBehaviour
                     ai.GetComponent<Brain>().setBiases(gameObject.GetComponent<Genetics>().mutate(mutRate,biases[index]));
 
                 }
+                */
             }
         }
     }
