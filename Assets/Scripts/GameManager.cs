@@ -128,6 +128,11 @@ public class GameManager : MonoBehaviour
         }
         averageFitness = averageFitness / populationSize;
         
+
+        
+    }
+    public void save_weights(){
+        
     }
 }
 

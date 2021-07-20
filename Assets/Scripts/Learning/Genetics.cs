@@ -6,7 +6,6 @@ using System.Linq;
 public class Genetics : MonoBehaviour
 {
     float elite = 7/16f;
-    float mut_elite = 3/16f;
     float mut_crossover = 9/16f;
 
     float[] cull_weights;
@@ -21,7 +20,7 @@ public class Genetics : MonoBehaviour
     // Genetic Algorithm + Natural Selection Control
     // Includes crossover, mutation and sorting of ais
     void Start(){
-        cull_weights = new float[2]{elite,mut_crossover};//Removed mut_elite
+        cull_weights = new float[2]{elite,mut_crossover};
     }
     
     public List<List<float[][]>> newGeneration(List<float[][]> weights,List<float[][]> biases,int population,float mut_rate){
@@ -61,6 +60,8 @@ public class Genetics : MonoBehaviour
     public float[][] crossover(int populationSize,List<float[][]> weights,float mut_rate)
     {
         //Will most likely use uniform random crossover not cutoff
+        //Comment this section
+
         int parent1 = (int) Mathf.Round(getParent(populationSize));
         int parent2 = (int) Mathf.Round(getParent(populationSize));
         float[][] p1_weights = weights[parent1];
