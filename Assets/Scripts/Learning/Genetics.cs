@@ -5,9 +5,9 @@ using System.Linq;
 
 public class Genetics : MonoBehaviour
 {
-    float elite = 3/16f;
-    float mut_crossover = 10/16f;
+    float elite = 7/16f;
     float mut_elite = 3/16f;
+    float mut_crossover = 9/16f;
 
     float[] cull_weights;
     
@@ -21,7 +21,7 @@ public class Genetics : MonoBehaviour
     // Genetic Algorithm + Natural Selection Control
     // Includes crossover, mutation and sorting of ais
     void Start(){
-        cull_weights = new float[3]{elite,mut_crossover,mut_elite};
+        cull_weights = new float[2]{elite,mut_crossover};//Removed mut_elite
     }
     
     public List<List<float[][]>> newGeneration(List<float[][]> weights,List<float[][]> biases,int population,float mut_rate){
@@ -31,19 +31,29 @@ public class Genetics : MonoBehaviour
             for(int z = 0; z < cull_weights[x]*population;z++){
                 if(x==0){
                     // NO POINT HAVING THIS LINE BUT WHATEVER
+                    // ELITE
                     weights[pointer] = weights[pointer];
+                    biases[pointer] = biases[pointer];
                     pointer +=1;
                 }
+
                 if(x == 1){
-                    weights[pointer] = crossover(population,weights,0);
-                    biases[pointer] = crossover(population,biases,0);
-                    pointer +=1;
-                }
-                if(x == 2){
+                    //CROSSOVER BETWEEN TWO PARENTS
                     weights[pointer] = crossover(population,weights,mut_rate);
                     biases[pointer] = crossover(population,biases,mut_rate);
                     pointer +=1;
                 }
+
+                /* DONT THINK THIS IS EFFICIENT
+                if(x == 2){
+                    //ASEXUAL REPRODUCTION WITH MUTATION
+                    weights[pointer] = mutate(mut_rate,weights[getParent(population)]);
+                    biases[pointer] = mutate(mut_rate,weights[getParent(population)]);
+                    pointer +=1;
+                }
+                */
+                
+                
             }
         }
         return new List<List<float[][]>>{weights, biases};
@@ -51,8 +61,8 @@ public class Genetics : MonoBehaviour
     public float[][] crossover(int populationSize,List<float[][]> weights,float mut_rate)
     {
         //Will most likely use uniform random crossover not cutoff
-        int parent1 = (int) Mathf.Round(samplePopulation() * (populationSize - 1));
-        int parent2 = (int) Mathf.Round(samplePopulation() * (populationSize - 1));
+        int parent1 = (int) Mathf.Round(getParent(populationSize));
+        int parent2 = (int) Mathf.Round(getParent(populationSize));
         float[][] p1_weights = weights[parent1];
         float[][] p2_weights = weights[parent2];
 
@@ -120,5 +130,8 @@ public class Genetics : MonoBehaviour
 
         return  value < 0 ? 0 : Mathf.Min(1,value);
         
+    }
+    public int getParent(int populationSize){
+        return (int) samplePopulation() * (populationSize - 1);
     }
 }
