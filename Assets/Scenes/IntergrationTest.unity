@@ -5935,7 +5935,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   car: {fileID: 771295119088812944, guid: c580d8245c471784a9f9ec20f1957a4a, type: 3}
   populationSize: 100
-  genTime: 100
+  genTime: 30
   mutRate: 0.05
   fitnesses: []
   timer: 0

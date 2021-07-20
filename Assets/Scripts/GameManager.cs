@@ -56,7 +56,6 @@ public class GameManager : MonoBehaviour
                 GameObject ai = Instantiate(car);
                 ai.GetComponent<AiController>().state = "init";
                 ai.name = "car" + x;
-                gameObject.GetComponent<Genetics>().crossover();
             }
 
 
@@ -78,20 +77,6 @@ public class GameManager : MonoBehaviour
                 ai.GetComponent<Brain>().build();
                 ai.GetComponent<Brain>().setWeights(weights[x]);
                 ai.GetComponent<Brain>().setBiases(biases[x]);
-                // THIS IS WEIGHT SELECTION
-                /*
-                if (x < populationSize / 2)
-                {
-                    ai.GetComponent<Brain>().setWeights(weights[x]);
-                    ai.GetComponent<Brain>().setBiases(biases[x]);
-                    
-                } else {
-                    int index = x - (populationSize/2);
-                    ai.GetComponent<Brain>().setWeights(gameObject.GetComponent<Genetics>().mutate(mutRate,weights[index]));
-                    ai.GetComponent<Brain>().setBiases(gameObject.GetComponent<Genetics>().mutate(mutRate,biases[index]));
-
-                }
-                */
             }
         }
     }

@@ -15,10 +15,8 @@ public class Genetics : MonoBehaviour
 
     /*Spawn Function:
      Spawn some elites
-     Some with Crossover
      Some with Random
-     Some with Random and Crossover
-     Some New*/
+     Some with Random and Crossover*/
 
     // Genetic Algorithm + Natural Selection Control
     // Includes crossover, mutation and sorting of ais
@@ -37,20 +35,34 @@ public class Genetics : MonoBehaviour
                     pointer +=1;
                 }
                 if(x == 1){
-                    //weights[pointer] = crossover(List<float[][]> weights,List<float[][]> biases,int population,float mut_rate);
+                    weights[pointer] = crossover(population,weights,0);
+                    biases[pointer] = crossover(population,biases,0);
                     pointer +=1;
                 }
                 if(x == 2){
+                    weights[pointer] = crossover(population,weights,mut_rate);
+                    biases[pointer] = crossover(population,biases,mut_rate);
                     pointer +=1;
                 }
             }
         }
         return new List<List<float[][]>>{weights, biases};
     }
-    public void crossover()
+    public float[][] crossover(int populationSize,List<float[][]> weights,float mut_rate)
     {
         //Will most likely use uniform random crossover not cutoff
-        print(NextGaussian());
+        int parent1 = (int) Mathf.Round(samplePopulation() * (populationSize - 1));
+        int parent2 = (int) Mathf.Round(samplePopulation() * (populationSize - 1));
+        float[][] p1_weights = weights[parent1];
+        float[][] p2_weights = weights[parent2];
+
+        for (int layer = 0; layer < weights[0].Length; layer++) {
+            for (int weight = 0; weight < weights[0][layer].Length; weight++){
+                p1_weights[layer][weight] = Random.Range(0,1) > 0.5 ? p1_weights[layer][weight] : p1_weights[layer][weight];
+            }
+        }
+        p1_weights = mutate(mut_rate,p1_weights);
+        return p1_weights;
     }
     public List<List<float[][]>> sortfits(List<float[][]> weights,List<float[][]> biases,List<float> fitness) {
         // Use LINQ to sort by the fitness value (Or use lambda)
@@ -100,11 +112,13 @@ public class Genetics : MonoBehaviour
         }
         return newVals;
     }
-    public float normalSample(float mean,float sd){
+    public float samplePopulation(float mean = 0.8f,float sd=0.2f){
+        float x1 = 1 - Random.Range(0.0f,1.0f);
+        float x2 = 1 - Random.Range(0.0f,1.0f);
+        float y1 = Mathf.Sqrt((float)-2.0 * Mathf.Log(x1)) * Mathf.Cos((float)2.0 * Mathf.PI * x2);
+        float value =  y1 * sd + mean;
 
+        return  value < 0 ? 0 : Mathf.Min(1,value);
         
     }
-
-    
-
 }
