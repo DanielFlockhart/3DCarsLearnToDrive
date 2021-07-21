@@ -47,4 +47,7 @@ public class button_script : MonoBehaviour
     public void load_training(){
         SceneManager.LoadScene("Main");
     }
+    public void finish_training(){
+        SceneManager.LoadScene("Results");
+    }
 }
