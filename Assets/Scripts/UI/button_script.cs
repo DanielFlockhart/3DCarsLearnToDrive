@@ -14,6 +14,15 @@ public class button_script : MonoBehaviour
     public void load_weights(){
 
     }
+    public void load_settings(){
+    }
+
+    public void increase_speed(){
+        Time.timeScale += 0.2f;
+    }
+    public void decrease_speed(){
+        Time.timeScale -= 0.2f;
+    }
     public void reset(){
         Scene scene = SceneManager.GetActiveScene(); 
         SceneManager.LoadScene(scene.name);

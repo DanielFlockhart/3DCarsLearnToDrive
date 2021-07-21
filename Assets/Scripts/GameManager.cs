@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
 
     // Coefficients
     public int populationSize = 128;
-    [SerializeField] private float genTime = 30;
+    public float genTime = 30;
     public float mutRate = 0.05f;
 
     // Arrays
@@ -21,11 +21,12 @@ public class GameManager : MonoBehaviour
     public List<float[][]> biases;
     public List<float> fitnesses;
 
-
+    public float training_time;
     public float timer;
     public float bestScore = -100;
-
     public float averageFitness = 0;
+
+    public int generation;
 
     void Start()
     {
@@ -39,6 +40,7 @@ public class GameManager : MonoBehaviour
     {
         print(bestScore + "  "+ averageFitness);
         timer += Time.deltaTime;
+        training_time += Time.deltaTime;
         if (isOver()) {
             timer = 0;
             clear();
@@ -50,6 +52,7 @@ public class GameManager : MonoBehaviour
 
     
     void spawn(string state) {
+        generation++;
         // If first spawn stage
         if (state == "init"){
             for (int x = 0; x < populationSize; x++) {
@@ -62,7 +65,7 @@ public class GameManager : MonoBehaviour
         }
 
         else if (state == "respawn"){
-            genTime += 0.97f;
+            genTime += 0.2f;
             List<List<float[][]>> sorted = gameObject.GetComponent<Genetics>().sortfits(weights,biases,fitnesses);
             weights = sorted[0];
             biases = sorted[1];
