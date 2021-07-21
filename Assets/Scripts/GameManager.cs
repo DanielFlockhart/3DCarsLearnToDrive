@@ -10,29 +10,36 @@ public class GameManager : MonoBehaviour
 
     //Prefabs
     public GameObject car;
+    public int populationSize = 64;
+    public int generation;
 
-    // Coefficients
-    public int populationSize = 128;
-    public float genTime = 30;
-    public float mutRate = 0.05f;
+    public float training_time;
+    public float timer;
+    public float genTime = 0;
+
+    public float startTime = 15;
+    public float mutRate = 0.02f;
+
+    public float increment = 0.5f;
 
     // Arrays
     public List<float[][]> weights;
     public List<float[][]> biases;
     public List<float> fitnesses;
 
-    public float training_time;
-    public float timer;
+
     public float bestScore = -100;
     public float averageFitness = 0;
-
-    public int generation;
+    public int bestGoal = 0;
+    
 
     void Start()
     {
         // Spawn first ais and assign goals their identities
+        
         initialiseCourse();
         spawn("init");
+        
     }
 
     // Controls generation timer
@@ -52,6 +59,7 @@ public class GameManager : MonoBehaviour
 
     
     void spawn(string state) {
+        genTime = startTime + (bestGoal * increment);
         generation++;
         // If first spawn stage
         if (state == "init"){
@@ -65,7 +73,6 @@ public class GameManager : MonoBehaviour
         }
 
         else if (state == "respawn"){
-            genTime += 0.2f;
             List<List<float[][]>> sorted = gameObject.GetComponent<Genetics>().sortfits(weights,biases,fitnesses);
             weights = sorted[0];
             biases = sorted[1];

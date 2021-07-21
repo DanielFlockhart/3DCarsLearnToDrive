@@ -5,7 +5,9 @@ using UnityEngine.UI;
 
 public class UIControls : MonoBehaviour
 {
+    // UI Controls
     public Text tt_text,gen_text,bf_text,af_text,ts_text,gl_text,mr_text;
+    public GameObject settings_page;
     private GameManager manager;
     void Start()
     {
@@ -22,5 +24,11 @@ public class UIControls : MonoBehaviour
         ts_text.text = "Time Scale : " + Time.timeScale;
         gl_text.text = "Generation Length : " + manager.genTime;
         mr_text.text = "Mutation Rate : " + manager.mutRate;
+    }
+    public void load_settings(){
+        settings_page.SetActive(true);
+    }
+    public void close_settings(){
+        settings_page.SetActive(false);
     }
 }

@@ -5,8 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class button_script : MonoBehaviour
 {
+    public UIControls uicontroller;
+    private float timeScaleStored = 0;
     public void next_generation(){
         FindObjectOfType<GameManager>().GetComponent<GameManager>().timer = 100000000000;
+        uicontroller = FindObjectOfType<UIControls>();
     }
     public void save_weights(){
 
@@ -15,6 +18,13 @@ public class button_script : MonoBehaviour
 
     }
     public void load_settings(){
+        timeScaleStored = Time.timeScale;
+        Time.timeScale = 0;
+        uicontroller.load_settings();
+    }
+    public void close_settings(){
+        Time.timeScale = timeScaleStored;
+        uicontroller.close_settings();
     }
 
     public void increase_speed(){
