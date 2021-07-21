@@ -37,4 +37,14 @@ public class button_script : MonoBehaviour
         Scene scene = SceneManager.GetActiveScene(); 
         SceneManager.LoadScene(scene.name);
     }
+    public void play_ais(){
+        SceneManager.LoadScene("Play");
+    }
+    public void load_setup(){
+        SceneManager.LoadScene("Setup");
+    }
+
+    public void load_training(){
+        SceneManager.LoadScene("Main");
+    }
 }
