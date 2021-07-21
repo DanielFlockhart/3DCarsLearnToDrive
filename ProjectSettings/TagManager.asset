@@ -8,6 +8,7 @@ TagManager:
   - Ai
   - Obstacle
   - goal
+  - GraphPoint
   layers:
   - Default
   - TransparentFX

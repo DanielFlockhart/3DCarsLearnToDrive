@@ -10,7 +10,7 @@ public class NetUI : MonoBehaviour
 
     // Variable declaring
     public Color polarity;
-    private Utils utilities;
+    public Utils utilities;
 
     public GameObject NetGraph;
     public GameObject Node;
@@ -28,9 +28,6 @@ public class NetUI : MonoBehaviour
     {
         // Will eventually be dictated by gamemanager script most likely
         layers = new int[5] { 4, 8,8,8,16 };
-
-        // Assign Utils Script
-        utilities = FindObjectOfType<GameManager>().GetComponent<Utils>();
 
         // Build Nodes in Net
         build(layers);
@@ -125,7 +122,7 @@ public class NetUI : MonoBehaviour
                 float weight = UnityEngine.Random.Range(-1.0f, 1.0f);
 
                 // Assign axon object positional inforamtion
-                lr_obj.transform.SetParent(NetGraph.transform.Find("Axons"), false);
+                lr_obj.transform.SetParent(NetGraph.transform.Find("Axons"), true);
                 lr_obj.GetComponent<Lr_controller>().SetUpLine(new Transform[2] { root.transform, node.transform });
 
                 // Set colour of new axon
