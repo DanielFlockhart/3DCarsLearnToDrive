@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
     // Controls generation timer
     void Update()
     {
-        print(bestScore + "  "+ averageFitness);
+        //print(bestScore + "  "+ averageFitness);
         timer += Time.deltaTime;
         training_time += Time.deltaTime;
         if (isOver()) {
@@ -115,13 +115,13 @@ public class GameManager : MonoBehaviour
     // Give Goals their identities
     void initialiseCourse() {
         int x = 0;
+        
         foreach (GameObject goal in GameObject.FindGameObjectsWithTag("goal"))
         {
             goal.GetComponent<GoalScript>().Ident = x;
             x++;
         }
     }
-
 
     // Stores ai data before they get destroyed so it can be save for sorting and culling
     public void storeData(GameObject[] ais) {
@@ -137,12 +137,6 @@ public class GameManager : MonoBehaviour
             averageFitness+=ais[x].GetComponent<FitCheck>().fitness;
         }
         averageFitness = averageFitness / populationSize;
-        
-
-        
-    }
-    public void save_weights(){
-        
     }
 }
 

@@ -7,11 +7,21 @@ public class button_script : MonoBehaviour
 {
     public UIControls uicontroller;
     private float timeScaleStored = 0;
+    private GameManager manager;
+
+    void Start(){
+        manager = FindObjectOfType<GameManager>();
+    }
+
     public void next_generation(){
-        FindObjectOfType<GameManager>().GetComponent<GameManager>().timer = 100000000000;
+        manager.GetComponent<GameManager>().timer = 100000000000;
         uicontroller = FindObjectOfType<UIControls>();
     }
     public void save_weights(){
+        manager.GetComponent<rw_script>().Save();
+    }
+
+    private void writeWeights(){
 
     }
     public void load_weights(){
