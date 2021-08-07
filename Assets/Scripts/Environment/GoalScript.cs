@@ -14,7 +14,7 @@ public class GoalScript : MonoBehaviour
         if (collision.gameObject.tag == "Ai" && collision.gameObject.GetComponent<FitCheck>().currentGoal == Ident-1)
         {
             //Increase ai fitness by one
-            collision.gameObject.GetComponent<FitCheck>().fitness += 1 + ((Ident/FindObjectOfType<GameManager>().timer) * 10);
+            collision.gameObject.GetComponent<FitCheck>().fitness += 1 +(Ident/FindObjectOfType<GameManager>().timer*10);
             // Set the current goal of the ai to this one so it cant get it again
             collision.gameObject.GetComponent<FitCheck>().currentGoal = Ident;
         }
