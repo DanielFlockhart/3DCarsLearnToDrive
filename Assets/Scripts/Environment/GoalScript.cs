@@ -17,6 +17,10 @@ public class GoalScript : MonoBehaviour
             collision.gameObject.GetComponent<FitCheck>().fitness += 1 +(Ident/FindObjectOfType<GameManager>().timer*10);
             // Set the current goal of the ai to this one so it cant get it again
             collision.gameObject.GetComponent<FitCheck>().currentGoal = Ident;
+            if(Ident == GameObject.FindObjectsOfType<GoalScript>().Length){
+                collision.gameObject.GetComponent<FitCheck>().currentGoal  = 0;
+            }
+            
         }
     }
 }
