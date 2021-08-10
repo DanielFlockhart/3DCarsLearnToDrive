@@ -5,18 +5,20 @@ using UnityEngine;
 public class graph_script : MonoBehaviour
 {
     public GameObject point;
+    
     public float g_width = 100f;
     public float g_height = 100f;
     List<float> values = new List<float>();
 
     public float peak = 0;
     // Start is called before the first frame update
-    public void plot(){
+    public void plot(int min,int max){
         clearPlot();
-        float split = g_width/values.Count;
+        //float split = g_width/values.Count;
+        float split = g_width/(max-min);
         peak = Mathf.Max(peak,values[values.Count-1]);
-        for(int x = 0; x < values.Count;x++){
-            addPoint(values[x],split,x,peak);
+        for(int x = min; x < max;x++){
+            addPoint(values[x],split,x-min,peak);
         }
     }
     void clearPlot(){
@@ -34,7 +36,7 @@ public class graph_script : MonoBehaviour
         GameObject newPoint = Instantiate(point);
         // Place node and place in correct position in heirachy
         newPoint.transform.SetParent(transform.Find("Points"), false);
-        //newPoint.transform.position = transform.position;
-        newPoint.transform.position += new Vector3(split*pos-500, (value/peak) * g_height - 250, 0);
+        newPoint.transform.position = transform.position;
+        newPoint.transform.position += new Vector3(split*pos-(g_width/2), (value/peak) * g_height - (g_height/2), 0);
     }
 }

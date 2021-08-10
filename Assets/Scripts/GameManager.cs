@@ -139,7 +139,7 @@ public class GameManager : MonoBehaviour
         }
         averageFitness = averageFitness / populationSize;
         graph.GetComponent<graph_script>().addValue(averageFitness);
-        graph.GetComponent<graph_script>().plot();
+        graph.GetComponent<graph_script>().plot(0,generation);
     }
 }
 

@@ -9,6 +9,10 @@ public class button_script : MonoBehaviour
     private float timeScaleStored = 0;
     private GameManager manager;
 
+    public GameObject graph;
+
+    public int pointer = 0;
+
     void Start(){
         manager = FindObjectOfType<GameManager>();
     }
@@ -59,5 +63,20 @@ public class button_script : MonoBehaviour
     }
     public void finish_training(){
         SceneManager.LoadScene("Results");
+    }
+    public void show_all_graph(){
+        graph.GetComponent<graph_script>().plot(0,manager.generation);
+    }
+    public void next_50_graph(){
+        
+        if (pointer > manager.generation-50){
+            pointer = 0;
+        }
+        if(manager.generation > 50){
+            graph.GetComponent<graph_script>().plot(pointer,pointer+50);
+            pointer+=50;
+        }
+        
+
     }
 }
