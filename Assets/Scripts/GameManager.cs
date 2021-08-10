@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
 
     //Prefabs
     public GameObject car;
+    public GameObject graph;
     public int populationSize = 64;
     public int generation;
 
@@ -137,6 +138,8 @@ public class GameManager : MonoBehaviour
             averageFitness+=ais[x].GetComponent<FitCheck>().fitness;
         }
         averageFitness = averageFitness / populationSize;
+        graph.GetComponent<graph_script>().addValue(averageFitness);
+        graph.GetComponent<graph_script>().plot();
     }
 }
 

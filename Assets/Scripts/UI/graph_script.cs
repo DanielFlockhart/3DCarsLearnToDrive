@@ -5,44 +5,36 @@ using UnityEngine;
 public class graph_script : MonoBehaviour
 {
     public GameObject point;
-    [SerializeField] private Transform[] points;
-    [SerializeField] private LineController line;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-        float initY = 0;
-        float prevX = 0;
-        float prevY = 0;
-        for(int i = 0; i < 25;i++){
-            initY += Random.Range(-1.0f,1.0f) * 10;
-            float[] res = addPoint(i*30,initY);
-            prevX = res[0];
-            prevY = res[1];
-        }   
-        
-    }
+    public float g_width = 100f;
+    public float g_height = 100f;
+    List<float> values = new List<float>();
 
-    // Update is called once per frame
-    void Update()
-    {
-        GameObject[] objs = GameObject.FindGameObjectsWithTag("GraphPoint");
-        Transform[] t_objs = new Transform[objs.Length];
-    
-        for ( int i = 0; i < t_objs.Length; ++i ){
-            t_objs[i] = objs[i].transform;
+    public float peak = 0;
+    // Start is called before the first frame update
+    public void plot(){
+        clearPlot();
+        float split = g_width/values.Count;
+        peak = Mathf.Max(peak,values[values.Count-1]);
+        for(int x = 0; x < values.Count;x++){
+            addPoint(values[x],split,x,peak);
         }
-        line.SetUpLine(t_objs);
     }
-    float[] addPoint(float xPos, float yPos)
+    void clearPlot(){
+        GameObject[] points = GameObject.FindGameObjectsWithTag("GraphPoint");
+        foreach(GameObject point in points){
+            Destroy(point);
+        }
+    }
+    public void addValue(float averageFitness){
+        values.Add(averageFitness);
+    }
+    void addPoint(float value,float split, float pos,float peak)
     {
         // Instantiate node
         GameObject newPoint = Instantiate(point);
-
         // Place node and place in correct position in heirachy
         newPoint.transform.SetParent(transform.Find("Points"), false);
-        newPoint.transform.position = transform.position;
-        newPoint.transform.position += new Vector3(xPos, yPos, 0);
-        return new float[2]{newPoint.transform.position.x,newPoint.transform.position.y};
+        //newPoint.transform.position = transform.position;
+        newPoint.transform.position += new Vector3(split*pos-500, (value/peak) * g_height - 250, 0);
     }
 }
