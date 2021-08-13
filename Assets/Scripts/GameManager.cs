@@ -145,6 +145,7 @@ public class GameManager : MonoBehaviour
     }
     public void reload_weights(List<float[][]> weights_load, List<float[][]> biases_load){
         timer = 0;
+        averageFitness = 0;
         clear();
         weights = weights_load;
         biases = biases_load;

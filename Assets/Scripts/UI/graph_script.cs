@@ -39,4 +39,7 @@ public class graph_script : MonoBehaviour
         newPoint.transform.position = transform.position;
         newPoint.transform.position += new Vector3(split*pos-(g_width/2), (value/peak) * g_height - (g_height/2), 0);
     }
+    public void reset_values(){
+        values = new List<float>();
+    }
 }

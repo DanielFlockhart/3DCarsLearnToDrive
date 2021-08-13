@@ -29,10 +29,8 @@ public class rw_script : MonoBehaviour
         
         List<float[][]> weights = readTextFile(Application.dataPath + "/model/weights.text",layers,false);
         List<float[][]> biases = readTextFile(Application.dataPath + "/model/biases.text",layers,true);
-        //print(biases[2][0].Length);
-        //print(biases[2][1].Length);
-        //print(biases[2][2].Length);
         manager.reload_weights(weights,biases);
+        manager.graph.GetComponent<graph_script>().reset_values();
     }
     List<float[][]> readTextFile(string file_path,int[] layers,bool biases)
     {
@@ -113,6 +111,13 @@ public class rw_script : MonoBehaviour
         string path = Application.dataPath + "/model/"+name+".text";
         File.WriteAllText(path, textToAppend);
     }
+    void preferences(){
+
+    // UPLOAD other data to seperate txt - settings time scale generation training time etc
+    }   
 
 }
+
+
+
 
