@@ -51,6 +51,7 @@ public class GameManager : MonoBehaviour
         training_time += Time.deltaTime;
         if (isOver()) {
             timer = 0;
+            storeData();
             clear();
             spawn("respawn");
         
@@ -106,7 +107,7 @@ public class GameManager : MonoBehaviour
     // Kill all ais currently still alive
     void clear() {
         GameObject[] ais = GameObject.FindGameObjectsWithTag("Ai");
-        storeData(ais);
+        
         foreach (GameObject ai in ais) {
             Destroy(ai);
         }
@@ -125,7 +126,8 @@ public class GameManager : MonoBehaviour
     }
 
     // Stores ai data before they get destroyed so it can be save for sorting and culling
-    public void storeData(GameObject[] ais) {
+    public void storeData() {
+        GameObject[] ais = GameObject.FindGameObjectsWithTag("Ai");
         weights = new List<float[][]>();
         biases = new List<float[][]>();
         fitnesses = new List<float>();
@@ -140,6 +142,14 @@ public class GameManager : MonoBehaviour
         averageFitness = averageFitness / populationSize;
         graph.GetComponent<graph_script>().addValue(averageFitness);
         graph.GetComponent<graph_script>().plot(0,generation);
+    }
+    public void reload_weights(List<float[][]> weights_load, List<float[][]> biases_load){
+        timer = 0;
+        clear();
+        weights = weights_load;
+        biases = biases_load;
+        spawn("respawn");
+        
     }
 }
 

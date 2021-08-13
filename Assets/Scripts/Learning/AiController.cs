@@ -35,7 +35,7 @@ public class AiController : MonoBehaviour
     [SerializeField] float[] input;
     [SerializeField] float[] output;
 
-    [SerializeField] int[] layers;
+    public int[] layers;
 
     [SerializeField] int inputs = 12;
     [SerializeField] int outputs = 3;

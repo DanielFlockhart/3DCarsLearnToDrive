@@ -11,6 +11,8 @@ public class button_script : MonoBehaviour
 
     public GameObject graph;
 
+    int[] layers;
+
     public int pointer = 0;
 
     void Start(){
@@ -29,7 +31,8 @@ public class button_script : MonoBehaviour
 
     }
     public void load_weights(){
-
+        layers = GameObject.FindGameObjectWithTag("Ai").GetComponent<AiController>().layers;
+        manager.GetComponent<rw_script>().Load(layers);
     }
     public void load_settings(){
         timeScaleStored = Time.timeScale;

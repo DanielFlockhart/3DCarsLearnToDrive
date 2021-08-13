@@ -7,45 +7,76 @@ using System.IO;
 using UnityEditor;
 using System.Linq;
 using System.Globalization;
+using System;
 public class rw_script : MonoBehaviour
 {
+    public GameManager manager;
+    void Start(){
+        manager = FindObjectOfType<GameManager>().GetComponent<GameManager>();
+
+    }
     public void Save()
     {
-        GameManager manager = FindObjectOfType<GameManager>();
-        GameObject[] ais = GameObject.FindGameObjectsWithTag("Ai");
-        manager.GetComponent<GameManager>().storeData(ais);
-        List<float[][]> weights = manager.GetComponent<GameManager>().weights;
-        List<float[][]> biases = manager.GetComponent<GameManager>().biases;
+        manager.storeData();
+        List<float[][]> weights = manager.weights;
+        List<float[][]> biases = manager.biases;
         CreateTextSpecial(weights,"weights");
         CreateTextSpecial(biases,"biases");
     }
     
-    public void Load()
-    {
-        /*
-        GameManager manager = FindObjectOfType<GameManager>();
-        manager.toLoadWeights = readTextFile(Application.dataPath + "/weights.text",false);
-        manager.toLoadBiases = readTextFile(Application.dataPath + "/biases.text",true);
-        manager.ToLoad = true;
-        */
-    }
-    float[] readTextFile(string file_path,bool biases)
+    public void Load(int[] layers)
     {
         
+        List<float[][]> weights = readTextFile(Application.dataPath + "/model/weights.text",layers,false);
+        List<float[][]> biases = readTextFile(Application.dataPath + "/model/biases.text",layers,true);
+        //print(biases[2][0].Length);
+        //print(biases[2][1].Length);
+        //print(biases[2][2].Length);
+        manager.reload_weights(weights,biases);
+    }
+    List<float[][]> readTextFile(string file_path,int[] layers,bool biases)
+    {
+        float[][][] output = new float[manager.populationSize][][];
         StreamReader inp_stm = new StreamReader(file_path);
-        string inp_ln = "";
+        string inp="";
         while (!inp_stm.EndOfStream)
         {
-            inp_ln = inp_stm.ReadLine();
+            inp += inp_stm.ReadLine();
         }
-        string[] numb = inp_ln.Split(" "[0]);
-        float[] numList = new float[numb.Length];
-        for(int x = 1; x < numb.Length; x++)
-        {
-            numList[x-1] = float.Parse(numb[x]);
+        
+        List<string> s = new List<string>(inp.Split(new string[] { "]" }, StringSplitOptions.RemoveEmptyEntries));
+        for(int ai = 0; ai < manager.populationSize;ai++){
+            output[ai] = new float[layers.Length-1][];
+            for(int layer = 0; layer < layers.Length-1;layer++){
+                int length = !biases ? layers[layer] * layers[layer+1] : layers[layer+1];
+                output[ai][layer] = new float[length];
+            }
         }
+        // im too tired for this but issue is here (below)
+        //Temp fix for 4 layered network
 
-        return numList;
+        for(int item = 0; item < s.Count;item++){
+            int ai = (int) Mathf.Floor(item / 3);
+            
+            output[ai][item % 3] = uncompress_string(s[item]);
+            
+        }
+        List<float[][]> weights = new List<float[][]>();
+        for(int x = 0; x < output.Length;x++){
+            weights.Add(output[x]);
+        }
+        return weights;
+    }
+    float[] uncompress_string(string data){
+        List<string> raw = new List<string>(data.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries));
+        
+        float[] cleaned = new float[raw.Count];
+        for(int x = 0; x < raw.Count;x++){
+            raw[x] = raw[x].Replace("[", "");
+            cleaned[x] = float.Parse(raw[x]);
+        }
+        
+        return cleaned;
     }
     
 
