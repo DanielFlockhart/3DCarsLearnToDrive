@@ -9,6 +9,8 @@ TagManager:
   - Obstacle
   - goal
   - GraphPoint
+  - GridPiece
+  - CityObjects
   layers:
   - Default
   - TransparentFX

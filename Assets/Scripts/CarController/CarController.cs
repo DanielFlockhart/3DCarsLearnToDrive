@@ -7,6 +7,7 @@ public class CarController : MonoBehaviour
 {
     // Main Physics controller of car
 
+    public bool isPlayer = false;
     private const string HORIZONTAL = "Horizontal";
     private const string VERTICAL = "Vertical";
 
@@ -27,13 +28,16 @@ public class CarController : MonoBehaviour
     // Commented as only required for when a use chooses to pilot a car
     // Will eventaully add the ability to race against the ais
 
-    //private void FixedUpdate()
-    //{
-    //    GetUserInput();
-    //    HandleCarMotor();
-    //    HandleCarSteering();
-    //    UpdateCarWheels();
-    //}
+    private void FixedUpdate()
+    {
+        if(isPlayer){
+            GetUserInput();
+            HandleCarMotor();
+            HandleCarSteering();
+            UpdateCarWheels();
+        }
+        
+    }
 
     // Use outputs of NN to act and change state of car
     public void operate(float forward,float left,bool breakVal) {
