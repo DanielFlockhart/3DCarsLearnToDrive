@@ -51,6 +51,7 @@ public class GameManager : MonoBehaviour
         timer += Time.deltaTime;
         training_time += Time.deltaTime;
         if (isOver()) {
+            print("here");
             timer = 0;
             storeData();
             clear();
@@ -82,24 +83,9 @@ public class GameManager : MonoBehaviour
             List<List<float[][]>> newGen = gameObject.GetComponent<Genetics>().newGeneration(weights,biases,populationSize,mutRate);
             weights = sorted[0];
             biases = sorted[1];
-
-            for (int x = 0; x < populationSize; x++) {
-                GameObject ai = Instantiate(car);
-                ai.GetComponent<AiController>().state = "new";
-                ai.name = "car" + x;
-                ai.GetComponent<Brain>().build();
-                ai.GetComponent<Brain>().setWeights(weights[x]);
-                ai.GetComponent<Brain>().setBiases(biases[x]);
-            }
+            place();
         } else if (state == "reload"){
-            for (int x = 0; x < populationSize; x++) {
-                GameObject ai = Instantiate(car);
-                ai.GetComponent<AiController>().state = "new";
-                ai.name = "car" + x;
-                ai.GetComponent<Brain>().build();
-                ai.GetComponent<Brain>().setWeights(weights[x]);
-                ai.GetComponent<Brain>().setBiases(biases[x]);
-            }
+            place();
         }
     }
 
@@ -154,6 +140,7 @@ public class GameManager : MonoBehaviour
     }
     public void reload_weights(List<float[][]> weights_load, List<float[][]> biases_load){
         timer = 0;
+        clear();
         averageFitness = 0;
         weights = weights_load;
         biases = biases_load;
@@ -171,6 +158,16 @@ public class GameManager : MonoBehaviour
         increment = values[6];
         bestScore = values[7];
 
+    }
+    public void place(){
+        for (int x = 0; x < populationSize; x++) {
+            GameObject ai = Instantiate(car);
+            ai.GetComponent<AiController>().state = "new";
+            ai.name = "car" + x;
+            ai.GetComponent<Brain>().build();
+            ai.GetComponent<Brain>().setWeights(weights[x]);
+            ai.GetComponent<Brain>().setBiases(biases[x]);
+        }
     }
 }
 // populationSize,generation,training_time,genTime,startTime,mutRate,increment,bestScore
