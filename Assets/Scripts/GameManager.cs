@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
     public float averageFitness = 0;
     public int bestGoal = 0;
     
-
+    public float[] state;
     void Start()
     {
         // Spawn first ais and assign goals their identities
@@ -47,6 +47,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         //print(bestScore + "  "+ averageFitness);
+        state = new float[]{populationSize,generation,training_time,genTime,startTime,mutRate,increment,bestScore};
         timer += Time.deltaTime;
         training_time += Time.deltaTime;
         if (isOver()) {
@@ -90,6 +91,15 @@ public class GameManager : MonoBehaviour
                 ai.GetComponent<Brain>().setWeights(weights[x]);
                 ai.GetComponent<Brain>().setBiases(biases[x]);
             }
+        } else if (state == "reload"){
+            for (int x = 0; x < populationSize; x++) {
+                GameObject ai = Instantiate(car);
+                ai.GetComponent<AiController>().state = "new";
+                ai.name = "car" + x;
+                ai.GetComponent<Brain>().build();
+                ai.GetComponent<Brain>().setWeights(weights[x]);
+                ai.GetComponent<Brain>().setBiases(biases[x]);
+            }
         }
     }
 
@@ -107,7 +117,6 @@ public class GameManager : MonoBehaviour
     // Kill all ais currently still alive
     void clear() {
         GameObject[] ais = GameObject.FindGameObjectsWithTag("Ai");
-        
         foreach (GameObject ai in ais) {
             Destroy(ai);
         }
@@ -146,11 +155,23 @@ public class GameManager : MonoBehaviour
     public void reload_weights(List<float[][]> weights_load, List<float[][]> biases_load){
         timer = 0;
         averageFitness = 0;
-        clear();
         weights = weights_load;
         biases = biases_load;
-        spawn("respawn");
+        spawn("reload");
+
         
     }
+    public void setState(float[] values){
+        populationSize = (int) values[0];
+        generation = (int) values[1];
+        training_time = values[2];
+        genTime = values[3];
+        startTime = values[4];
+        mutRate = values[5];
+        increment = values[6];
+        bestScore = values[7];
+
+    }
 }
+// populationSize,generation,training_time,genTime,startTime,mutRate,increment,bestScore
 

@@ -40,6 +40,10 @@ public class graph_script : MonoBehaviour
         newPoint.transform.position += new Vector3(split*pos-(g_width/2), (value/peak) * g_height - (g_height/2), 0);
     }
     public void reset_values(){
+        clearPlot();
         values = new List<float>();
+        peak = 0;
+        
+
     }
 }

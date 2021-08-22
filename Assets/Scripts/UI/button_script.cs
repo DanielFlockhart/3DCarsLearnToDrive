@@ -26,10 +26,7 @@ public class button_script : MonoBehaviour
     public void save_weights(){
         manager.GetComponent<rw_script>().Save();
     }
-
-    private void writeWeights(){
-
-    }
+    
     public void load_weights(){
         layers = GameObject.FindGameObjectWithTag("Ai").GetComponent<AiController>().layers;
         manager.GetComponent<rw_script>().Load(layers);
