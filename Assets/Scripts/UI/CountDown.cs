@@ -6,16 +6,20 @@ using UnityEngine.UI;
 public class CountDown : MonoBehaviour
 {
     public Text countdown;
+
+    public GameObject player;
     private string[] queue = {"Ready?","3","2","1","go"};
 
     public float timer = 0f;
 
     private int index = 0;
 
+    bool loadedCars = false;
+
     void Start()
     {
-        print(index);
         setText(queue[index]);
+        player.GetComponent<CarController>().isPlayer = false;
     }
 
     // Update is called once per frame
@@ -30,9 +34,17 @@ public class CountDown : MonoBehaviour
         } 
         if(timer > 1){
             countdown.gameObject.SetActive(false);
+            startRace();
         }
     }
     public void setText(string text){
         countdown.text = text;
+    }
+    public void startRace () {
+        player.GetComponent<CarController>().isPlayer = true;
+        if (!loadedCars){
+            GetComponent<rw_script>().RaceLoading(GetComponent<ModelController>().car.GetComponent<Brain>().layers);
+            loadedCars = true;
+        }
     }
 }

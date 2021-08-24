@@ -11,6 +11,7 @@ public class CityBuilder : MonoBehaviour
     public GameObject gridPrefab;
 
     public GameObject buildings;
+    public GameObject road;
     public Vector3 leftBottomLocation = new Vector3(0,0,0);
 
     public List<GameObject> path = new List<GameObject>();
@@ -56,6 +57,9 @@ public class CityBuilder : MonoBehaviour
         }
     }
     GameObject getPiece(){
-        return buildings.transform.GetChild(Random.Range(0,buildings.transform.childCount)).gameObject;
+        if(Random.Range(0,101) < 20){
+            return buildings.transform.GetChild(Random.Range(0,buildings.transform.childCount)).gameObject;
+        }
+        return road;
     }
 }

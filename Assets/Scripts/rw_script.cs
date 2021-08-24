@@ -22,6 +22,7 @@ bestScore = -100;
 public class rw_script : MonoBehaviour
 {
     public GameManager manager;
+    
     string[] labels = {"populationSize","generation","training_time","genTime","startTime","mutRate","increment","bestScore"};
     void Start(){
         manager = FindObjectOfType<GameManager>().GetComponent<GameManager>();
@@ -35,11 +36,18 @@ public class rw_script : MonoBehaviour
         CreateTextSpecial(biases,"biases");
         preferences(manager.state,labels);
     }
+    public void RaceLoading(int[] layers){
+        ModelController modelController = FindObjectOfType<ModelController>();
+        //List<float[][]> weights = readTextFile(Application.dataPath + "/model/weights.txt",layers,false,modelController.opponents);
+        //List<float[][]> biases = readTextFile(Application.dataPath + "/model/biases.txt",layers,true,modelController.opponents);
+        //modelController.load_weights(weights,biases);
+        modelController.place();
+    }
     
     public void Load(int[] layers)
     {
-        List<float[][]> weights = readTextFile(Application.dataPath + "/model/weights.txt",layers,false);
-        List<float[][]> biases = readTextFile(Application.dataPath + "/model/biases.txt",layers,true);
+        List<float[][]> weights = readTextFile(Application.dataPath + "/model/weights.txt",layers,false,manager.populationSize);
+        List<float[][]> biases = readTextFile(Application.dataPath + "/model/biases.txt",layers,true,manager.populationSize);
         
         manager.graph.GetComponent<graph_script>().reset_values();
         manager.reload_weights(weights,biases);
@@ -59,13 +67,13 @@ public class rw_script : MonoBehaviour
         }
         return inp;
     }
-    List<float[][]> readTextFile(string file_path,int[] layers,bool biases)
+    List<float[][]> readTextFile(string file_path,int[] layers,bool biases,int popSize)
     {
-        float[][][] output = new float[manager.populationSize][][];
+        float[][][] output = new float[popSize][][];
         string inp=get_data(file_path);
         
         List<string> s = new List<string>(inp.Split(new string[] { "]" }, StringSplitOptions.RemoveEmptyEntries));
-        for(int ai = 0; ai < manager.populationSize;ai++){
+        for(int ai = 0; ai < popSize;ai++){
             output[ai] = new float[layers.Length-1][];
             for(int layer = 0; layer < layers.Length-1;layer++){
                 int length = !biases ? layers[layer] * layers[layer+1] : layers[layer+1];

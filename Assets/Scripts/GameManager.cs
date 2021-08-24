@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -51,7 +51,6 @@ public class GameManager : MonoBehaviour
         timer += Time.deltaTime;
         training_time += Time.deltaTime;
         if (isOver()) {
-            print("here");
             timer = 0;
             storeData();
             clear();
@@ -72,8 +71,6 @@ public class GameManager : MonoBehaviour
                 ai.GetComponent<AiController>().state = "init";
                 ai.name = "car" + x;
             }
-
-
         }
 
         else if (state == "respawn"){
@@ -106,9 +103,8 @@ public class GameManager : MonoBehaviour
         foreach (GameObject ai in ais) {
             Destroy(ai);
         }
+        // NOT CLEARING AFTER LOAD
     }
-
-
     // Give Goals their identities
     void initialiseCourse() {
         int x = 0;
@@ -146,7 +142,6 @@ public class GameManager : MonoBehaviour
         biases = biases_load;
         spawn("reload");
 
-        
     }
     public void setState(float[] values){
         populationSize = (int) values[0];
