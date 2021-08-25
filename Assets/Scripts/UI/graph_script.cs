@@ -15,9 +15,11 @@ public class graph_script : MonoBehaviour
     public void plot(int min,int max){
         clearPlot();
         //float split = g_width/values.Count;
-        float split = g_width/(max-min);
+        int maxApprox = Mathf.Min(max,values.Count);
+        float split = g_width/(maxApprox-min);
+        
         peak = Mathf.Max(peak,values[values.Count-1]);
-        for(int x = min; x < max;x++){
+        for(int x = min; x < maxApprox;x++){
             addPoint(values[x],split,x-min,peak);
         }
     }
@@ -32,6 +34,7 @@ public class graph_script : MonoBehaviour
     }
     void addPoint(float value,float split, float pos,float peak)
     {
+        
         // Instantiate node
         GameObject newPoint = Instantiate(point);
         // Place node and place in correct position in heirachy

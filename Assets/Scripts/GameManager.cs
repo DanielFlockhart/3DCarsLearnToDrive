@@ -118,6 +118,7 @@ public class GameManager : MonoBehaviour
 
     // Stores ai data before they get destroyed so it can be save for sorting and culling
     public void storeData() {
+
         GameObject[] ais = GameObject.FindGameObjectsWithTag("Ai");
         weights = new List<float[][]>();
         biases = new List<float[][]>();
@@ -131,6 +132,7 @@ public class GameManager : MonoBehaviour
             averageFitness+=ais[x].GetComponent<FitCheck>().fitness;
         }
         averageFitness = averageFitness / populationSize;
+        
         graph.GetComponent<graph_script>().addValue(averageFitness);
         graph.GetComponent<graph_script>().plot(0,generation);
     }

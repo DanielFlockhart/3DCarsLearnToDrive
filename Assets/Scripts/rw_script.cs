@@ -37,25 +37,25 @@ public class rw_script : MonoBehaviour
         preferences(manager.state,labels);
     }
     public void RaceLoading(int[] layers){
+        int size = 64;
         ModelController modelController = FindObjectOfType<ModelController>();
-        //List<float[][]> weights = readTextFile(Application.dataPath + "/model/weights.txt",layers,false,modelController.opponents);
-        //List<float[][]> biases = readTextFile(Application.dataPath + "/model/biases.txt",layers,true,modelController.opponents);
-        //modelController.load_weights(weights,biases);
-        modelController.place();
+        List<float[][]> weights = readTextFile(Application.dataPath + "/model/weights.txt",layers,false,size);
+        List<float[][]> biases = readTextFile(Application.dataPath + "/model/biases.txt",layers,true,size);
+        modelController.load_weights(weights,biases);
     }
     
     public void Load(int[] layers)
     {
-        List<float[][]> weights = readTextFile(Application.dataPath + "/model/weights.txt",layers,false,manager.populationSize);
-        List<float[][]> biases = readTextFile(Application.dataPath + "/model/biases.txt",layers,true,manager.populationSize);
-        
-        manager.graph.GetComponent<graph_script>().reset_values();
-        manager.reload_weights(weights,biases);
+        int size = manager.populationSize;
+        List<float[][]> weights = readTextFile(Application.dataPath + "/model/weights.txt",layers,false,size);
+        List<float[][]> biases = readTextFile(Application.dataPath + "/model/biases.txt",layers,true,size);
         string[] passing = get_data(Application.dataPath + "/model/preferences.txt").Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
         float[] converted = new float[passing.Length];
         for(int x =0;x<passing.Length;x++){
             converted[x] = float.Parse(passing[x]);
         }
+        manager.graph.GetComponent<graph_script>().reset_values();
+        manager.reload_weights(weights,biases);
         manager.setState(converted);
     }
     string get_data(string file_path){

@@ -10,7 +10,6 @@ public class Brain : MonoBehaviour
 
     // Prefabs
     private NeuralNetwork net;
-    [SerializeField] Utils utilities;
 
     // Network Variables
     public int[] layers;
@@ -22,7 +21,6 @@ public class Brain : MonoBehaviour
     // Assign Neural network before cars start to move to avoid errors
     void Awake()
     {
-        utilities = FindObjectOfType<GameManager>().GetComponent<Utils>();
         net = GetComponent<NeuralNetwork>();
     }
     // Initialise weights and biases

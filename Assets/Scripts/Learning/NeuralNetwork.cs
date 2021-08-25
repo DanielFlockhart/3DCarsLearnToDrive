@@ -13,7 +13,7 @@ public class NeuralNetwork : MonoBehaviour
     // Assign utilties gameobject
     private void Awake()
     {
-        utilities = FindObjectOfType<GameManager>().GetComponent<Utils>();
+        utilities = FindObjectOfType<Utils>();
     }
 
     // One full pass of a FFNN returning outputs in float[]

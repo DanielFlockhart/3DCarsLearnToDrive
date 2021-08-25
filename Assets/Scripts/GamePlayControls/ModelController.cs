@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ModelController : MonoBehaviour
 {
-    public int opponents = 10;
+    public int opponents = 64;
     public GameObject car;
     public List<float[][]> weights;
     public List<float[][]> biases;
@@ -14,13 +14,13 @@ public class ModelController : MonoBehaviour
             ai.GetComponent<AiController>().state = "new";
             ai.name = "car" + x;
             ai.GetComponent<Brain>().build();
-            //ai.GetComponent<Brain>().setWeights(weights[x]);
-            //ai.GetComponent<Brain>().setBiases(biases[x]);
+            ai.GetComponent<Brain>().setWeights(weights[x]);
+            ai.GetComponent<Brain>().setBiases(biases[x]);
         }
     }
     public void load_weights(List<float[][]> weights_load, List<float[][]> biases_load){
-        //weights = weights_load;
-        //biases = biases_load;
+        weights = weights_load;
+        biases = biases_load;
         place();
     }
 }
