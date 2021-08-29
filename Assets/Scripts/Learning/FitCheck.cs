@@ -11,12 +11,23 @@ public class FitCheck : MonoBehaviour
     {
         //fitness = currentGoal;
         // If this ais fitness is better then the current set change it
-        if (fitness > FindObjectOfType<GameManager>().bestScore) {
-            FindObjectOfType<GameManager>().bestScore = fitness;
+        if(gameObject.tag == "Ai"){
+            if (fitness > FindObjectOfType<GameManager>().bestScore) {
+                FindObjectOfType<GameManager>().bestScore = fitness;
+            }
+            if (currentGoal > FindObjectOfType<GameManager>().bestGoal) {
+                FindObjectOfType<GameManager>().bestGoal = currentGoal;
+            }
+            if (currentGoal+1 >= GameObject.FindGameObjectsWithTag("goal").Length){
+                currentGoal = -1;
+            }
+            
+        } else {
+            if (currentGoal+1 >= GameObject.FindGameObjectsWithTag("goal").Length){
+                FindObjectOfType<GameButtons>().results.SetActive(true);
+            }
         }
-        if (currentGoal > FindObjectOfType<GameManager>().bestGoal) {
-            FindObjectOfType<GameManager>().bestGoal = currentGoal;
-        }
+        
         
     }
 }

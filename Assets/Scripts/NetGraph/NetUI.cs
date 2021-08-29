@@ -24,7 +24,7 @@ public class NetUI : MonoBehaviour
     public int yScale = 20;
 
 
-    void Start()
+    void Awake()
     {
         // Will eventually be dictated by gamemanager script most likely
         layers = new int[5] { 4, 8,8,8,16 };

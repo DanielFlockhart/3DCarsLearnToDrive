@@ -11,6 +11,7 @@ TagManager:
   - GraphPoint
   - GridPiece
   - CityObjects
+  - Opponent
   layers:
   - Default
   - TransparentFX

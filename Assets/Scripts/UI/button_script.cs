@@ -52,7 +52,7 @@ public class button_script : MonoBehaviour
         SceneManager.LoadScene(scene.name);
     }
     public void play_ais(){
-        SceneManager.LoadScene("Play");
+        SceneManager.LoadScene("GamePlay");
     }
     public void load_setup(){
         SceneManager.LoadScene("Setup");
