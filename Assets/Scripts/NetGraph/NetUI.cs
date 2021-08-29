@@ -27,7 +27,7 @@ public class NetUI : MonoBehaviour
     void Awake()
     {
         // Will eventually be dictated by gamemanager script most likely
-        layers = new int[5] { 4, 8,8,8,16 };
+        layers = new int[4] {12, 16,16,3};
 
         // Build Nodes in Net
         build(layers);

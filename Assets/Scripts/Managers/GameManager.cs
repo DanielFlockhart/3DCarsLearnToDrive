@@ -8,6 +8,9 @@ public class GameManager : MonoBehaviour
     /* Main Game Manager,
      * Often is the spaghetti'est place */
 
+    // Hyperparameters
+
+    private int checkpointInterval = 25;
     //Prefabs
     public GameObject car;
     public GameObject graph;
@@ -55,6 +58,9 @@ public class GameManager : MonoBehaviour
             clear();
             spawn("respawn");
         
+        }
+        if(generation % checkpointInterval == 0){
+            FindObjectOfType<rw_script>().Save();
         }
     }
 
