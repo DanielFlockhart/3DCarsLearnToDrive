@@ -34,8 +34,19 @@ public class rw_script : MonoBehaviour
         manager.storeData();
         List<float[][]> weights = manager.weights;
         List<float[][]> biases = manager.biases;
+        preferences(manager.state,labels);
         CreateTextSpecial(weights,"weights");
         CreateTextSpecial(biases,"biases");
+
+    }
+
+    public void Save(string state,int checkpoint)
+    {
+        manager.storeData();
+        List<float[][]> weights = manager.weights;
+        List<float[][]> biases = manager.biases;
+        CreateTextSpecial(weights,"weights","Checkpoint",checkpoint);
+        CreateTextSpecial(biases,"biases","Checkpoint",checkpoint);
         preferences(manager.state,labels);
     }
     public void RaceLoading(int[] layers){
@@ -110,7 +121,7 @@ public class rw_script : MonoBehaviour
     }
     
 
-    void CreateTextSpecial(List<float[][]> inputList,string name)
+    void CreateTextSpecial(List<float[][]> inputList,string name,string state = "model",int checkpoint = -1)
     {
         string textToAppend = "[";
         for (int ai = 0; ai < inputList.Count;  ai++)
@@ -139,8 +150,15 @@ public class rw_script : MonoBehaviour
             textToAppend += "]";
         }
         textToAppend += "]";
-
-        string path = Application.dataPath + "/model/"+name+".txt";
+        string path = "";
+        if(state == "Checkpoint"){
+            path = Application.dataPath + "/checkpoints/checkpoint"+checkpoint+"/"+name+".txt";
+            print(path);
+        } else {
+            path = Application.dataPath + "/model/"+name+".txt";
+            print(path);
+        }
+        
         File.WriteAllText(path, textToAppend);
     }
     void preferences(float[] data,string[] labels){

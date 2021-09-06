@@ -11,6 +11,7 @@ public class button_script : MonoBehaviour
 
     public GameObject graph;
 
+    public GameObject saveChoice;
     int[] layers;
 
     public int pointer = 0;
@@ -24,6 +25,8 @@ public class button_script : MonoBehaviour
         uicontroller = FindObjectOfType<UIControls>();
     }
     public void save_weights(){
+        saveChoice.SetActive(true);
+        // Set it so it only does what that wants
         manager.GetComponent<rw_script>().Save();
     }
     

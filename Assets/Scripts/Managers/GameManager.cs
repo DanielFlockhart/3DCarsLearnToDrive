@@ -59,9 +59,7 @@ public class GameManager : MonoBehaviour
             spawn("respawn");
         
         }
-        if(generation % checkpointInterval == 0){
-            FindObjectOfType<rw_script>().Save();
-        }
+        
     }
 
 
@@ -69,6 +67,9 @@ public class GameManager : MonoBehaviour
     void spawn(string state) {
         genTime = startTime + (bestGoal * increment);
         generation++;
+        if(generation % checkpointInterval == 0){
+            FindObjectOfType<rw_script>().Save("Checkpoint",generation);
+        }
         // If first spawn stage
         if (state == "init"){
             for (int x = 0; x < populationSize; x++) {
