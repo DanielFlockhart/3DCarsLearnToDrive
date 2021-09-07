@@ -4,13 +4,10 @@ using UnityEngine;
 
 public class PlaceScript : MonoBehaviour
 {
+    // Gameplay script to calculate places 
     int pop;
     public int[] positions;
     public int playerPos = 0;
-    // Start is called before the first frame update
-
-
-    // Update is called once per frame
     void Update()
     {
         pop = GameObject.FindGameObjectsWithTag("Opponent").Length;

@@ -5,6 +5,7 @@ using System.Linq;
 
 public class Genetics : MonoBehaviour
 {
+    // Distribution of generational passovers
     float elite = 7/16f;
     float mut_crossover = 9/16f;
 
@@ -14,8 +15,7 @@ public class Genetics : MonoBehaviour
 
     /*Spawn Function:
      Spawn some elites
-     Some with Random
-     Some with Random and Crossover*/
+     Some with Mutation and Crossover */
 
     // Genetic Algorithm + Natural Selection Control
     // Includes crossover, mutation and sorting of ais
@@ -25,6 +25,8 @@ public class Genetics : MonoBehaviour
     
     public List<List<float[][]>> newGeneration(List<float[][]> weights,List<float[][]> biases,int population,float mut_rate){
         int pointer = 0;
+        // Iterate through culled weights
+        // List<>'s in unity pass by reference and I hate it
         for(int x = 0; x < cull_weights.Length;x++){
             
             for(int z = 0; z < cull_weights[x]*population;z++){
@@ -43,7 +45,7 @@ public class Genetics : MonoBehaviour
                     pointer +=1;
                 }
 
-                /* DONT THINK THIS IS EFFICIENT
+                /* I have come to the conclusion asexual reproduction does not make logical sense in this use case and is less efficient than other methods
                 if(x == 2){
                     //ASEXUAL REPRODUCTION WITH MUTATION
                     weights[pointer] = mutate(mut_rate,weights[getParent(population)]);
@@ -67,9 +69,10 @@ public class Genetics : MonoBehaviour
         float[][] p1_weights = weights[parent1];
         float[][] p2_weights = weights[parent2];
 
+        // iterate through weights and randomly choose which genes from which parents to keep
         for (int layer = 0; layer < weights[0].Length; layer++) {
             for (int weight = 0; weight < weights[0][layer].Length; weight++){
-                p1_weights[layer][weight] = Random.Range(0,1) > 0.5 ? p1_weights[layer][weight] : p1_weights[layer][weight];
+                p1_weights[layer][weight] = Random.Range(0,1) > 0.5 ? p2_weights[layer][weight] : p1_weights[layer][weight];
             }
         }
         p1_weights = mutate(mut_rate,p1_weights);

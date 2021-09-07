@@ -4,6 +4,15 @@ using UnityEngine;
 
 public class CityBuilder : MonoBehaviour
 {
+
+    // Decided to cut City From Scope of Project
+    //
+
+
+
+
+
+    /*
     public bool findDistance = true;
     public int rows = 10;
     public int columns = 10;
@@ -62,4 +71,7 @@ public class CityBuilder : MonoBehaviour
         }
         return road;
     }
+
+    */
+
 }
