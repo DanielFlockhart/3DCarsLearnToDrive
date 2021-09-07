@@ -10,7 +10,7 @@ public class GoalScript : MonoBehaviour
     float points;
     private void OnTriggerEnter(Collider collision)
     {
-        // If object collided is ai and its not a previous goal
+        // If gameobject is interacting with goals for training or gameplay it decides the scoring method
         if (collision.gameObject.tag == "Ai"){
             points = 3 +(Ident/FindObjectOfType<GameManager>().timer*10);
         }
@@ -19,6 +19,7 @@ public class GoalScript : MonoBehaviour
         } else {
             points = -1;
         }
+        // If object collided is ai and its not a previous goal
         if (points > 0 && collision.gameObject.GetComponent<FitCheck>().currentGoal == Ident-1)
         {
             //Increase ai fitness by one

@@ -7,12 +7,19 @@ public class CarController : MonoBehaviour
 {
     // Main Physics controller of car
 
+    //Booleans
     public bool isPlayer = false;
+
+    // Input keys
     private const string HORIZONTAL = "Horizontal";
     private const string VERTICAL = "Vertical";
 
+    //Player inputs
     private float horizontalInput;
     private float verticalInput;
+
+
+    // Current State
     public float currentSteeringAngle;
     public float currentBreakForce;
     private bool isBreaking;
@@ -21,6 +28,7 @@ public class CarController : MonoBehaviour
     [SerializeField] private float breakForce;
     [SerializeField] private float maxSteerAngle;
 
+    // Transforms and Objects
     [SerializeField] private WheelCollider frontLeftWheelCollider, frontRightWheelCollider, backLeftWheelCollider, backRightWheelCollider;
 
     [SerializeField] private Transform frontLeftWheelTransform, frontRightWheelTransform, backLeftWheelTransform, backRightWheelTransform;
@@ -30,8 +38,12 @@ public class CarController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // If car object is controlled by a player
         if(isPlayer){
+            // Get User inputs and dave to variable
             GetUserInput();
+
+            // Use user inputs and control car
             HandleCarMotor();
             HandleCarSteering();
             UpdateCarWheels();
