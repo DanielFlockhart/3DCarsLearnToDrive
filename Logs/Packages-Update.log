@@ -67,3 +67,13 @@ The following packages were updated:
   com.unity.collab-proxy from version 1.5.7 to 1.7.1
   com.unity.test-framework from version 1.1.26 to 1.1.27
   com.unity.timeline from version 1.5.5 to 1.5.6
+
+=== Tue Sep  7 10:49:58 2021
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were updated:
+  com.unity.collab-proxy from version 1.7.1 to 1.9.0
+  com.unity.ide.visualstudio from version 2.0.9 to 2.0.11
+  com.unity.test-framework from version 1.1.27 to 1.1.29
