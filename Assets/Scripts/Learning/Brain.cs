@@ -45,7 +45,14 @@ public class Brain : MonoBehaviour
         Array.Copy(b,biases, b.Length);
     }
 
-    // Initialising Biases - Glorot Weight initialising?
+
+
+    /*
+    Initialisation process of brain
+    Could implement other weight initialisation techniques like glorot
+    
+    Initialising Biases
+    */
     private float[][] initBiases(int[] layers)
     {
         float[][] biasList = new float[layers.Length-1][];
@@ -62,7 +69,7 @@ public class Brain : MonoBehaviour
         return biasList;
     }
 
-    // Initialising Weight - Glorot Weight initialising?
+    // Initialising Weight
     private float[][] initWeights(int[] layers)
     {
 

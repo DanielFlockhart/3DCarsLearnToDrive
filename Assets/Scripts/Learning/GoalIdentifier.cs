@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class GoalIdentifier : MonoBehaviour
 {
-    // Start is called before the first frame update
+    // Script for labelling goals for fitness
     void Start()
     {
         initialiseCourse();
     }
+    // Find all goal objects and iterate through them adding an identity
     void initialiseCourse() {
         int x = 0;
         

@@ -61,29 +61,32 @@ public class Genetics : MonoBehaviour
     }
     public float[][] crossover(int populationSize,List<float[][]> weights,float mut_rate)
     {
-        //Will most likely use uniform random crossover not cutoff
-        //Comment this section
-
-        int parent1 = (int) Mathf.Round(getParent(populationSize));
-        int parent2 = (int) Mathf.Round(getParent(populationSize));
+        // ONLY SELECTING THE FIRST AND LAST PARENT
+        int parent1 = Mathf.Min(populationSize - (int) Mathf.Round(getParent(populationSize)),populationSize-1);
+        int parent2 = Mathf.Min(populationSize - (int) Mathf.Round(getParent(populationSize)),populationSize-1);
         float[][] p1_weights = weights[parent1];
         float[][] p2_weights = weights[parent2];
 
-        // iterate through weights and randomly choose which genes from which parents to keep
+        /* iterate through weights and randomly choose which genes from which parents to keep at 50% split
+        For a while i had it as only choosing from one parent and it was working fine. Then I fixed this and It broke performance, causing non determinism
+        */
+
         for (int layer = 0; layer < weights[0].Length; layer++) {
             for (int weight = 0; weight < weights[0][layer].Length; weight++){
-                p1_weights[layer][weight] = Random.Range(0,1) > 0.5 ? p2_weights[layer][weight] : p1_weights[layer][weight];
+                p1_weights[layer][weight] = Random.Range(0.0f,1.0f) > 0.5 ? p2_weights[layer][weight] : p1_weights[layer][weight];
             }
         }
+        // Mutate resulting weights 
         p1_weights = mutate(mut_rate,p1_weights);
         return p1_weights;
     }
-    public List<List<float[][]>> sortfits(List<float[][]> weights,List<float[][]> biases,List<float> fitness) {
-        // Use LINQ to sort by the fitness value (Or use lambda)
-        // Data in form (F,W,B)
-        //ata = ;
 
-        // MIGHT BE AN ISSUE HERE WITH PASSING BY REFERENCE
+    /* Sort weights
+    In code refactoring possibly use different sorting algorithm
+    Have sorting algorithm in utils so I can just pass into there
+    */
+    public List<List<float[][]>> sortfits(List<float[][]> weights,List<float[][]> biases,List<float> fitness) {
+
         int swaps = 1;
         while (swaps != 0) // Bubble sort
         {
@@ -126,16 +129,16 @@ public class Genetics : MonoBehaviour
         }
         return newVals;
     }
-    public float samplePopulation(float mean = 0.8f,float sd=0.2f){
+    public float samplePopulation(float mean = 0.9f,float sd=0.2f){
         float x1 = 1 - Random.Range(0.0f,1.0f);
         float x2 = 1 - Random.Range(0.0f,1.0f);
         float y1 = Mathf.Sqrt((float)-2.0 * Mathf.Log(x1)) * Mathf.Cos((float)2.0 * Mathf.PI * x2);
         float value =  y1 * sd + mean;
-
         return  value < 0 ? 0 : Mathf.Min(1,value);
         
     }
-    public int getParent(int populationSize){
-        return (int) samplePopulation() * (populationSize - 1);
+    public float getParent(int populationSize){
+        // FIXED BUG HERE WAS CONVERTING TO INT
+        return (float) samplePopulation() * populationSize;
     }
 }

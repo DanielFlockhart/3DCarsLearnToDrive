@@ -142,15 +142,17 @@ public class AiController : MonoBehaviour
     */
 
     private float[] getCollisions(Vector3[] rays) {
+        // Instantiates list of floats for ray distances
         float[] distanceList = new float[rays.Length];
         for(int ray = 0; ray < rays.Length;ray++) {
             // Inefficient as it has to check all collisions
             RaycastHit[] hitRay = Physics.RaycastAll(transform.position +new Vector3(0f, 1f, 0f), rays[ray] * 1000);
-            //if(gameObject.name == "car20"){
-            //    Debug.DrawRay(transform.position,rays[ray],Color.green,1000);
-            //}
+            
+            //Debug.DrawRay(transform.position,rays[ray],Color.green,1000);
+
             if (hitRay.Length != 0)
             {
+                // Loop through hit items and get distance from car to use as input
                 foreach (RaycastHit rayed in hitRay)
                 {
                     if (rayed.collider.tag != "Ai")
