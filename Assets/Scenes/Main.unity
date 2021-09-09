@@ -3904,7 +3904,6 @@ GameObject:
   - component: {fileID: 1399677787}
   - component: {fileID: 1399677788}
   - component: {fileID: 1399677789}
-  - component: {fileID: 1399677790}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -3938,7 +3937,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   car: {fileID: 771295119088812944, guid: c580d8245c471784a9f9ec20f1957a4a, type: 3}
   graph: {fileID: 2018500808}
-  populationSize: 128
+  populationSize: 16
   generation: 0
   training_time: 0
   timer: 0
@@ -4010,28 +4009,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   manager: {fileID: 0}
---- !u!114 &1399677790
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1399677783}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a44d0cc5ed643a743aa43ac88e5a8c42, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  polarity: {r: 0, g: 0, b: 0, a: 0}
-  utilities: {fileID: 1399677784}
-  NetGraph: {fileID: 0}
-  Node: {fileID: 1255153317420044257, guid: 1b2c5d174f93cdc46a3c8e1e98ab461c, type: 3}
-  lineRenderer: {fileID: 514245673731386068, guid: be45b6cf0810bda46b389f88bdcc85ea,
-    type: 3}
-  rgb: []
-  layers: 
-  xScale: 80
-  yScale: 10
 --- !u!1 &1450848550
 GameObject:
   m_ObjectHideFlags: 0
