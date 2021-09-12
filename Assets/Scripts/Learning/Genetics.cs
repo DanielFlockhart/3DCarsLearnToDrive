@@ -5,13 +5,11 @@ using System.Linq;
 
 public class Genetics : MonoBehaviour
 {
-    // Distribution of generational passovers
+    // Distribution of generational statistics
     float elite = 7/16f;
     float mut_crossover = 9/16f;
 
     float[] cull_weights;
-    
-    
 
     /*Spawn Function:
      Spawn some elites
@@ -31,7 +29,7 @@ public class Genetics : MonoBehaviour
             
             for(int z = 0; z < cull_weights[x]*population;z++){
                 if(x==0){
-                    // NO POINT HAVING THIS LINE BUT WHATEVER
+                    // Temporary
                     // ELITE
                     weights[pointer] = weights[pointer];
                     biases[pointer] = biases[pointer];
@@ -39,22 +37,11 @@ public class Genetics : MonoBehaviour
                 }
 
                 if(x == 1){
-                    //CROSSOVER BETWEEN TWO PARENTS
+                    //CROSSOVER + Mutation
                     weights[pointer] = crossover(population,weights,mut_rate);
                     biases[pointer] = crossover(population,biases,mut_rate);
                     pointer +=1;
                 }
-
-                /* I have come to the conclusion asexual reproduction does not make logical sense in this use case and is less efficient than other methods
-                if(x == 2){
-                    //ASEXUAL REPRODUCTION WITH MUTATION
-                    weights[pointer] = mutate(mut_rate,weights[getParent(population)]);
-                    biases[pointer] = mutate(mut_rate,weights[getParent(population)]);
-                    pointer +=1;
-                }
-                */
-                
-                
             }
         }
         return new List<List<float[][]>>{weights, biases};
@@ -85,6 +72,8 @@ public class Genetics : MonoBehaviour
     In code refactoring possibly use different sorting algorithm
     Have sorting algorithm in utils so I can just pass into there
     */
+
+    // Temporary Bubble sort
     public List<List<float[][]>> sortfits(List<float[][]> weights,List<float[][]> biases,List<float> fitness) {
 
         int swaps = 1;

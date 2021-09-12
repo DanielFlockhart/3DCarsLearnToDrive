@@ -29,8 +29,6 @@ public class Brain : MonoBehaviour
         biases = initBiases(layers);
         
     }
-    
-
     // Get outputs from FFNN after inputs
     public float[] getOutputs(float[] inputs)
     {
@@ -45,13 +43,11 @@ public class Brain : MonoBehaviour
         Array.Copy(b,biases, b.Length);
     }
 
-
-
     /*
     Initialisation process of brain
     Could implement other weight initialisation techniques like glorot
-    
-    Initialising Biases
+    Similar Code used for initialising weights and biases - In refactoring I will combine
+    Initialise Biases
     */
     private float[][] initBiases(int[] layers)
     {
@@ -62,7 +58,6 @@ public class Brain : MonoBehaviour
             biasList[layer] = new float[layerLength];
             for (int node = 0; node < layerLength; node++)
             {
-                // Should access random from utils but didnt like it
                 biasList[layer][node] = UnityEngine.Random.Range(-1.0f, 1.0f);
             }
         }
@@ -72,7 +67,6 @@ public class Brain : MonoBehaviour
     // Initialising Weight
     private float[][] initWeights(int[] layers)
     {
-
         float[][] weightList = new float[layers.Length-1][];
         for (int layer = 0; layer < weightList.Length; layer++)
         {

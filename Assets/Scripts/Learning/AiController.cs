@@ -14,50 +14,35 @@ public class AiController : MonoBehaviour
     // Prefabs
     private CarController carControls;
     private Brain brain;
-
     // Other
     public string state;
     public bool isAlive = true;
-
-
     //Input Variables
     private Vector3[] rays;
     private float[] distances;
-    
-
     // Output states
     [SerializeField] float forwardVal;
     [SerializeField] float leftVal;
     [SerializeField] bool breakVal;
-
-
     // Neural Network Variables
     [SerializeField] float[] input;
     [SerializeField] float[] output;
-
     public int[] layers;
-
     [SerializeField] int inputs = 12;
     [SerializeField] int outputs = 3;
-
     
     // Awake is used instead of start() as brain needs to be assigned before cars start moving
-    void Awake()
-    {
+    void Awake(){
         // Calculate the amount of hidden nodes required (Depending on inputs and outputs total)
         int hiddenNodes = Mathf.RoundToInt(inputs * (2 / 3)) + outputs;
         layers = new int[] { inputs, 16, 16, outputs};
         brain = GetComponent<Brain>();
         brain.layers = layers;
         carControls = GetComponent<CarController>();
-        
-        
     }
-    private void Start()
-    {
+    private void Start(){
         // If in initial spawn stages build brain with new weights etc
-        if (state == "init")
-        {
+        if (state == "init"){
             brain.build();
         }
     }
@@ -67,9 +52,11 @@ public class AiController : MonoBehaviour
     {
 
         // Get inputs
-        
         rays = getRays();
-        //drawRays(rays);
+
+        // Uncomment for displaying debugging rays.
+        drawRays(rays);
+
         distances = getCollisions(rays);
 
         float breakforce = carControls.currentBreakForce / 3000;
@@ -80,8 +67,7 @@ public class AiController : MonoBehaviour
         forwardVal = output[0] > 0 ? 1 : -1;
         leftVal = output[1] > 0 ? 1 : -1;
         breakVal = output[2] > 0 ? true : false;
-        if (isAlive)
-        {
+        if (isAlive){
             operateCar(forwardVal, leftVal, breakVal);
         }
     }
@@ -95,35 +81,24 @@ public class AiController : MonoBehaviour
     private Vector3[] getRays() {
         //Forward
         Vector3 dir1 = transform.TransformDirection(Vector3.forward);
-
         //Backwards
         Vector3 dir2 = -dir1;
-
         //Right
         Vector3 dir3 = transform.TransformDirection(Vector2.right); 
-
         //Left
         Vector3 dir4 = -dir3;
-
         //Forward Right
         Vector3 dir5 = dir1 + dir3;
-
         //Forward Left
         Vector3 dir6 = dir1 + dir4;
-
         //Forward Right Right
         Vector3 dir7 = dir5 + dir3;
-
         //Forward Left Left
         Vector3 dir8 = dir6 + dir4;
-
         //Forward Rightish
         Vector3 dir9 = dir7 + dir6;
-
         //Forward Leftish
         Vector3 dir10 = dir8 + dir5;
-
-       
         return new Vector3[] { dir1, dir2, dir3, dir4, dir5, dir6, dir7, dir8, dir9, dir10 };
 
     }
