@@ -6,8 +6,6 @@ public class NeuralNetwork : MonoBehaviour
 {
     /*Main Neural Network template for feed forward neural network.
     May be subject to change to NEAT if I have time*/
-    
-    // it is currently 00:40 i am tipsy and i am starting to go insane 
     private Utils utilities;
 
     // Assign utilties gameobject
@@ -23,8 +21,6 @@ public class NeuralNetwork : MonoBehaviour
         }
         return inputs;
     }
-
-
     // One dot product multiplication between dense layers
     public float[] layerDense(float[] inputs, float[] weights, float[] biases, int outCount) {
         float[] outputs = new float[outCount];
@@ -37,7 +33,10 @@ public class NeuralNetwork : MonoBehaviour
             }
         }
         for (int outs = 0; outs < outCount; outs++) {
-            // Activation function to create non-linearity
+            /* Activation function to create non-linearity
+            Will eventually test out an experiment with different activation functions to find optimal
+            Including sigmoid,tanh,relu and leaky relu
+            */
             outputs[outs] = utilities.tanh(outputs[outs] + biases[outs]);
         }
         return outputs;

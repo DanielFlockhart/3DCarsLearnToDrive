@@ -56,8 +56,8 @@ public class Genetics : MonoBehaviour
 
         /* iterate through weights and randomly choose which genes from which parents to keep at 50% split
         For a while i had it as only choosing from one parent and it was working fine. Then I fixed this and It broke performance, causing non determinism
+        Debugging will persist until end of project.
         */
-
         for (int layer = 0; layer < weights[0].Length; layer++) {
             for (int weight = 0; weight < weights[0][layer].Length; weight++){
                 p1_weights[layer][weight] = Random.Range(0.0f,1.0f) > 0.5 ? p2_weights[layer][weight] : p1_weights[layer][weight];
@@ -71,6 +71,8 @@ public class Genetics : MonoBehaviour
     /* Sort weights
     In code refactoring possibly use different sorting algorithm
     Have sorting algorithm in utils so I can just pass into there
+
+    Bubble sort is a good solution as the length of inputs are fixed/constant and are small in volume
     */
 
     // Temporary Bubble sort

@@ -34,8 +34,8 @@ public class AiController : MonoBehaviour
     // Awake is used instead of start() as brain needs to be assigned before cars start moving
     void Awake(){
         // Calculate the amount of hidden nodes required (Depending on inputs and outputs total)
-        int hiddenNodes = Mathf.RoundToInt(inputs * (2 / 3)) + outputs;
-        layers = new int[] { inputs, 16, 16, outputs};
+        int hiddenNodes = Mathf.RoundToInt(inputs * (4 / 3)) + outputs;
+        layers = new int[] { inputs, hiddenNodes, hiddenNodes, outputs};
         brain = GetComponent<Brain>();
         brain.layers = layers;
         carControls = GetComponent<CarController>();
@@ -55,7 +55,7 @@ public class AiController : MonoBehaviour
         rays = getRays();
 
         // Uncomment for displaying debugging rays.
-        drawRays(rays);
+        //drawRays(rays);
 
         distances = getCollisions(rays);
 
