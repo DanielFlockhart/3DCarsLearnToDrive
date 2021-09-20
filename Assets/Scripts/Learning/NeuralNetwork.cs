@@ -21,7 +21,7 @@ public class NeuralNetwork : MonoBehaviour
         }
         return inputs;
     }
-    // One dot product multiplication between dense layers
+    // One matrix multiplication between dense layers
     public float[] layerDense(float[] inputs, float[] weights, float[] biases, int outCount) {
         float[] outputs = new float[outCount];
         for (int node = 0; node < inputs.Length; node++) {
