@@ -19,7 +19,6 @@ mutRate = 0.02f;
 increment = 0.5f;
 bestScore = -100;
 */
-
 public class rw_script : MonoBehaviour
 {
     public GameManager manager;
