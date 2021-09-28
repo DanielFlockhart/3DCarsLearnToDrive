@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
 
     // Hyperparameters
 
-    private int checkpointInterval = 25;
+    public int checkpointInterval = 200;
     //Prefabs
     public GameObject car;
     public GameObject graph;
@@ -69,12 +69,14 @@ public class GameManager : MonoBehaviour
         generation++;
         if(generation % checkpointInterval == 0){
             //FindObjectOfType<rw_script>().Save("Checkpoint",generation);
-            print("nothing");
+            gameObject.GetComponent<overfitting>().switchMap();
         }
         // If first spawn stage
         if (state == "init"){
             for (int x = 0; x < populationSize; x++) {
                 GameObject ai = Instantiate(car);
+                ai.transform.position = GameObject.FindObjectOfType<trackScript>().startPos;
+                ai.transform.rotation = GameObject.FindObjectOfType<trackScript>().startRot;
                 ai.GetComponent<AiController>().state = "init";
                 ai.name = "car" + x;
             }
@@ -156,6 +158,8 @@ public class GameManager : MonoBehaviour
     public void place(){
         for (int x = 0; x < populationSize; x++) {
             GameObject ai = Instantiate(car);
+            ai.transform.position = GameObject.FindObjectOfType<trackScript>().startPos;
+            ai.transform.rotation = GameObject.FindObjectOfType<trackScript>().startRot;
             ai.GetComponent<AiController>().state = "new";
             ai.name = "car" + x;
             ai.GetComponent<Brain>().build();

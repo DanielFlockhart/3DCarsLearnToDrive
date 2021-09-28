@@ -16,7 +16,7 @@ public class CarController : MonoBehaviour
 
     //Player inputs
     private float horizontalInput;
-    private float verticalInput;
+    public float verticalInput;
 
 
     // Current State
