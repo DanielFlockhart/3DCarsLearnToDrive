@@ -10,8 +10,7 @@ public class trackScript : MonoBehaviour
     void Start()
     {
         GameObject[] goals = GameObject.FindGameObjectsWithTag("goal");
-        GameObject startgoal = GameObject.FindGameObjectWithTag("goal");
-        GameObject secondgoal = GameObject.FindGameObjectWithTag("goal");
+        GameObject startgoal,secondgoal = new GameObject();
         foreach(GameObject goal in goals){
             if(goal.GetComponent<GoalScript>().Ident == 0){
                 startgoal = goal;
@@ -23,7 +22,6 @@ public class trackScript : MonoBehaviour
         } // Rotating Y aswell
         
         startRot = new Quaternion(0,secondgoal.transform.rotation.y,0,1);
-        print(startRot);
 
     }
 

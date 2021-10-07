@@ -4426,7 +4426,7 @@ MonoBehaviour:
   checkpointInterval: 200
   car: {fileID: 771295119088812944, guid: c580d8245c471784a9f9ec20f1957a4a, type: 3}
   graph: {fileID: 2018500808}
-  populationSize: 16
+  populationSize: 80
   generation: 0
   training_time: 0
   timer: 0

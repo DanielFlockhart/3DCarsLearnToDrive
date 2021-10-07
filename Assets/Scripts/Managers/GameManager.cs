@@ -37,6 +37,13 @@ public class GameManager : MonoBehaviour
     public int bestGoal = 0;
     
     public float[] state;
+    void Awake(){
+
+        populationSize = setup.population;
+        Time.timeScale = setup.timeScale;
+        checkpointInterval = setup.checkInterval;
+    }
+
     void Start()
     {
         // Spawn first ais and assign goals their identities
