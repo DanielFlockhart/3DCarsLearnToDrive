@@ -9,8 +9,10 @@ public class trackScript : MonoBehaviour
 
     void Start()
     {
+        // Find all the goals in the scene
         GameObject[] goals = GameObject.FindGameObjectsWithTag("goal");
         GameObject startgoal,secondgoal = new GameObject();
+        // Enumerate goals
         foreach(GameObject goal in goals){
             if(goal.GetComponent<GoalScript>().Ident == 0){
                 startgoal = goal;
