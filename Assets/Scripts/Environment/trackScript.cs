@@ -23,7 +23,8 @@ public class trackScript : MonoBehaviour
             }
         } // Rotating Y aswell
         
-        startRot = new Quaternion(0,secondgoal.transform.rotation.y,0,1);
+        //startRot = new Quaternion(0,secondgoal.transform.rotation.y,0,1);
+        startRot = new Quaternion(0,1,0,1);
 
     }
 

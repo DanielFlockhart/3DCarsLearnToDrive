@@ -74,7 +74,7 @@ public class GameManager : MonoBehaviour
     void spawn(string state) {
         genTime = startTime + (bestGoal * increment);
         generation++;
-        if(generation % checkpointInterval == 0){
+        if(generation % checkpointInterval == 0 && generation > 0){
             //FindObjectOfType<rw_script>().Save("Checkpoint",generation);
             gameObject.GetComponent<overfitting>().switchMap();
         }
@@ -119,7 +119,6 @@ public class GameManager : MonoBehaviour
         foreach (GameObject ai in ais) {
             Destroy(ai);
         }
-        // NOT CLEARING AFTER LOAD
     }
 
     // Stores ai data before they get destroyed so it can be save for sorting and culling

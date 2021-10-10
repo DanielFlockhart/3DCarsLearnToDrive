@@ -27,7 +27,7 @@ public class setup : MonoBehaviour
         try {
             return int.Parse(input);
         } catch {
-            return 0;
+            return 1;
         }
     }
 }
