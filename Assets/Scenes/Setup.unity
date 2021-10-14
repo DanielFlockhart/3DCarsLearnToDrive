@@ -1044,10 +1044,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4188bce90ca03464789f6d456b1a795c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hLayers: {fileID: 0}
-  hNodes: {fileID: 0}
-  tScale: {fileID: 0}
-  interObj: {fileID: 0}
+  hLayers: {fileID: 1839245500}
+  hNodes: {fileID: 1262500706}
+  tScale: {fileID: 554347082}
+  interObj: {fileID: 1016847364}
 --- !u!4 &918842934
 Transform:
   m_ObjectHideFlags: 0
