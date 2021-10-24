@@ -4,8 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class button_script : MonoBehaviour
-{
+public class button_script : MonoBehaviour{  
     public UIControls uicontroller;
     private float timeScaleStored = 0;
     private GameManager manager;
@@ -13,6 +12,7 @@ public class button_script : MonoBehaviour
     public GameObject graph;
 
     public GameObject saveChoice;
+
     int[] layers;
 
     public int pointer = 0;
@@ -85,7 +85,5 @@ public class button_script : MonoBehaviour
             graph.GetComponent<graph_script>().plot(pointer,pointer+50);
             pointer+=50;
         }
-        
-
     }
 }

@@ -14,6 +14,10 @@ public class GameUIControls : MonoBehaviour
         setPosition(results);
     }
     void setPosition(Text res){
-        res.text = "Place : " + FindObjectOfType<PlaceScript>().GetComponent<PlaceScript>().playerPos;
+        int place =  FindObjectOfType<PlaceScript>().GetComponent<PlaceScript>().playerPos;
+        string post = "th";
+        if(place == 2) post = "nd";
+        else if(place == 3) post = "rd";
+        res.text = place + post;
     }
 }
