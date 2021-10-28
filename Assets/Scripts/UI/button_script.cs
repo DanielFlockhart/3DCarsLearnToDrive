@@ -5,6 +5,9 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class button_script : MonoBehaviour{  
+
+    public Animator animator;
+    public Animation animation;
     public UIControls uicontroller;
     private float timeScaleStored = 0;
     private GameManager manager;
@@ -63,7 +66,13 @@ public class button_script : MonoBehaviour{
     }
 
     public void load_training(){
-        SceneManager.LoadScene("Main");
+        StartCoroutine(load_scene(4,"Main"));
+    }
+
+    IEnumerator load_scene(float time,string scene){
+        animation.Play("Curtains 1");
+        yield return new WaitForSeconds(time);
+        SceneManager.LoadScene(scene);
     }
     /* City Cut From From Project
     public void load_city(){

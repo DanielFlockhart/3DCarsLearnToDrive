@@ -838,6 +838,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7346fc7283e96904e829bc66826c4bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
   uicontroller: {fileID: 0}
   graph: {fileID: 0}
   saveChoice: {fileID: 0}
