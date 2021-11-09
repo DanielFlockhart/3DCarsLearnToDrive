@@ -13,5 +13,4 @@ Milestones:
 
 Current To Do's:
 - Get progress graph working
-- Genetic Algorithm Coded
-- Android app and firebase setup
+- Add glorot weight initialization
