@@ -165,6 +165,7 @@ public class GameManager : MonoBehaviour
     }
     public void place(){
         for (int x = 0; x < populationSize; x++) {
+
             GameObject ai = Instantiate(car);
             ai.GetComponent<Brain>().build();
             ai.GetComponent<Brain>().setWeights(weights[x]);
@@ -173,7 +174,6 @@ public class GameManager : MonoBehaviour
             ai.transform.rotation = GameObject.FindObjectOfType<trackScript>().startRot;
             ai.GetComponent<AiController>().state = "new";
             ai.name = "car" + x;
-            
         }
         
     }

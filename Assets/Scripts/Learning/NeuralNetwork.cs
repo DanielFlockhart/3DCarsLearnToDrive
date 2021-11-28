@@ -16,14 +16,19 @@ public class NeuralNetwork : MonoBehaviour
 
     // One full pass of a FFNN returning outputs in float[]
     public float[] forwardPass(int[] layers, float[] inputs, float[][] weights, float[][] biases) {
+        //print(layers[0] + " " + layers[1] + " " + layers[2] + layers[3] + layers[4] + layers[5]);
+        //print(weights[0].Length + " " + weights[1].Length + " " + weights[2].Length + " " + weights[3].Length + weights[4].Length + weights[5].Length);
+        
         for (int layer = 0; layer < layers.Length-1; layer++) {
-            //print(layers[layer + 1]);
+            // IS IT JUST CALLING THE INPUTS ON EACH LAYERRR???
             inputs = layerDense(inputs, weights[layer], biases[layer], layers[layer + 1]);
         }
         return inputs;
     }
     // One matrix multiplication between dense layers
     public float[] layerDense(float[] inputs, float[] weights, float[] biases, int outCount) {
+        //print(inputs.Length + " " + weights.Length + " " + biases.Length + " " + outCount);
+        print("FUCK"  + inputs.Length+" " + weights.Length);
         float[] outputs = new float[outCount];
         for (int node = 0; node < inputs.Length; node++) {
             int wPerNode = (weights.Length / inputs.Length);
