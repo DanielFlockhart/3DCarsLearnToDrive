@@ -29,6 +29,7 @@ public class NeuralNetwork : MonoBehaviour
     public float[] layerDense(float[] inputs, float[] weights, float[] biases, int outCount) {
         //print(inputs.Length + " " + weights.Length + " " + biases.Length + " " + outCount);
         print("FUCK"  + inputs.Length+" " + weights.Length);
+        // ERROR HERE
         float[] outputs = new float[outCount];
         for (int node = 0; node < inputs.Length; node++) {
             int wPerNode = (weights.Length / inputs.Length);
