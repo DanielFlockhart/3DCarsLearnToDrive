@@ -50,16 +50,24 @@ public class rw_script : MonoBehaviour
         preferences(manager.state,labels);
     }
     public void RaceLoading(int[] layers){
-        int size = 64;
+        // Convert a string to int
+        int size = int.Parse(getPreference(0).ToString());
         ModelController modelController = FindObjectOfType<ModelController>();
         List<float[][]> weights = readTextFile(Application.dataPath + "/model/weights.txt",layers,false,size);
         List<float[][]> biases = readTextFile(Application.dataPath + "/model/biases.txt",layers,true,size);
         modelController.load_weights(weights,biases);
     }
     
-    public void Load(int[] layers)
+    public void Load()
     {
-        int size = manager.populationSize;
+        string[] newlayers= getPreference(8).ToString().Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+        int[] layers = new int[newlayers.Length];
+        for(int x=0; x<newlayers.Length; x++){
+            layers[x] = int.Parse(newlayers[x]);
+        }
+        List<string> raw = new List<string>(getPreference(0).Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries));
+        int size = int.Parse(raw[0].ToString());
+
         List<float[][]> weights = readTextFile(Application.dataPath + "/model/weights.txt",layers,false,size);
         List<float[][]> biases = readTextFile(Application.dataPath + "/model/biases.txt",layers,true,size);
         string[] passing = get_data(Application.dataPath + "/model/preferences.txt").Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
@@ -68,8 +76,9 @@ public class rw_script : MonoBehaviour
             converted[x] = float.Parse(passing[x]);
         }
         manager.graph.GetComponent<graph_script>().reset_values();
-        manager.reload_weights(weights,biases);
         manager.setState(converted);
+        manager.reload_weights(weights,biases,layers);
+        
     }
     string get_data(string file_path){
         StreamReader inp_stm = new StreamReader(file_path);
@@ -86,6 +95,7 @@ public class rw_script : MonoBehaviour
         string inp=get_data(file_path);
         
         List<string> s = new List<string>(inp.Split(new string[] { "]" }, StringSplitOptions.RemoveEmptyEntries));
+        
         for(int ai = 0; ai < popSize;ai++){
             output[ai] = new float[layers.Length-1][];
             for(int layer = 0; layer < layers.Length-1;layer++){
@@ -93,14 +103,14 @@ public class rw_script : MonoBehaviour
                 output[ai][layer] = new float[length];
             }
         }
+        int divisor = layers.Length-1;
         // im too tired for this but issue is here (below)
         //Temp fix for 4 layered network
-
         for(int item = 0; item < s.Count;item++){
-            int ai = (int) Mathf.Floor(item / 3);
-            
+            int ai = (int) Mathf.Floor(item / divisor);
+            //print(ai + " " + (item % divisor));
+            // iterating through too many ais
             output[ai][item % 3] = uncompress_string(s[item]);
-            
         }
         List<float[][]> weights = new List<float[][]>();
         for(int x = 0; x < output.Length;x++){
@@ -116,7 +126,6 @@ public class rw_script : MonoBehaviour
             raw[x] = raw[x].Replace("[", "");
             cleaned[x] = float.Parse(raw[x]);
         }
-        
         return cleaned;
     }
     
@@ -153,13 +162,22 @@ public class rw_script : MonoBehaviour
         string path = "";
         if(state == "Checkpoint"){
             path = Application.dataPath + "/checkpoints/checkpoint"+checkpoint+"/"+name+".txt";
-            print(path);
         } else {
             path = Application.dataPath + "/model/"+name+".txt";
-            print(path);
         }
         
         File.WriteAllText(path, textToAppend);
+    }
+
+    string getPreference(int index){
+        StreamReader inp_stm = new StreamReader(Application.dataPath + "/model/preferences.txt");
+        string inp="";
+        while (!inp_stm.EndOfStream)
+        {
+            inp += inp_stm.ReadLine() + "\n";
+        }
+        List<string> raw = new List<string>(inp.Split(new string[] { "\n" }, StringSplitOptions.RemoveEmptyEntries));
+        return raw[index];
     }
     void preferences(float[] data,string[] labels){
         string text = "";
@@ -167,9 +185,15 @@ public class rw_script : MonoBehaviour
             text += data[x]+",";
             text += "\n";
         }
+        int[] layers = getLayers();
+        for(int x = 0; x < layers.Length; x++){
+            text += layers[x]+",";
+        }
         File.WriteAllText(Application.dataPath + "/model/preferences.txt", text);
     }
-
+    public int[] getLayers(){
+        return FindObjectOfType<AiController>().layers;;
+    }
 }
 
 

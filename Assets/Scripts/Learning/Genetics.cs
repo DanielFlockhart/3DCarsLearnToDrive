@@ -38,6 +38,7 @@ public class Genetics : MonoBehaviour
 
                 if(x == 1){
                     //CROSSOVER + Mutation
+                    // PASSING BY REFERENCE THATS WHY ITS BROKEN
                     weights[pointer] = crossover(population,weights,mut_rate);
                     biases[pointer] = crossover(population,biases,mut_rate);
                     pointer +=1;
@@ -60,8 +61,8 @@ public class Genetics : MonoBehaviour
         */
         for (int layer = 0; layer < weights[0].Length; layer++) {
             for (int weight = 0; weight < weights[0][layer].Length; weight++){
-                p1_weights[layer][weight] = Random.Range(0.0f,1.0f) > 0.5 ? p2_weights[layer][weight] : p1_weights[layer][weight];
-            }
+                p1_weights[layer][weight] = Random.Range(0.0f,1.0f) > 0.5 ? p1_weights[layer][weight] : p1_weights[layer][weight];
+            } // HMMM
         }
         // Mutate resulting weights 
         p1_weights = mutate(mut_rate,p1_weights);

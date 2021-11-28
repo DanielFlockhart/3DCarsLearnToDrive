@@ -71,7 +71,7 @@ public class GameManager : MonoBehaviour
 
 
     
-    void spawn(string state) {
+    public void spawn(string state) {
         genTime = startTime + (bestGoal * increment);
         generation++;
         if(generation % checkpointInterval == 0 && generation > 0){
@@ -114,7 +114,7 @@ public class GameManager : MonoBehaviour
     }
 
     // Kill all ais currently still alive
-    void clear() {
+    public void clear() {
         GameObject[] ais = GameObject.FindGameObjectsWithTag("Ai");
         foreach (GameObject ai in ais) {
             Destroy(ai);
@@ -141,12 +141,15 @@ public class GameManager : MonoBehaviour
         graph.GetComponent<graph_script>().addValue(averageFitness);
         graph.GetComponent<graph_script>().plot(0,generation);
     }
-    public void reload_weights(List<float[][]> weights_load, List<float[][]> biases_load){
+    public void reload_weights(List<float[][]> weights_load, List<float[][]> biases_load, int[] layers){
         timer = 0;
         clear();
         averageFitness = 0;
         weights = weights_load;
         biases = biases_load;
+        setup.hiddenNodes = layers[1];
+        setup.hiddenLayers = layers.Length - 2;
+        setup.population = populationSize;
         spawn("reload");
 
     }
@@ -159,19 +162,20 @@ public class GameManager : MonoBehaviour
         mutRate = values[5];
         increment = values[6];
         bestScore = values[7];
-
     }
     public void place(){
         for (int x = 0; x < populationSize; x++) {
             GameObject ai = Instantiate(car);
+            ai.GetComponent<Brain>().build();
+            ai.GetComponent<Brain>().setWeights(weights[x]);
+            ai.GetComponent<Brain>().setBiases(biases[x]);
             ai.transform.position = GameObject.FindObjectOfType<trackScript>().startPos;
             ai.transform.rotation = GameObject.FindObjectOfType<trackScript>().startRot;
             ai.GetComponent<AiController>().state = "new";
             ai.name = "car" + x;
-            ai.GetComponent<Brain>().build();
-            ai.GetComponent<Brain>().setWeights(weights[x]);
-            ai.GetComponent<Brain>().setBiases(biases[x]);
+            
         }
+        
     }
 }
 // populationSize,generation,training_time,genTime,startTime,mutRate,increment,bestScore

@@ -35,8 +35,7 @@ public class button_script : MonoBehaviour{
     }
     
     public void load_weights(){
-        layers = GameObject.FindGameObjectWithTag("Ai").GetComponent<AiController>().layers;
-        manager.GetComponent<rw_script>().Load(layers);
+        manager.GetComponent<rw_script>().Load();
     }
     public void load_settings(){
         timeScaleStored = Time.timeScale;
@@ -55,8 +54,8 @@ public class button_script : MonoBehaviour{
         Time.timeScale -= 0.2f;
     }
     public void reset(){
-        Scene scene = SceneManager.GetActiveScene(); 
-        SceneManager.LoadScene(scene.name);
+        manager.clear();
+        manager.spawn("init");
     }
     public void play_ais(){
         SceneManager.LoadScene("GamePlay");

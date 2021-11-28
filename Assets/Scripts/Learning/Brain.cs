@@ -25,6 +25,8 @@ public class Brain : MonoBehaviour
     }
     // Initialise weights and biases
     public void build() {
+        gameObject.GetComponent<AiController>().layerSetup();
+        layers = GetComponent<AiController>().layers;
         weights = initWeights(layers);
         biases = initBiases(layers);
         
@@ -32,6 +34,8 @@ public class Brain : MonoBehaviour
     // Get outputs from FFNN after inputs
     public float[] getOutputs(float[] inputs)
     {
+        // TTHE LAYERS ON THIS IS ONLY 12 3
+        layers = GetComponent<AiController>().layers;
         return net.forwardPass(layers, inputs, weights, biases);
     }
 

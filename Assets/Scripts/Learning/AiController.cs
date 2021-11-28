@@ -34,10 +34,13 @@ public class AiController : MonoBehaviour
     // Awake is used instead of start() as brain needs to be assigned before cars start moving
     void Awake(){
         // Calculate the amount of hidden nodes required (Depending on inputs and outputs total)
+        layerSetup();
+        carControls = GetComponent<CarController>();
+    }
+
+    public void layerSetup(){
         layers = createLayers(setup.hiddenNodes,setup.hiddenLayers);
         brain = GetComponent<Brain>();
-        brain.layers = layers;
-        carControls = GetComponent<CarController>();
     }
     private void Start(){
         // If in initial spawn stages build brain with new weights etc
@@ -60,7 +63,7 @@ public class AiController : MonoBehaviour
 
         float breakforce = carControls.currentBreakForce / 3000;
         float steeringAngle = carControls.currentSteeringAngle / 30;
-        input = new float[] { breakforce, steeringAngle, distances[0], distances[1], distances[2], distances[3], distances[4], distances[5], distances[6], distances[7], distances[8], distances[9] };
+        input = new float[] { breakforce, steeringAngle, distances[0], distances[1], distances[2], distances[3], distances[4], distances[5], distances[6], distances[7], distances[8], distances[9]};
         output = brain.getOutputs(input);
         // Arg Max for binary input requirements
         forwardVal = output[0] > 0 ? 1 : -1;
