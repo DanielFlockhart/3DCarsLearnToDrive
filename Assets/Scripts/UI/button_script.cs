@@ -65,11 +65,10 @@ public class button_script : MonoBehaviour{
     }
 
     public void load_training(){
-        StartCoroutine(load_scene(4,"Main"));
+        StartCoroutine(load_scene(0.2f,"Main"));
     }
 
     IEnumerator load_scene(float time,string scene){
-        animation.Play("Curtains 1");
         yield return new WaitForSeconds(time);
         SceneManager.LoadScene(scene);
     }

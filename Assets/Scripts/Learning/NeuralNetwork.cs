@@ -18,18 +18,20 @@ public class NeuralNetwork : MonoBehaviour
     public float[] forwardPass(int[] layers, float[] inputs, float[][] weights, float[][] biases) {
         //print(layers[0] + " " + layers[1] + " " + layers[2] + layers[3] + layers[4] + layers[5]);
         //print(weights[0].Length + " " + weights[1].Length + " " + weights[2].Length + " " + weights[3].Length + weights[4].Length + weights[5].Length);
-        
+        int total = 0;
         for (int layer = 0; layer < layers.Length-1; layer++) {
             // IS IT JUST CALLING THE INPUTS ON EACH LAYERRR???
+            total++;
             inputs = layerDense(inputs, weights[layer], biases[layer], layers[layer + 1]);
+            
         }
         return inputs;
     }
     // One matrix multiplication between dense layers
     public float[] layerDense(float[] inputs, float[] weights, float[] biases, int outCount) {
         //print(inputs.Length + " " + weights.Length + " " + biases.Length + " " + outCount);
-        print("FUCK"  + inputs.Length+" " + weights.Length);
         // ERROR HERE
+        
         float[] outputs = new float[outCount];
         for (int node = 0; node < inputs.Length; node++) {
             int wPerNode = (weights.Length / inputs.Length);
@@ -37,6 +39,7 @@ public class NeuralNetwork : MonoBehaviour
             {
                 // Adds the value of the weight times the input to the node value
                 outputs[weight] += weights[(node * wPerNode) + weight] * inputs[node];
+                
             }
         }
         for (int outs = 0; outs < outCount; outs++) {

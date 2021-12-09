@@ -3817,7 +3817,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c532f51b59c16d645a13bb89bb4b3fab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  checkpointInterval: 200
+  checkpointInterval: 8000
   car: {fileID: 771295119088812944, guid: c580d8245c471784a9f9ec20f1957a4a, type: 3}
   graph: {fileID: 2018500808}
   populationSize: 80
