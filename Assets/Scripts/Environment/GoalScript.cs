@@ -12,7 +12,7 @@ public class GoalScript : MonoBehaviour
     {
         // If gameobject is interacting with goals for training or gameplay it decides the scoring method
         if (collision.gameObject.tag == "Ai"){
-            points = 3 +(Ident/FindObjectOfType<GameManager>().timer*10);
+            points = 20 + Ident/(FindObjectOfType<GameManager>().timer*10);
         }
         else if (collision.gameObject.tag == "Opponent" ||  collision.gameObject.tag == "Player"){
             points = 1;

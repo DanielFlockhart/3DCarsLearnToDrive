@@ -84,6 +84,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d944b238135c1c94b8fa3ffa2373dd77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPlayer: 0
+  verticalInput: 0
   currentSteeringAngle: 0
   currentBreakForce: 0
   motorForce: 2000
@@ -130,7 +132,7 @@ MonoBehaviour:
   output: []
   layers: 
   inputs: 12
-  outputs: 3
+  outputs: 5
 --- !u!114 &771295119088812948
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,7 +145,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 999ca13d758033c4cbc92c0fbee14ba4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  utilities: {fileID: 0}
   layers: 
 --- !u!65 &771295119088812946
 BoxCollider:
