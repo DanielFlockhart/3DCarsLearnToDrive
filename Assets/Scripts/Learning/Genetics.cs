@@ -6,10 +6,10 @@ using System;
 public class Genetics : MonoBehaviour
 {
     // Distribution of generational statistics
-    float elite = 4/16f;
-    float elite_mutation = 4/16f;
-    float mut_crossover = 4/16f;
-    float mut_mutation = 4/16f;
+    float elite = 7/16f;
+    float elite_mutation = 0/16f;
+    float mut_crossover = 9/16f;
+    float mut_mutation = 0/16f;
 
     float[] cull_weights;
 
@@ -20,21 +20,14 @@ public class Genetics : MonoBehaviour
     // Genetic Algorithm + Natural Selection Control
     // Includes crossover, mutation and sorting of ais
     void Start(){
-        cull_weights = new float[4]{elite,mut_mutation,elite_mutation,mut_crossover};
+        cull_weights = new float[2]{elite,mut_crossover};
     }
     
     public List<List<float[][]>> newGeneration(List<float[][]> weights,List<float[][]> biases,int population,float mut_rate){
         int pointer = 0;
-        List<float[][]> new_weights = new List<float[][]>(population);
+        //List<float[][]> new_weights = new List<float[][]>(population);
 
-        List<float[][]> new_biases = new List<float[][]>(population);
-        print(new_weights.Count + " WB " + new_biases.Count);
-        for (int w = 0; w < weights.Count; w++){
-            new_weights[w] = new float[weights[0].Length][];
-            new_biases[w] = new float[biases[0].Length][];
-            Array.Copy(weights[w],new_weights[w],weights[w].Length);
-            Array.Copy(biases[w],new_biases[w],biases[w].Length);
-        }
+        //List<float[][]> new_biases = new List<float[][]>(population);
 
         // Iterate through culled weights
         // List<>'s in unity pass by reference and I hate it
@@ -44,36 +37,33 @@ public class Genetics : MonoBehaviour
                 if(x==0){
                     // Temporary
                     // ELITE
-                    //Array.Copy(weights[pointer],new_weights[pointer],weights[pointer].Length);
-                    //Array.Copy(biases[pointer],new_biases[pointer],biases[pointer].Length);
+                    //weights[pointer] = weights[pointer];
+                    //biases[pointer] = biases[pointer];
+                    pointer +=1;
+                }
+
+                if(x == 100){
+                    weights[pointer] = mutate(mut_rate,weights[sampleParent(population)]);
+                    biases[pointer] = mutate(mut_rate, biases[sampleParent(population)]);;
                     pointer +=1;
                 }
 
                 if(x == 1){
-
-                    Array.Copy(mutate(mut_rate,weights[sampleParent(population)]),new_weights[pointer],weights[pointer].Length);
-                    Array.Copy(mutate(mut_rate,biases[sampleParent(population)]),new_biases[pointer],biases[pointer].Length);
-                    pointer +=1;
-                }
-                 if(x == 2){
-                    Array.Copy(mutate(mut_rate,weights[0]),new_weights[pointer],weights[pointer].Length);
-                    Array.Copy(mutate(mut_rate,biases[0]),new_biases[pointer],biases[pointer].Length);
-                    pointer +=1;
-                }
-                if(x == 3){
                     //CROSSOVER + Mutation
                     // PASSING BY REFERENCE THATS WHY ITS BROKEN
-
-                    Array.Copy(crossover(population,weights),new_weights[pointer],weights[pointer].Length);
-                    Array.Copy(crossover(population,biases),new_biases[pointer],biases[pointer].Length);
+                    weights[pointer] = crossover(population,weights,mut_rate);
+                    biases[pointer] = crossover(population,biases,mut_rate);
                     pointer +=1;
                 }
                 
-               
+                if(x == 30000){
+                    weights[pointer] = mutate(mut_rate,weights[0]);
+                    biases[pointer] = mutate(mut_rate,biases[0]);;
+                    pointer +=1;
+                }
             }
         }
-        print(new_weights.Count + " WB " + new_biases.Count);
-        return new List<List<float[][]>>{new_weights,new_biases};
+        return new List<List<float[][]>>{weights, biases};
     }
 
     public int sampleParent(int population){
@@ -81,15 +71,16 @@ public class Genetics : MonoBehaviour
     }
 
     
-    public float[][] crossover(int populationSize,List<float[][]> weights)
+    public float[][] crossover(int populationSize,List<float[][]> weights,float mut_rate)
     {
         // ONLY SELECTING THE FIRST AND LAST PARENT
         // BETTER AIS ARE CLOSER TO 0
         int parent1 = sampleParent(populationSize);
         int parent2 = sampleParent(populationSize);
-        
-        float[][] p1_weights = weights[parent1];
-        float[][] p2_weights = weights[parent2];
+        float[][] p1_weights = new float[weights[parent1].Length][];
+        float[][] p2_weights = new float[weights[parent2].Length][];
+        Array.Copy(weights[parent1],p1_weights,weights[parent1].Length);
+        Array.Copy(weights[parent2],p2_weights,weights[parent2].Length);
         
         float[][] child_weights = new float[p1_weights.Length][];
         for(int x = 0; x < p1_weights.Length;x++){
@@ -103,10 +94,11 @@ public class Genetics : MonoBehaviour
         */
         for (int layer = 0; layer < weights[0].Length; layer++) {
             for (int weight = 0; weight < weights[0][layer].Length; weight++){
-                child_weights[layer][weight] = UnityEngine.Random.Range(0.0f,1.0f) > 0.5 ? p2_weights[layer][weight]: p1_weights[layer][weight];
+                child_weights[layer][weight] = UnityEngine.Random.Range(0.0f,1.0f) > 0.5 ? p1_weights[layer][weight]: p1_weights[layer][weight];
             } // HMMM
         }
         // Mutate resulting weights
+        child_weights = mutate(mut_rate,child_weights);
         return child_weights;
     }
 
