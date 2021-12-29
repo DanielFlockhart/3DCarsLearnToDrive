@@ -5,12 +5,10 @@ using UnityEngine;
 public class trackScript : MonoBehaviour
 {
     public Vector3 newstartPos;
-    public Quaternion newstartRot;
 
-    void Start()
+    void Awake()
     {
         GameManager.startPos = newstartPos;
-        GameManager.startRot = newstartRot;
 
     }
 

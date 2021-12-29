@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
     public float training_time;
     public float timer;
     public float genTime = 0;
-
+    private float newGenTime = 0;
     public float startTime = 15;
     public float mutRate = 0.02f;
 
@@ -31,7 +31,6 @@ public class GameManager : MonoBehaviour
     public List<float[][]> biases;
     public List<float> fitnesses;
 
-    public static Quaternion startRot;
     public static Vector3 startPos;
 
 
@@ -67,7 +66,6 @@ public class GameManager : MonoBehaviour
             storeData();
             clear();
             spawn("respawn");
-        
         }
         
     }
@@ -86,7 +84,6 @@ public class GameManager : MonoBehaviour
             for (int x = 0; x < populationSize; x++) {
                 GameObject ai = Instantiate(car);
                 ai.transform.position = startPos;
-                ai.transform.rotation = new Quaternion(0,-90,0,0);
                 ai.GetComponent<AiController>().state = "init";
                 ai.name = "car" + x;
             }
@@ -101,6 +98,7 @@ public class GameManager : MonoBehaviour
             biases = sorted[1];
             place();
         } else if (state == "reload"){
+            genTime = newGenTime;
             place();
         }
     }
@@ -160,7 +158,7 @@ public class GameManager : MonoBehaviour
         populationSize = (int) values[0];
         generation = (int) values[1];
         training_time = values[2];
-        genTime = values[3];
+        newGenTime = values[3];
         startTime = values[4];
         mutRate = values[5];
         increment = values[6];
@@ -174,7 +172,6 @@ public class GameManager : MonoBehaviour
             ai.GetComponent<Brain>().setWeights(weights[x]);
             ai.GetComponent<Brain>().setBiases(biases[x]);
             ai.transform.position = startPos;
-            ai.transform.rotation = startRot;
             ai.GetComponent<AiController>().state = "new";
             ai.name = "car" + x;
         }

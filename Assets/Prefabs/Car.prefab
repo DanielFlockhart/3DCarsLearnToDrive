@@ -85,7 +85,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPlayer: 0
-  verticalInput: 0
   currentSteeringAngle: 0
   currentBreakForce: 0
   motorForce: 2000
