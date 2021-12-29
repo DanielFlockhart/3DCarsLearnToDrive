@@ -27,8 +27,8 @@ public class AiController : MonoBehaviour
     [SerializeField] float[] input;
     [SerializeField] float[] output;
     public int[] layers;
-    [SerializeField] private int inputs = 11;
-    [SerializeField] private int outputs = 5;
+    [SerializeField] private int inputs = 12;
+    [SerializeField] private int outputs = 3;
     
     // Awake is used instead of start() as brain needs to be assigned before cars start moving
     void Awake(){
@@ -62,12 +62,12 @@ public class AiController : MonoBehaviour
 
         float breakforce = carControls.currentBreakForce / 3000;
         float steeringAngle = carControls.currentSteeringAngle / 30;
-        input = new float[] { breakforce, steeringAngle, distances[0], distances[1], distances[2], distances[3], distances[4], distances[5], distances[6], distances[7], distances[8]}; //distances[9]};
+        input = new float[] { breakforce, steeringAngle, distances[0], distances[1], distances[2], distances[3], distances[4], distances[5], distances[6], distances[7], distances[8],distances[9]};
         output = brain.getOutputs(input);
         // Arg Max for binary input requirements
-        forwardVal = output[0] > output[1] ? 1 : -1;
-        leftVal = output[2] > output[3] ? 1 : -1;
-        breakVal = output[4] > 0 ? true : false;
+        forwardVal = output[0] > 0 ? 1 : -1;
+        leftVal = output[1] > 0 ? 1 : -1;
+        breakVal = output[2] > 0 ? true : false;
         if (isAlive){
             operateCar(forwardVal, leftVal, breakVal);
         }
@@ -91,7 +91,7 @@ public class AiController : MonoBehaviour
         //Forward
         Vector3 dir1 = transform.TransformDirection(Vector3.forward);
         //Backwards
-        //Vector3 dir2 = -dir1;
+        Vector3 dir2 = -dir1;
         //Right
         Vector3 dir3 = transform.TransformDirection(Vector2.right); 
         //Left
@@ -108,7 +108,7 @@ public class AiController : MonoBehaviour
         Vector3 dir9 = dir7 + dir6;
         //Forward Leftish
         Vector3 dir10 = dir8 + dir5;
-        return new Vector3[] { dir1, dir3, dir4, dir5, dir6, dir7, dir8, dir9, dir10 };
+        return new Vector3[] { dir1,dir2, dir3, dir4, dir5, dir6, dir7, dir8, dir9, dir10 };
 
     }
 

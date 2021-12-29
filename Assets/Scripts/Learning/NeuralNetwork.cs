@@ -16,10 +16,7 @@ public class NeuralNetwork : MonoBehaviour
 
     // One full pass of a FFNN returning outputs in float[]
     public float[] forwardPass(int[] layers, float[] inputs, float[][] weights, float[][] biases) {
-        int total = 0;
         for (int layer = 0; layer < layers.Length-1; layer++) {
-            // IS IT JUST CALLING THE INPUTS ON EACH LAYERRR???
-            total++;
             inputs = layerDense(inputs, weights[layer], biases[layer], layers[layer + 1]);
             
         }

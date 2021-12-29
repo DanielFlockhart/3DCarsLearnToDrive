@@ -37,30 +37,35 @@ public class Genetics : MonoBehaviour
                 if(x==0){
                     // Temporary
                     // ELITE
-                    //weights[pointer] = weights[pointer];
-                    //biases[pointer] = biases[pointer];
+                    weights[pointer] = weights[pointer];
+                    biases[pointer] = biases[pointer];
                     pointer +=1;
                 }
-
-                if(x == 100){
-                    weights[pointer] = mutate(mut_rate,weights[sampleParent(population)]);
-                    biases[pointer] = mutate(mut_rate, biases[sampleParent(population)]);;
-                    pointer +=1;
-                }
-
-                if(x == 1){
-                    //CROSSOVER + Mutation
-                    // PASSING BY REFERENCE THATS WHY ITS BROKEN
+                if (x == 1){
                     weights[pointer] = crossover(population,weights,mut_rate);
                     biases[pointer] = crossover(population,biases,mut_rate);
                     pointer +=1;
                 }
+
+                // if(x == 1){
+                //     //CROSSOVER + Mutation
+                //     // PASSING BY REFERENCE THATS WHY ITS BROKEN
+                //     weights[pointer] = mutate(mut_rate,weights[pointer-(population/2)]);
+                //     biases[pointer] = mutate(mut_rate, biases[pointer-(population/2)]);
+                //     pointer +=1;
+                // }
+
+                // if(x == 100){
+                //     weights[pointer] = mutate(mut_rate,weights[sampleParent(population)]);
+                //     biases[pointer] = mutate(mut_rate, biases[sampleParent(population)]);
+                //     pointer +=1;
+                // }
                 
-                if(x == 30000){
-                    weights[pointer] = mutate(mut_rate,weights[0]);
-                    biases[pointer] = mutate(mut_rate,biases[0]);;
-                    pointer +=1;
-                }
+                // if(x == 30000){
+                //     weights[pointer] = mutate(mut_rate,weights[0]);
+                //     biases[pointer] = mutate(mut_rate,biases[0]);;
+                //     pointer +=1;
+                // }
             }
         }
         return new List<List<float[][]>>{weights, biases};
@@ -75,31 +80,45 @@ public class Genetics : MonoBehaviour
     {
         // ONLY SELECTING THE FIRST AND LAST PARENT
         // BETTER AIS ARE CLOSER TO 0
+        // int parent1 = sampleParent(populationSize);
+        // int parent2 = sampleParent(populationSize);
+        // float[][] p1_weights = new float[weights[parent1].Length][];
+        // float[][] p2_weights = new float[weights[parent2].Length][];
+        // Array.Copy(weights[parent1],p1_weights,weights[parent1].Length);
+        // Array.Copy(weights[parent2],p2_weights,weights[parent2].Length);
+        
+        // float[][] child_weights = new float[p1_weights.Length][];
+        // for(int x = 0; x < p1_weights.Length;x++){
+        //     for(int i = 0; i < p1_weights[x].Length;i++){
+        //         child_weights[x] = new float[p1_weights[x].Length];
+        //     }
+        // }
+        // /* iterate through weights and randomly choose which genes from which parents to keep at 50% split
+        // For a while i had it as only choosing from one parent and it was working fine. Then I fixed this and It broke performance, causing non determinism
+        // Debugging will persist until end of project.
+        // */
+        // for (int layer = 0; layer < weights[0].Length; layer++) {
+        //     for (int weight = 0; weight < weights[0][layer].Length; weight++){
+        //         child_weights[layer][weight] = UnityEngine.Random.Range(0.0f,1.0f) > 0.5 ? p1_weights[layer][weight]: p1_weights[layer][weight];
+        //     } // HMMM
+        // }
+
+
         int parent1 = sampleParent(populationSize);
         int parent2 = sampleParent(populationSize);
-        float[][] p1_weights = new float[weights[parent1].Length][];
-        float[][] p2_weights = new float[weights[parent2].Length][];
-        Array.Copy(weights[parent1],p1_weights,weights[parent1].Length);
-        Array.Copy(weights[parent2],p2_weights,weights[parent2].Length);
-        
-        float[][] child_weights = new float[p1_weights.Length][];
-        for(int x = 0; x < p1_weights.Length;x++){
-            for(int i = 0; i < p1_weights[x].Length;i++){
-                child_weights[x] = new float[p1_weights[x].Length];
-            }
-        }
-        /* iterate through weights and randomly choose which genes from which parents to keep at 50% split
-        For a while i had it as only choosing from one parent and it was working fine. Then I fixed this and It broke performance, causing non determinism
-        Debugging will persist until end of project.
-        */
+        float[][] p1_weights = weights[parent1];
+        float[][] p2_weights = weights[parent2];
+
+        // iterate through weights and randomly choose which genes from which parents to keep
         for (int layer = 0; layer < weights[0].Length; layer++) {
             for (int weight = 0; weight < weights[0][layer].Length; weight++){
-                child_weights[layer][weight] = UnityEngine.Random.Range(0.0f,1.0f) > 0.5 ? p1_weights[layer][weight]: p1_weights[layer][weight];
-            } // HMMM
+                p1_weights[layer][weight] = UnityEngine.Random.Range(0.0f,1.0f) > 0.5 ? p1_weights[layer][weight] : p1_weights[layer][weight];
+            }
         }
+        
         // Mutate resulting weights
-        child_weights = mutate(mut_rate,child_weights);
-        return child_weights;
+        p1_weights = mutate(mut_rate,p1_weights);
+        return p1_weights;
     }
 
     /* Sort weights

@@ -6,11 +6,11 @@ using UnityEngine.UI;
 public class setup : MonoBehaviour
 {
     public GameObject hLayers,hNodes,tScale,interObj;
-    public static int hiddenLayers = 0;
-    public static int hiddenNodes = 0;
+    public static int hiddenLayers = 2;
+    public static int hiddenNodes = 12;
     public static int timeScale = 1;
-    public static int population = 16;
-    public static int checkInterval = 50;
+    public static int population = 64;
+    public static int checkInterval = 5000;
     public static bool isPreloading = false;
     public static bool isUnderfitting = true;
 

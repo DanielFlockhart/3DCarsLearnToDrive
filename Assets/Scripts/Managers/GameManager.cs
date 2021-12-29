@@ -31,6 +31,9 @@ public class GameManager : MonoBehaviour
     public List<float[][]> biases;
     public List<float> fitnesses;
 
+    public static Quaternion startRot;
+    public static Vector3 startPos;
+
 
     public float bestScore = -100;
     public float averageFitness = 0;
@@ -76,14 +79,14 @@ public class GameManager : MonoBehaviour
         generation++;
         if(generation % checkpointInterval == 0 && generation > 0){
             //FindObjectOfType<rw_script>().Save("Checkpoint",generation);
-            gameObject.GetComponent<overfitting>().switchMap();
+            //gameObject.GetComponent<overfitting>().switchMap();
         }
         // If first spawn stage
         if (state == "init"){
             for (int x = 0; x < populationSize; x++) {
                 GameObject ai = Instantiate(car);
-                ai.transform.position = GameObject.FindObjectOfType<trackScript>().startPos;
-                ai.transform.rotation = GameObject.FindObjectOfType<trackScript>().startRot;
+                ai.transform.position = startPos;
+                ai.transform.rotation = new Quaternion(0,-90,0,0);
                 ai.GetComponent<AiController>().state = "init";
                 ai.name = "car" + x;
             }
@@ -170,8 +173,8 @@ public class GameManager : MonoBehaviour
             ai.GetComponent<Brain>().build();
             ai.GetComponent<Brain>().setWeights(weights[x]);
             ai.GetComponent<Brain>().setBiases(biases[x]);
-            ai.transform.position = GameObject.FindObjectOfType<trackScript>().startPos;
-            ai.transform.rotation = GameObject.FindObjectOfType<trackScript>().startRot;
+            ai.transform.position = startPos;
+            ai.transform.rotation = startRot;
             ai.GetComponent<AiController>().state = "new";
             ai.name = "car" + x;
         }
