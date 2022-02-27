@@ -16,6 +16,8 @@ public class button_script : MonoBehaviour{
 
     public GameObject saveChoice;
 
+    public Text warning;
+
     int[] layers;
 
     public int pointer = 0;
@@ -65,7 +67,15 @@ public class button_script : MonoBehaviour{
     }
 
     public void load_training(){
-        StartCoroutine(load_scene(0.2f,"Main"));
+
+        /*Add Input Checks Here*/
+        if (setup.isSetUp == true){
+            warning.text = "";
+            StartCoroutine(load_scene(0.2f,"Main"));
+        } else {
+            warning.text = "One of your inputs is invalid! Please ensure all of the fields are filled out correctly as integers.";
+        }
+        
     }
 
     IEnumerator load_scene(float time,string scene){

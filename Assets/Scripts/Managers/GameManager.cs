@@ -76,8 +76,7 @@ public class GameManager : MonoBehaviour
         genTime = startTime + (bestGoal * increment);
         generation++;
         if(generation % checkpointInterval == 0 && generation > 0){
-            //FindObjectOfType<rw_script>().Save("Checkpoint",generation);
-            //gameObject.GetComponent<overfitting>().switchMap();
+            FindObjectOfType<rw_script>().Save();
         }
         // If first spawn stage
         if (state == "init"){

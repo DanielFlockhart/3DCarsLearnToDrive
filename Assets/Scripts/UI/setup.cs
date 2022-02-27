@@ -14,8 +14,12 @@ public class setup : MonoBehaviour
     public static bool isPreloading = false;
     public static bool isUnderfitting = true;
 
+
+    public static bool isSetUp = false;
+
     void Update()
     {
+        isSetUp = true;
         population = FindObjectOfType<SetupButtons>().population;
         hiddenLayers = getInput(hLayers.GetComponent<InputField>().text);
         hiddenNodes = getInput(hNodes.GetComponent<InputField>().text);
@@ -27,7 +31,9 @@ public class setup : MonoBehaviour
         try {
             return int.Parse(input);
         } catch {
-            return 1;
+            isSetUp = false;
+            return 0;
+            
         }
     }
 }

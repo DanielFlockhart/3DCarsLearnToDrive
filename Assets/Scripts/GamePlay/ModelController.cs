@@ -22,8 +22,6 @@ public class ModelController : MonoBehaviour
             ai.name = "car" + x;
             // Build Neural Network and assign weights
             ai.GetComponent<Brain>().build();
-
-            
             ai.GetComponent<Brain>().setWeights(weights[x]);
             ai.GetComponent<Brain>().setBiases(biases[x]);
         }

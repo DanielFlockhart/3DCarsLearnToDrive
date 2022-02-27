@@ -10,10 +10,12 @@ public class doppler : MonoBehaviour
 
     public bool isPlaying = false;
     public void Update(){
+        // If the user is pressing accelerate, the sound is played.
         if(player.GetComponent<CarController>().verticalInput != 0 && !isPlaying){
             motorsound.Play();
             isPlaying = true;
         }
+        // If the user is not pressing accelerate, the sound is stopped.
         if(player.GetComponent<CarController>().verticalInput == 0){
             isPlaying = false;
             motorsound.Stop();
