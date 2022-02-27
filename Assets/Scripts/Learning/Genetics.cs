@@ -178,7 +178,7 @@ public class Genetics : MonoBehaviour
         float x2 = 1 - UnityEngine.Random.Range(0.0f,1.0f);
         float y1 = Mathf.Sqrt((float)-2.0 * Mathf.Log(x1)) * Mathf.Cos((float)2.0 * Mathf.PI * x2);
         float value =  y1 * sd + mean;
-        return  value < 0 ? 0 : Mathf.Min(1,value);
+        return  value < 0 ? 1 : Mathf.Min(1,value);
         
     }
     public float getParent(int populationSize){

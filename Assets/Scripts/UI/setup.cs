@@ -9,8 +9,8 @@ public class setup : MonoBehaviour
     public static int hiddenLayers = 3;
     public static int hiddenNodes = 16;
     public static int timeScale = 2;
-    public static int population = 128;
-    public static int checkInterval = 5000;
+    public static int population = 160;
+    public static int checkInterval = 500000;
     public static bool isPreloading = false;
     public static bool isUnderfitting = true;
 

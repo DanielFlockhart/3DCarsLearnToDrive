@@ -25,53 +25,55 @@ public class rw_script : MonoBehaviour
     
     string[] labels = {"populationSize","generation","training_time","genTime","startTime","mutRate","increment","bestScore"};
     void Start(){
+        // If there is ais in the environment, assign the game manager
         if (GameObject.FindGameObjectsWithTag("Ai").Length != 0){
             manager = FindObjectOfType<GameManager>().GetComponent<GameManager>();
         }
     }
+    // Save the weights, biases, and preferences to a file
     public void Save()
     {
+        // WEIGHTS AND BIASES ARE NOT RIGHT LENGTH
         manager.storeData();
         List<float[][]> weights = manager.weights;
         List<float[][]> biases = manager.biases;
+        
         preferences(manager.state,labels);
         CreateTextSpecial(weights,"weights");
         CreateTextSpecial(biases,"biases");
 
     }
-
-    public void Save(string state,int checkpoint)
-    {
-        manager.storeData();
-        List<float[][]> weights = manager.weights;
-        List<float[][]> biases = manager.biases;
-        CreateTextSpecial(weights,"weights","Checkpoint",checkpoint);
-        CreateTextSpecial(biases,"biases","Checkpoint",checkpoint);
-        preferences(manager.state,labels);
-    }
-    public void RaceLoading(int[] layers){
-        // Convert a string to int
-        int size = int.Parse(getPreference(0).ToString());
-        ModelController modelController = FindObjectOfType<ModelController>();
-        List<float[][]> weights = readTextFile(Application.dataPath + "/model/weights.txt",layers,false,size);
-        List<float[][]> biases = readTextFile(Application.dataPath + "/model/biases.txt",layers,true,size);
-        modelController.load_weights(weights,biases);
-    }
     
+
+    
+    // Function used for loading weights and biases from a file
     public void Load()
     {
+        // Convert a string into a string array
         string[] newlayers= getPreference(8).ToString().Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
         int[] layers = new int[newlayers.Length];
         for(int x=0; x<newlayers.Length; x++){
             layers[x] = int.Parse(newlayers[x]);
         }
+        // Convert a string to List of strings
         List<string> raw = new List<string>(getPreference(0).Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries));
         int size = int.Parse(raw[0].ToString());
 
+        // Assign weights and biases
+        // Issue could be here
         List<float[][]> weights = readTextFile(Application.dataPath + "/model/weights.txt",layers,false,size);
         List<float[][]> biases = readTextFile(Application.dataPath + "/model/biases.txt",layers,true,size);
+
+        if(SceneManager.GetActiveScene().name == "GamePlay"){
+            // Assign weights and biases
+            ModelController modelController = FindObjectOfType<ModelController>();
+            modelController.load_weights(weights,biases,layers);
+            return;
+        }
+
         string[] passing = get_data(Application.dataPath + "/model/preferences.txt").Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
         float[] converted = new float[passing.Length];
+
         for(int x =0;x<passing.Length;x++){
             converted[x] = float.Parse(passing[x]);
         }
@@ -80,6 +82,7 @@ public class rw_script : MonoBehaviour
         manager.reload_weights(weights,biases,layers);
         
     }
+    // Get the raw text from the file store.
     string get_data(string file_path){
         StreamReader inp_stm = new StreamReader(file_path);
         string inp="";
@@ -89,8 +92,10 @@ public class rw_script : MonoBehaviour
         }
         return inp;
     }
+    // Split the raw text into a list of strings
     List<float[][]> readTextFile(string file_path,int[] layers,bool biases,int popSize)
     {
+        // ----------------------------------------------------------------------------------------------------
         float[][][] output = new float[popSize][][];
         string inp=get_data(file_path);
         
@@ -99,25 +104,25 @@ public class rw_script : MonoBehaviour
         for(int ai = 0; ai < popSize;ai++){
             output[ai] = new float[layers.Length-1][];
             for(int layer = 0; layer < layers.Length-1;layer++){
+                // HERE
                 int length = !biases ? layers[layer] * layers[layer+1] : layers[layer+1];
                 output[ai][layer] = new float[length];
             }
         }
         int divisor = layers.Length-1;
-        // im too tired for this but issue is here (below)
-        //Temp fix for 4 layered network
         for(int item = 0; item < s.Count;item++){
-            int ai = (int) Mathf.Floor(item / divisor);
-            //print(ai + " " + (item % divisor));
-            // iterating through too many ais
-            output[ai][item % 3] = uncompress_string(s[item]);
+            int ai = (int) Mathf.Floor(item / divisor); // THE ISSUE WAS HERE ARGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+            output[ai][item % divisor] = uncompress_string(s[item]);
         }
         List<float[][]> weights = new List<float[][]>();
+
+        // ----------------------------------------------------------------------------------------------------
         for(int x = 0; x < output.Length;x++){
             weights.Add(output[x]);
         }
         return weights;
     }
+    // Split the strings into raw floats which are then assigned to lists
     float[] uncompress_string(string data){
         List<string> raw = new List<string>(data.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries));
         
@@ -129,7 +134,8 @@ public class rw_script : MonoBehaviour
         return cleaned;
     }
     
-
+    // Create the text that will then be saved to a file
+    // Code is ineffecient, but it works
     void CreateTextSpecial(List<float[][]> inputList,string name,string state = "model",int checkpoint = -1)
     {
         string textToAppend = "[";
@@ -165,10 +171,9 @@ public class rw_script : MonoBehaviour
         } else {
             path = Application.dataPath + "/model/"+name+".txt";
         }
-        
         File.WriteAllText(path, textToAppend);
     }
-
+    // Get data from preference file
     string getPreference(int index){
         StreamReader inp_stm = new StreamReader(Application.dataPath + "/model/preferences.txt");
         string inp="";
@@ -179,6 +184,7 @@ public class rw_script : MonoBehaviour
         List<string> raw = new List<string>(inp.Split(new string[] { "\n" }, StringSplitOptions.RemoveEmptyEntries));
         return raw[index];
     }
+    // Create data that will then be uploaded to preferences file
     void preferences(float[] data,string[] labels){
         string text = "";
         for(int x = 0; x < data.Length; x++){
@@ -191,12 +197,12 @@ public class rw_script : MonoBehaviour
         }
         File.WriteAllText(Application.dataPath + "/model/preferences.txt", text);
     }
+
+    // Get the layers for the neural network
     public int[] getLayers(){
-        return FindObjectOfType<AiController>().layers;;
+        return FindObjectOfType<AiController>().layers;
     }
 }
-
-
 
 
 

@@ -10,14 +10,14 @@ public class doppler : MonoBehaviour
 
     public bool isPlaying = false;
     public void Update(){
-        //if(player.GetComponent<CarController>().verticalInput != 0 && !isPlaying){
-        //    motorsound.Play();
-        //    isPlaying = true;
-        //}
-        //if(player.GetComponent<CarController>().verticalInput == 0){
-        //    isPlaying = false;
-        //    motorsound.Stop();
-        //}
+        if(player.GetComponent<CarController>().verticalInput != 0 && !isPlaying){
+            motorsound.Play();
+            isPlaying = true;
+        }
+        if(player.GetComponent<CarController>().verticalInput == 0){
+            isPlaying = false;
+            motorsound.Stop();
+        }
     }
     public float calcDistance(){
         return (gameObject.transform.position -  player.transform.position).magnitude;

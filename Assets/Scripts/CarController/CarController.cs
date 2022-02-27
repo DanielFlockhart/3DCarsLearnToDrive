@@ -15,8 +15,8 @@ public class CarController : MonoBehaviour
     private const string VERTICAL = "Vertical";
 
     //Player inputs
-    private float horizontalInput;
-    private float verticalInput;
+    public float horizontalInput;
+    public float verticalInput;
 
 
     // Current State

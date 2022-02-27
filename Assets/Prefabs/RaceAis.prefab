@@ -52,6 +52,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPlayer: 0
+  horizontalInput: 0
+  verticalInput: 0
   currentSteeringAngle: 0
   currentBreakForce: 0
   motorForce: 2000
@@ -98,7 +100,7 @@ MonoBehaviour:
   output: []
   layers: 
   inputs: 12
-  outputs: 3
+  outputs: 5
 --- !u!114 &990190652763803664
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -805,8 +807,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 07f44fe3e9c462146a7769b976c50ec4, type: 2}
-  - {fileID: 2100000, guid: ab035d7682921704a9015ac353311d57, type: 2}
+  - {fileID: 2100000, guid: 3d61a916e021ff949b6b524c1ef40088, type: 2}
+  - {fileID: 2100000, guid: 3d61a916e021ff949b6b524c1ef40088, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

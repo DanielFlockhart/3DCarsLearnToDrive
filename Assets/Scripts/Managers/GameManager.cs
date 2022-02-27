@@ -98,6 +98,7 @@ public class GameManager : MonoBehaviour
             biases = sorted[1];
             place();
         } else if (state == "reload"){
+            
             genTime = newGenTime;
             place();
         }
@@ -124,7 +125,7 @@ public class GameManager : MonoBehaviour
 
     // Stores ai data before they get destroyed so it can be save for sorting and culling
     public void storeData() {
-
+        
         GameObject[] ais = GameObject.FindGameObjectsWithTag("Ai");
         weights = new List<float[][]>();
         biases = new List<float[][]>();
@@ -151,6 +152,7 @@ public class GameManager : MonoBehaviour
         setup.hiddenNodes = layers[1];
         setup.hiddenLayers = layers.Length - 2;
         setup.population = populationSize;
+        
         spawn("reload");
 
     }
@@ -179,4 +181,8 @@ public class GameManager : MonoBehaviour
     }
 }
 // populationSize,generation,training_time,genTime,startTime,mutRate,increment,bestScore
+
+
+
+
 

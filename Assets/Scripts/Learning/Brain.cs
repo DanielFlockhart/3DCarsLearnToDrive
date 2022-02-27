@@ -27,6 +27,7 @@ public class Brain : MonoBehaviour
     public void build() {
         gameObject.GetComponent<AiController>().layerSetup();
         layers = GetComponent<AiController>().layers;
+        
         weights = initWeights(layers);
         biases = initBiases(layers);
         
@@ -65,6 +66,7 @@ public class Brain : MonoBehaviour
                 biasList[layer][node] = UnityEngine.Random.Range(-1.0f, 1.0f);
             }
         }
+        
         return biasList;
     }
 

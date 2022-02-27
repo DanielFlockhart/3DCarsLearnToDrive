@@ -43,7 +43,7 @@ public class CountDown : MonoBehaviour
     public void startRace () {
         player.GetComponent<CarController>().isPlayer = true;
         if (!loadedCars){
-            GetComponent<rw_script>().RaceLoading(GameObject.FindGameObjectWithTag("Opponent").GetComponent<AiController>().layers);
+            FindObjectOfType<rw_script>().GetComponent<rw_script>().Load();
             loadedCars = true;
         }
     }

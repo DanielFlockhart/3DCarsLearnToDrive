@@ -29,7 +29,7 @@ public class FitCheck : MonoBehaviour
         // If ai reaches the end, load results
          else {
             if (currentGoal+1 >= GameObject.FindGameObjectsWithTag("goal").Length){
-                FindObjectOfType<GameButtons>().results.SetActive(true);
+                //FindObjectOfType<GameButtons>().results.SetActive(true);
             }
         }
         
