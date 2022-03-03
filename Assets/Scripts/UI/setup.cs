@@ -29,9 +29,18 @@ public class setup : MonoBehaviour
     }
 
     int getInput(string input){
+        
         // If the input is not a boolean the isSetUp boolean is set to false.
         try {
-            return int.Parse(input);
+            int val = int.Parse(input);
+            //if the input is in the valid range, return the input.
+            if( val > 0 && val < 10000) {
+                return val;
+            } else {
+                isSetUp = false;
+                return 0;
+            }
+
         } catch {
             isSetUp = false;
             return 0;
