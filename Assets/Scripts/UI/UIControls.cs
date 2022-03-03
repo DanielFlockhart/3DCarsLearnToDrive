@@ -6,10 +6,14 @@ using UnityEngine.UI;
 public class UIControls : MonoBehaviour
 {
     // UI Controls
+
+    // Text objects that appear in the scene
     public Text tt_text,gen_text,bf_text,af_text,ts_text,gl_text,mr_text;
     public Slider mutationRate;
     public GameObject settings_page;
     private GameManager manager;
+
+    // Maximum value the slider can take.
     public float maxMutation = 0.5f;
     void Start()
     {
@@ -21,6 +25,7 @@ public class UIControls : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Update the text objects with the current values
         manager.mutRate = mutationRate.value * 0.5f;
         tt_text.text = "Time Trained : " + manager.training_time;
         gen_text.text = "Generation : " + manager.generation;
@@ -31,11 +36,5 @@ public class UIControls : MonoBehaviour
         mr_text.text = "Mutation Rate : " + (manager.mutRate * 100) + "%";
         
 
-    }
-    public void load_settings(){
-        settings_page.SetActive(true);
-    }
-    public void close_settings(){
-        settings_page.SetActive(false);
     }
 }

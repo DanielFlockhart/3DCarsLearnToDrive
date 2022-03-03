@@ -7,9 +7,10 @@ public class ButtonSounds : MonoBehaviour
 {
     public AudioClip clip;
     public AudioSource source;    
+
+    // Whenever a user hovers over button, this function is called and a sound is played
     public void OnMouseOver()
     {
-        print("sdfadasd");
         source.PlayOneShot(clip);
     }
 }

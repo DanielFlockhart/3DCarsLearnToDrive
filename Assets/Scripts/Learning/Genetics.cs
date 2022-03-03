@@ -46,24 +46,12 @@ public class Genetics : MonoBehaviour
                     biases[pointer] = crossover(population,biases,mut_rate);
                     pointer +=1;
                 }
-
+                // Temporary   
                 // if(x == 1){
                 //     //CROSSOVER + Mutation
                 //     // PASSING BY REFERENCE THATS WHY ITS BROKEN
                 //     weights[pointer] = mutate(mut_rate,weights[pointer-(population/2)]);
                 //     biases[pointer] = mutate(mut_rate, biases[pointer-(population/2)]);
-                //     pointer +=1;
-                // }
-
-                // if(x == 100){
-                //     weights[pointer] = mutate(mut_rate,weights[sampleParent(population)]);
-                //     biases[pointer] = mutate(mut_rate, biases[sampleParent(population)]);
-                //     pointer +=1;
-                // }
-                
-                // if(x == 30000){
-                //     weights[pointer] = mutate(mut_rate,weights[0]);
-                //     biases[pointer] = mutate(mut_rate,biases[0]);;
                 //     pointer +=1;
                 // }
             }
@@ -78,7 +66,6 @@ public class Genetics : MonoBehaviour
     
     public float[][] crossover(int populationSize,List<float[][]> weights,float mut_rate)
     {
-        // ONLY SELECTING THE FIRST AND LAST PARENT
         // BETTER AIS ARE CLOSER TO 0
         // int parent1 = sampleParent(populationSize);
         // int parent2 = sampleParent(populationSize);
@@ -93,10 +80,7 @@ public class Genetics : MonoBehaviour
         //         child_weights[x] = new float[p1_weights[x].Length];
         //     }
         // }
-        // /* iterate through weights and randomly choose which genes from which parents to keep at 50% split
-        // For a while i had it as only choosing from one parent and it was working fine. Then I fixed this and It broke performance, causing non determinism
-        // Debugging will persist until end of project.
-        // */
+        
         // for (int layer = 0; layer < weights[0].Length; layer++) {
         //     for (int weight = 0; weight < weights[0][layer].Length; weight++){
         //         child_weights[layer][weight] = UnityEngine.Random.Range(0.0f,1.0f) > 0.5 ? p1_weights[layer][weight]: p1_weights[layer][weight];
@@ -108,11 +92,16 @@ public class Genetics : MonoBehaviour
         int parent2 = sampleParent(populationSize);
         float[][] p1_weights = weights[parent1];
         float[][] p2_weights = weights[parent2];
+        
+        // /* iterate through weights and randomly choose which genes from which parents to keep at 50% split
+        // For a while i had it as only choosing from one parent and it was working fine. Then I fixed this and It broke performance, causing non determinism
+        // Debugging will persist until end of project.
+        // */
 
         // iterate through weights and randomly choose which genes from which parents to keep
         for (int layer = 0; layer < weights[0].Length; layer++) {
             for (int weight = 0; weight < weights[0][layer].Length; weight++){
-                p1_weights[layer][weight] = UnityEngine.Random.Range(0.0f,1.0f) > 0.5 ? p1_weights[layer][weight] : p1_weights[layer][weight];
+                p1_weights[layer][weight] = UnityEngine.Random.Range(0.0f,1.0f) > 0.5 ? p1_weights[layer][weight] : p1_weights[layer][weight]; // Temporary
             }
         }
         
@@ -173,6 +162,8 @@ public class Genetics : MonoBehaviour
         }
         return newVals;
     }
+
+    // Gets a biased sample from a population, using guassian distribution
     public float samplePopulation(float mean = 0.9f,float sd=0.2f){
         float x1 = 1 - UnityEngine.Random.Range(0.0f,1.0f);
         float x2 = 1 - UnityEngine.Random.Range(0.0f,1.0f);
@@ -182,7 +173,7 @@ public class Genetics : MonoBehaviour
         
     }
     public float getParent(int populationSize){
-        // FIXED BUG HERE WAS CONVERTING TO INT
+        // FIXED BUG HERE WAS CONVERTING TO INTEGER
         return (float) samplePopulation() * populationSize;
     }
 }

@@ -22,6 +22,8 @@ public class CarController : MonoBehaviour
     // Current State
     public float currentSteeringAngle;
     public float currentBreakForce;
+
+    // Is the Car breaking
     private bool isBreaking;
 
     [SerializeField] private float motorForce;

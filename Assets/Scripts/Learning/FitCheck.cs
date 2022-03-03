@@ -25,7 +25,7 @@ public class FitCheck : MonoBehaviour
             }
             
         }
-        // Temporary
+        
         // If ai reaches the end, load results
          else {
             if (currentGoal+1 >= GameObject.FindGameObjectsWithTag("goal").Length){

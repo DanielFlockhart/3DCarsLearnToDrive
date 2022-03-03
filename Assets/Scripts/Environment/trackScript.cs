@@ -8,6 +8,7 @@ public class trackScript : MonoBehaviour
 
     void Awake()
     {
+        // Set the start position of the track
         GameManager.startPos = newstartPos;
 
     }

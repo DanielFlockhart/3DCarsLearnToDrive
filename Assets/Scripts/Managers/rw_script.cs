@@ -60,7 +60,6 @@ public class rw_script : MonoBehaviour
         int size = int.Parse(raw[0].ToString());
 
         // Assign weights and biases
-        // Issue could be here
         List<float[][]> weights = readTextFile(Application.dataPath + "/model/weights.txt",layers,false,size);
         List<float[][]> biases = readTextFile(Application.dataPath + "/model/biases.txt",layers,true,size);
 
@@ -136,6 +135,7 @@ public class rw_script : MonoBehaviour
     
     // Create the text that will then be saved to a file
     // Code is ineffecient, but it works
+    // If you are reading this, ingore this function, accept the fact it WORKS and move on with your life
     void CreateTextSpecial(List<float[][]> inputList,string name,string state = "model",int checkpoint = -1)
     {
         string textToAppend = "[";

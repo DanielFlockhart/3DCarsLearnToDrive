@@ -6,7 +6,6 @@ using System;
 public class Brain : MonoBehaviour
 {
     // Setup of weights, biases topology etc
-    // This will be used more if I decide to implement NEAT
 
     // Prefabs
     private NeuralNetwork net;
@@ -35,11 +34,11 @@ public class Brain : MonoBehaviour
     // Get outputs from FFNN after inputs
     public float[] getOutputs(float[] inputs)
     {
-        // TTHE LAYERS ON THIS IS ONLY 12 3
         layers = GetComponent<AiController>().layers;
         return net.forwardPass(layers, inputs, weights, biases);
     }
 
+    // Setters for weights and biases
     public void setWeights(float[][] w){
         Array.Copy(w,weights, w.Length);
     }
@@ -63,13 +62,13 @@ public class Brain : MonoBehaviour
             biasList[layer] = new float[layerLength];
             for (int node = 0; node < layerLength; node++)
             {
+                // Set new random bias
                 biasList[layer][node] = UnityEngine.Random.Range(-1.0f, 1.0f);
             }
         }
         
         return biasList;
     }
-
     // Initialising Weight
     private float[][] initWeights(int[] layers)
     {
@@ -80,6 +79,7 @@ public class Brain : MonoBehaviour
             weightList[layer] = new float[layerLength];
             for (int connection = 0; connection < layerLength; connection++)
             {
+                // Set new random weight
                 weightList[layer][connection] = UnityEngine.Random.Range(-1.0f, 1.0f);
             }
         }

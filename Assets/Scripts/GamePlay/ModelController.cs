@@ -5,7 +5,10 @@ using UnityEngine;
 public class ModelController : MonoBehaviour
 {
     // Controller for loading driving game models 
+
+    // The number of opponents in the game
     private int opponents = 160;
+
     public GameObject car;
     public List<float[][]> weights;
     public List<float[][]> biases;
@@ -28,6 +31,7 @@ public class ModelController : MonoBehaviour
     }
     // Start placement process from model loading
     public void load_weights(List<float[][]> weights_load, List<float[][]> biases_load, int[] layers){
+        // Sets the neural network layers
         setup.hiddenNodes = layers[1];
         setup.hiddenLayers = layers.Length - 2;
         weights = weights_load;

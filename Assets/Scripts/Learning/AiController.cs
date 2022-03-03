@@ -37,6 +37,7 @@ public class AiController : MonoBehaviour
         carControls = GetComponent<CarController>();
     }
 
+    // Initialise the brain and set up its layers
     public void layerSetup(){
         layers = createLayers(setup.hiddenNodes,setup.hiddenLayers);
         brain = GetComponent<Brain>();
@@ -58,16 +59,21 @@ public class AiController : MonoBehaviour
         // Uncomment for displaying debugging rays.
         //drawRays(rays);
 
+        // Get distances of rays
         distances = getCollisions(rays);
 
+        // Get current breaking force and streeing angle of the car
         float breakforce = carControls.currentBreakForce / 3000;
         float steeringAngle = carControls.currentSteeringAngle / 30;
+
+        // assign all the inputs to an input array
         input = new float[] { breakforce, steeringAngle, distances[0], distances[1], distances[2], distances[3], distances[4], distances[5], distances[6], distances[7], distances[8],distances[9]};
         output = brain.getOutputs(input);
         // Arg Max for binary input requirements
         forwardVal = output[0] > 0 ? 1 : -1;
         leftVal = output[1] > 0 ? 1 : -1;
         breakVal = output[2] > 0 ? true : false;
+        // If the car is alive then move it
         if (isAlive){
             operateCar(forwardVal, leftVal, breakVal);
         }
