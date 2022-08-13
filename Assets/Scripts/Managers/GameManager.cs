@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     public float training_time;
     public float timer;
     public float genTime = 0;
-    private float newGenTime = 0;
+    public float newGenTime = 0;
     public float startTime = 15;
     public float mutRate = 0.02f;
 

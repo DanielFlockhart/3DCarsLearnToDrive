@@ -47,7 +47,7 @@ public class rw_script : MonoBehaviour
 
     
     // Function used for loading weights and biases from a file
-    public void Load()
+    public async void Load()
     {
         // Convert a string into a string array
         string[] newlayers= getPreference(8).ToString().Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
@@ -58,6 +58,12 @@ public class rw_script : MonoBehaviour
         // Convert a string to List of strings
         List<string> raw = new List<string>(getPreference(0).Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries));
         int size = int.Parse(raw[0].ToString());
+
+        if ((System.IO.File.Exists(Application.dataPath + "/model/biases.txt") && System.IO.File.Exists(Application.dataPath + "/model/weights.txt")) == false){
+            // If there is no model, break
+            print("No model found");
+            return;
+        }
 
         // Assign weights and biases
         List<float[][]> weights = readTextFile(Application.dataPath + "/model/weights.txt",layers,false,size);

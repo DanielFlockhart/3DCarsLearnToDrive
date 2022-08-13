@@ -7,10 +7,7 @@ using UnityEngine.SceneManagement;
 public class button_script : MonoBehaviour{  
 
     // Get objects of animators, prefabs, game managers and other ui features
-    public Animator animator;
-    public Animation animation;
     public UIControls uicontroller;
-    private float timeScaleStored = 0;
     private GameManager manager;
 
     public GameObject graph;
