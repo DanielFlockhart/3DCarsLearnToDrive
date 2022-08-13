@@ -9,3 +9,6 @@ Cars learn to navigate around a track using home programmed neural networks and 
 
 ![cars](https://user-images.githubusercontent.com/57047926/184493439-52605d62-fd38-4b3a-91c0-4f5990c94f0f.JPG)
 ![pictures](https://user-images.githubusercontent.com/57047926/184493440-86d773e0-9b02-4429-8266-6d4ab016c951.JPG)
+
+Link to Example Training Video
+https://youtu.be/Lf4vcGnzJxU
