@@ -1,7 +1,16 @@
 # 3DCarsLearnToDrive
  A-Level OCR Computer Science Programming Project
 
-Cars learn to navigate around a track using home programmed neural networks and reinforcement learning without using libraries other than default unity libraries
+Cars learn to navigate around a track using home programmed neural networks and reinforcement learning without using libraries other than default unity libraries.
+
+The main components of this project:
+- Physics simulation/Car Physics
+- Feed Forward Neural Network
+- Reinforcement Learning
+- Model Loading/Saving
+
+
+
 
 ![buttons](https://user-images.githubusercontent.com/57047926/184493377-904def71-b4a1-4739-b22f-f3c014e9633d.JPG)
 
