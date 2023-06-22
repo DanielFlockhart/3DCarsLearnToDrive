@@ -1,14 +1,13 @@
 # 3DCarsLearnToDrive
  A-Level OCR Computer Science Programming Project
  
-Developer Note -
-
+**Developer Note**
+```
 This project is lacking formal documentation.
 This project was accompanied by a 50,000 word dissertation on how it works and how it was developed.
 However, the file was to large to fit in this repository.
 In the future, I will update the documentation of this project and return to fix some issues with the project.
-
--
+```
 
 Cars learn to navigate around a track using home programmed neural networks and reinforcement learning without using libraries other than default unity libraries.
 
