@@ -9,12 +9,6 @@ The main components of this project:
 - Reinforcement Learning
 - Model Loading/Saving
 
-Preface Caveats:
-- Unfortunately the names of commits were not entirely useful for looking back on.
-- Had to limit scope due to time restraints - and the fact I had to write 50 Thousands words about the project on top of the coding.
-- Model saving is slow.
-- User interface is not aesthetic.
-
 
 ![buttons](https://user-images.githubusercontent.com/57047926/184493377-904def71-b4a1-4739-b22f-f3c014e9633d.JPG)
 
