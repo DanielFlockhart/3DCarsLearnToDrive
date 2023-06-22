@@ -1,6 +1,8 @@
 # 3DCarsLearnToDrive
  A-Level OCR Computer Science Programming Project
--- Developer Note --
+ 
+Developer Note
+
 This project is lacking formal documentation.
 This project was accompanied by a 50,000 word dissertation on how it works and how it was developed.
 However, the file was to large to fit in this repository.
